@@ -290,7 +290,6 @@ tr:last-child th,tr:last-child td{border-bottom:0}
   <header class="head">
     <span class="eyebrow">2026 東京紅葉行 · 住宿比較</span>
     <h1>東京住宿<em>五選</em></h1>
-    <p class="lede">五間可包棟的住宿（② 是原本的，④–⑧ 是後來加的、客廳有沙發的候選；①、③、⑦ 已刪除，其餘編號不變），資料取自 Booking.com 與 Airbnb 的房源頁。可以點卡片切換，看照片、每層樓的格局、到新宿和澀谷的時間，還有附近吃的和便利商店。</p>
     <dl class="facts">
       <div><dt>入住</dt><dd class="num">11/19（四）</dd></div>
       <div><dt>退房</dt><dd class="num">11/22（日）</dd></div>
@@ -302,7 +301,6 @@ tr:last-child th,tr:last-child td{border-bottom:0}
   <section class="sec" id="overview">
     <div class="sec-head">
       <h2>一眼總覽</h2>
-      <p>依推薦排名排序，點排名或卡片會跳到該間的詳細資料。價格是 3 晚總價（台幣，已含稅費），每人每晚以 7 人、3 晚計算。⑧ 的 Booking 連結是用 8 人查的價格。並排比較表和地圖在最下面。</p>
     </div>
     <ol class="ranklist" id="ranklist"></ol>
     <div class="cards" id="cards"></div>
@@ -317,23 +315,22 @@ tr:last-child th,tr:last-child td{border-bottom:0}
   <section class="sec" id="compare">
     <div class="sec-head">
       <h2>並排比較</h2>
-      <p>綠底 ★ 是該項最好的一間，黃底是需要特別注意的地方。</p>
+      <p>綠底 ★ 最好，黃底要注意。</p>
     </div>
     <p class="swipe-hint">← 表格可以左右滑動 →</p>
     <div class="tbl-wrap"><table id="cmp"></table></div>
-    <p class="tbl-note">交通時間是 Google 地圖從住宿位置查到 JR 新宿／澀谷／池袋站的大眾運輸時間（11/20 週五 9:00 出發，取 Google 排第一的鐵路路線），已含走路和轉乘。實際時間會因為搭到哪一班而差幾分鐘。</p>
+    <p class="tbl-note">交通時間：Google 地圖門到門，11/20（五）9:00 出發。</p>
   </section>
 
   <section class="sec" id="map">
     <div class="sec-head">
       <h2>相對位置</h2>
-      <p>底圖是國土地理院的淡色地圖。② 在中井站旁；⑤ 野方也在同一條西武新宿線上；⑥ 赤羽、⑧ 十條都在 JR 埼京線上；點地圖上的住宿可以跳到該間的詳細資料。</p>
     </div>
     <div class="map-wrap" id="mapbox"></div>
     <ul class="addr-list" id="addrs"></ul>
   </section>
 
-  <p class="foot">資料來源：Booking.com、Airbnb 房源頁（2026-10-15 擷取）；周邊店家數量與宵夜營業時間取自 OpenStreetMap，資料可能不完整；餐廳評分為 Tabelog 搜尋結果顯示的分數，可能已有變動；地圖底圖：國土地理院 淡色地圖。</p>
+  <p class="foot">資料：Booking.com、Airbnb（2026-10-15）、OpenStreetMap、Tabelog；底圖：國土地理院。</p>
 </div>
 
 <div class="lb" id="lb" hidden>
@@ -789,7 +786,7 @@ function renderPane(){
     </dl>
 
     <div class="block">
-      <h4>照片 <small>精選 ${PHOTOS[s.id].length} 張，依房間分類；點大圖可全螢幕，鍵盤 ← → 切換</small></h4>
+      <h4>照片</h4>
       <div class="gal-filter">
         <button class="chip" data-f="all" aria-pressed="${galFilter === 'all'}">全部</button>
         ${CATS.map(c => [c, PHOTOS[s.id].filter(p => p[1] === c).length]).filter(x => x[1]).map(([c, n]) => `<button class="chip" data-f="${c}" aria-pressed="${galFilter === c}">${c} ${n}</button>`).join('')}
@@ -802,7 +799,7 @@ function renderPane(){
     </div>
 
     <div class="block">
-      <h4>格局 <small>依房源格局圖與照片整理</small></h4>
+      <h4>格局</h4>
       <dl class="layout-sum">
         <div class="stat"><dt>臥室</dt><dd>${s.bedrooms}<small>間</small></dd></div>
         <div class="stat"><dt>廁所</dt><dd>${s.toilets}<small>間</small></dd></div>
@@ -823,7 +820,7 @@ function renderPane(){
     </div>
 
     <div class="block">
-      <h4>交通 <small>Google 地圖門到門時間（11/20 週五 9:00 出發）</small></h4>
+      <h4>交通 <small>11/20（五）9:00 出發</small></h4>
       ${miniMap(s)}
       <div class="stations">${st}</div>
       <div class="transit">${tr}</div>
@@ -831,9 +828,9 @@ function renderPane(){
     </div>
 
     <div class="block">
-      <h4>周邊 <small>以住宿為中心 600 m 內（步行約 8 分鐘）${s.approx ? '；Airbnb 只公開大概位置，數字僅供參考' : ''}</small></h4>
+      <h4>周邊 <small>600 m 內${s.approx ? '；Airbnb 只公開大概位置，數字僅供參考' : ''}</small></h4>
       <div class="near-grid">
-        <div class="panel"><h5>熱鬧程度<small>OpenStreetMap 登錄的店家數</small></h5>${meters}<p class="foot">${esc(VIBE[s.id])}</p></div>
+        <div class="panel"><h5>熱鬧程度</h5>${meters}<p class="foot">${esc(VIBE[s.id])}</p></div>
         <div class="panel"><h5>高評分餐廳<small>Tabelog 分數</small></h5><ul class="plist">${top || '<li class="foot">這一區還沒查到可靠的 Tabelog 分數。</li>'}</ul></div>
         <div class="panel"><h5>宵夜（23:00 後還開）</h5><ul class="plist">${late}</ul></div>
         <div class="panel"><h5>便利商店<small>最近 6 家</small></h5><ul class="plist">${shopLi(['convenience'])}</ul>
