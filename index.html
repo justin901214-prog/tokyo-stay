@@ -1,0 +1,920 @@
+<!doctype html>
+<html lang="zh-Hant">
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<title>東京住宿五選</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Serif+TC:wght@700&display=swap">
+<style>
+/* Layout: same visual system as 東京紅葉七日 — a summary row of four stay cards, a comparison table, then one detail view switched by tabs. */
+:root{
+  --ground:#F1F2EE; --surface:#FAFAF7; --ink:#1C231F; --ink-2:#3B4540; --muted:#66706A;
+  --rule:#D4D8CF; --rule-soft:#E3E6DF;
+  --maple:#A93426; --maple-soft:#F4E1DC; --ginkgo:#C98F0A; --ginkgo-band:rgba(214,164,26,.17); --ginkgo-ink:#7A5600;
+  --good:#2F6B45; --good-soft:#DCEBDF; --warn:#9A5B00; --warn-soft:#F5E7CC;
+  --on-accent:#FFFFFF; --img-ground:#E3E6DF; --scrim:rgba(12,15,13,.92);
+  --line-seibu:#2E7EC2; --line-oedo:#B6007A; --line-tozai:#009BBF; --line-marunouchi:#E60012;
+  --map-l:block; --map-d:none;
+  --line-tojo:#1F4E9C; --line-fukutoshin:#9C5E31; --line-yamanote:#80C241; --line-yurakucho:#C1A470; --line-mita:#0079C2; --line-saikyo:#00AC9A; --line-arakawa:#E85298; --line-namboku:#00ADA9; --line-keihin:#00B2E5; --line-bus:#8A8F8B;
+  --f-display:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"Noto Sans TC","Microsoft JhengHei",monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#121614; --surface:#1A1F1C; --ink:#E7EAE4; --ink-2:#C4CBC3; --muted:#97A19A;
+    --rule:#313934; --rule-soft:#232926;
+    --maple:#E4705F; --maple-soft:#3A2420; --ginkgo:#E2B544; --ginkgo-band:rgba(226,181,68,.15); --ginkgo-ink:#E9C56A;
+    --good:#7CC795; --good-soft:#1E3326; --warn:#E6B566; --warn-soft:#3A2D16;
+    --on-accent:#1A0E0B; --img-ground:#232926; --scrim:rgba(6,8,7,.94);
+    --map-l:none; --map-d:block;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#121614; --surface:#1A1F1C; --ink:#E7EAE4; --ink-2:#C4CBC3; --muted:#97A19A;
+  --rule:#313934; --rule-soft:#232926;
+  --maple:#E4705F; --maple-soft:#3A2420; --ginkgo:#E2B544; --ginkgo-band:rgba(226,181,68,.15); --ginkgo-ink:#E9C56A;
+  --good:#7CC795; --good-soft:#1E3326; --warn:#E6B566; --warn-soft:#3A2D16;
+  --on-accent:#1A0E0B; --img-ground:#232926; --scrim:rgba(6,8,7,.94);
+  --map-l:none; --map-d:block;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.7}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:36px 88px;display:flex;flex-direction:column;gap:56px}
+h1,h2,h3,h4{margin:0;text-wrap:balance}
+p{margin:0}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--maple);outline-offset:2px;border-radius:3px}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.eyebrow{font-size:12.5px;letter-spacing:.08em;color:var(--muted);font-weight:500}
+img{display:block;max-width:100%}
+
+/* header */
+.head{display:flex;flex-direction:column;gap:14px}
+.head h1{font-family:var(--f-display);font-size:clamp(34px,6vw,54px);line-height:1.15;letter-spacing:.02em}
+.head h1 em{font-style:normal;color:var(--maple)}
+.lede{font-size:17px;color:var(--ink-2);max-width:44em}
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);margin:4px 0 0}
+.facts div{padding:12px 16px;display:flex;flex-direction:column;gap:2px}
+.facts div + div{border-left:1px solid var(--rule-soft)}
+.facts dt{font-size:12.5px;color:var(--muted);letter-spacing:.06em}
+.facts dd{margin:0;font-weight:500}
+
+/* section heads */
+.sec{display:flex;flex-direction:column;gap:20px;scroll-margin-top:60px}
+.sec-head{display:flex;flex-direction:column;gap:6px;max-width:50em}
+.sec-head h2{font-family:var(--f-display);font-size:28px;line-height:1.25}
+.sec-head p{color:var(--ink-2)}
+
+/* stay cards */
+.cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+.card{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--rule);border-radius:6px;overflow:hidden;text-align:left;padding:0;cursor:pointer;transition:border-color .15s, box-shadow .15s}
+.card:hover{border-color:var(--maple)}
+.card[aria-pressed="true"]{border-color:var(--maple);box-shadow:0 0 0 1.5px var(--maple)}
+.card img{width:100%;aspect-ratio:3/2;object-fit:cover;background:var(--img-ground)}
+.card-body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px;flex:1;width:100%}
+.card-top{display:flex;align-items:baseline;gap:8px}
+.badge{font-family:var(--f-mono);font-weight:600;font-size:13px;color:var(--maple)}
+.card h3{font-size:16px;line-height:1.4}
+.card .sub{font-size:12.5px;color:var(--muted)}
+.price{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.price b{font-family:var(--f-mono);font-size:21px;font-weight:600}
+.price span{font-size:12.5px;color:var(--muted)}
+.tbd{color:var(--muted)!important;font-weight:500}
+.mini dd.no{color:var(--muted)}
+.mini{display:grid;grid-template-columns:auto minmax(0,1fr);gap:1px 10px;font-size:13px;margin:auto 0 0;padding-top:8px;border-top:1px solid var(--rule-soft)}
+.mini dt{color:var(--muted)}
+.mini dd{margin:0;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.pill{display:inline-block;font-size:11.5px;line-height:1.7;padding:0 8px;border-radius:99px;font-weight:500}
+.swipe-hint{display:none;font-size:12.5px;color:var(--muted);margin-top:-8px}
+.pill.rank{background:var(--maple-soft);color:var(--maple)}
+.ranklist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;border:1px solid var(--rule);border-radius:6px;background:var(--surface);overflow:hidden}
+.ranklist li + li{border-top:1px solid var(--rule-soft)}
+.ranklist button{all:unset;box-sizing:border-box;width:100%;cursor:pointer;display:grid;grid-template-columns:40px minmax(150px,200px) minmax(0,1fr);gap:4px 16px;align-items:start;padding:14px 16px}
+.ranklist button:hover{background:var(--ground)}
+.ranklist button:focus-visible{outline:2px solid var(--maple);outline-offset:-2px}
+.ranklist .rk{font-size:24px;font-weight:600;color:var(--maple);line-height:1.2}
+.ranklist .rn{display:flex;flex-direction:column}
+.ranklist .rn small{color:var(--muted);font-size:13px}
+.ranklist .rt{font-size:14.5px;color:var(--ink-2)}
+@media (max-width:620px){.ranklist button{grid-template-columns:32px minmax(0,1fr)}.ranklist .rt{grid-column:2}}
+.verdict{background:var(--maple-soft);border-radius:6px;padding:12px 16px;color:var(--ink);font-size:15px}
+.verdict b{color:var(--maple);margin-right:10px}
+.pill.booked{background:var(--maple);color:var(--on-accent)}
+.pill.good{background:var(--good-soft);color:var(--good)}
+.pill.warn{background:var(--warn-soft);color:var(--warn)}
+
+/* comparison table */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--rule);border-radius:6px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:14px}
+th,td{padding:10px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--rule-soft)}
+thead th{font-size:13px;color:var(--muted);font-weight:500;background:var(--surface);position:sticky;top:0}
+thead th b{display:block;color:var(--ink);font-size:14.5px}
+tbody th{font-weight:500;color:var(--muted);white-space:nowrap;font-size:13px}
+td.best{background:var(--good-soft)}
+td.best::after{content:" ★";color:var(--good);font-size:12px}
+td.bad{background:var(--warn-soft)}
+tr:last-child th,tr:last-child td{border-bottom:0}
+.tbl-note{font-size:12.5px;color:var(--muted)}
+
+/* tabs */
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--rule);overflow-x:auto;position:sticky;top:env(safe-area-inset-top,0px);background:var(--ground);z-index:5}
+.tabs button{border:0;background:none;padding:12px 14px 10px;cursor:pointer;color:var(--ink-2);border-bottom:2.5px solid transparent;white-space:nowrap;font-size:14.5px}
+.tabs button:hover{color:var(--maple)}
+.tabs button[aria-selected="true"]{color:var(--ink);font-weight:700;border-bottom-color:var(--maple)}
+.tabs .badge{margin-right:4px}
+
+.detail{display:flex;flex-direction:column;gap:36px;padding-top:8px}
+.d-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 24px}
+.d-head h3{font-family:var(--f-display);font-size:30px;line-height:1.2}
+.d-head .sub{color:var(--muted);font-size:14px}
+.links{display:flex;gap:8px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;padding:6px 12px;border:1px solid var(--rule);border-radius:99px;text-decoration:none;background:var(--surface);cursor:pointer}
+.btn:hover{border-color:var(--maple);color:var(--maple)}
+.block{display:flex;flex-direction:column;gap:14px}
+.block > h4{font-size:18px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;border-bottom:1px solid var(--rule);padding-bottom:6px}
+.block > h4 small{font-size:13px;color:var(--muted);font-weight:400}
+
+/* gallery */
+.gal{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+.gal-main{position:relative;background:var(--img-ground);border-radius:6px;overflow:hidden;aspect-ratio:16/10;cursor:zoom-in}
+.gal-main img{width:100%;height:100%;object-fit:contain}
+.gal-cap{position:absolute;left:0;right:0;bottom:0;padding:8px 12px;font-size:13px;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.6))}
+.gal-nav{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;border:0;background:rgba(0,0,0,.45);color:#fff;font-size:20px;cursor:pointer;display:grid;place-items:center}
+.gal-nav:hover{background:rgba(0,0,0,.7)}
+.gal-nav.prev{left:10px}.gal-nav.next{right:10px}
+.gal-count{position:absolute;top:10px;right:12px;font-family:var(--f-mono);font-size:12px;color:#fff;background:rgba(0,0,0,.45);padding:1px 8px;border-radius:99px}
+.gal-filter{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:13px;padding:3px 12px;border-radius:99px;border:1px solid var(--rule);background:var(--surface);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--maple);border-color:var(--maple);color:var(--on-accent)}
+.thumbs{display:grid;grid-auto-flow:column;grid-auto-columns:112px;gap:6px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x proximity}
+.thumbs button{padding:0;border:2px solid transparent;border-radius:4px;overflow:hidden;cursor:pointer;background:var(--img-ground);scroll-snap-align:start}
+.thumbs button[aria-current="true"]{border-color:var(--maple)}
+.thumbs img{width:100%;aspect-ratio:4/3;object-fit:cover}
+
+/* floors */
+.floors{display:grid;grid-template-columns:repeat(var(--fc,3),minmax(0,1fr));gap:14px}
+.floor{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.floor h5{margin:0;font-family:var(--f-mono);font-size:15px;color:var(--maple)}
+.floor h5 span{font-family:var(--f-body);color:var(--muted);font-weight:400;font-size:12.5px;margin-left:6px}
+.room{display:flex;flex-direction:column;gap:3px;padding:8px 10px;border-radius:4px;background:var(--ground)}
+.room b{font-size:14.5px}
+.room .beds{display:flex;flex-wrap:wrap;gap:4px}
+.bed{font-size:12px;padding:0 7px;border-radius:3px;border:1px solid var(--rule);background:var(--surface);white-space:nowrap}
+.bed.real{border-color:var(--good);color:var(--good)}
+.room p{font-size:12.5px;color:var(--muted)}
+.room.wet{background:transparent;border:1px dashed var(--rule)}
+.floor-plan{display:flex;gap:8px;flex-wrap:wrap}
+.layout-sum{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.stat{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:10px 14px}
+.stat dt{font-size:12.5px;color:var(--muted)}
+.stat dd{margin:0;font-size:20px;font-weight:600;font-family:var(--f-mono)}
+.stat dd small{font-family:var(--f-body);font-size:12.5px;font-weight:400;color:var(--muted);margin-left:4px}
+.sleep{font-size:14px;color:var(--ink-2);background:var(--ginkgo-band);padding:10px 14px;border-radius:6px}
+
+/* transit */
+.transit{display:flex;flex-direction:column;gap:10px}
+.tr-row{display:grid;grid-template-columns:72px minmax(0,1fr) 64px;gap:12px;align-items:center}
+.tr-dest{font-weight:700}
+.tr-bar{position:relative;height:26px;background:var(--rule-soft);border-radius:4px;overflow:hidden;display:flex}
+.tr-bar span{height:100%;display:flex;align-items:center;padding-left:6px;font-size:11.5px;color:#fff;white-space:nowrap;overflow:hidden}
+.tr-bar .walk{background:repeating-linear-gradient(45deg,var(--muted),var(--muted) 4px,var(--ink-2) 4px,var(--ink-2) 8px)}
+.tr-bar .wait{background:var(--rule)}
+.tr-min{font-family:var(--f-mono);font-weight:600;font-size:17px;text-align:right}
+.tr-min small{font-size:11px;font-weight:400;color:var(--muted)}
+.tr-route{grid-column:2 / 4;font-size:13px;color:var(--ink-2);margin-top:-4px}
+.tr-route a{color:var(--muted)}
+.scale{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:11px;color:var(--muted);margin-left:84px;margin-right:76px}
+.stations{display:flex;flex-direction:column;gap:6px}
+.st{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:14.5px}
+.st .walkmin{font-family:var(--f-mono);font-weight:600;min-width:58px}
+.ln{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;padding:0 8px;border-radius:99px;border:1.5px solid var(--c);color:var(--ink-2)}
+.ln::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--c)}
+
+/* nearby */
+.near-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.panel{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.panel h5{margin:0;font-size:15px}
+.panel h5 small{font-weight:400;color:var(--muted);font-size:12.5px;margin-left:6px}
+.meter{display:grid;grid-template-columns:76px minmax(0,1fr) 36px;gap:8px;align-items:center;font-size:13px}
+.meter .track{height:10px;background:var(--rule-soft);border-radius:99px;overflow:hidden}
+.meter .fill{height:100%;background:var(--ginkgo);border-radius:99px}
+.meter .v{font-family:var(--f-mono);text-align:right}
+.plist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:14px}
+.plist li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px}
+.plist .nm{min-width:0}
+.plist .nm small{color:var(--muted);margin-left:4px;font-size:12px}
+.plist .rt{font-family:var(--f-mono);font-weight:600;color:var(--maple)}
+.plist .ds{font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
+.plist .why{grid-column:1 / -1;font-size:12.5px;color:var(--muted)}
+.foot{font-size:12px;color:var(--muted)}
+
+/* notes */
+.pc{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.pc ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:4px;font-size:14.5px;color:var(--ink-2)}
+.pc .panel.pro{border-top:3px solid var(--good)}
+.pc .panel.con{border-top:3px solid var(--warn)}
+.facts-list{display:flex;flex-wrap:wrap;gap:6px}
+.facts-list span{font-size:12.5px;padding:1px 9px;border-radius:99px;border:1px solid var(--rule);color:var(--ink-2)}
+
+/* map */
+.map-wrap{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:8px;overflow-x:auto}
+.geo{position:relative;margin:0 auto;max-width:100%}
+.geo img{width:100%;height:auto;border-radius:4px}
+.geo .tile-d{display:var(--map-d)}.geo .tile-l{display:var(--map-l)}
+.geo svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.geo text{font-family:var(--f-body);paint-order:stroke;stroke:var(--surface);stroke-width:5px;stroke-linejoin:round}
+.geo-overview{width:min(100%,760px)}
+.geo:not(.geo-overview) svg{overflow:hidden}
+.block > .geo{width:min(100%,760px);margin:0}
+.block > .legend{max-width:760px}
+.addr-list{list-style:none;margin:14px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:6px 18px;font-size:14px}
+.addr-list li{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 8px}
+.addr-list b{font-weight:600}
+.addr-list small{color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--muted);padding:6px 4px 0}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:-1px}
+.d-price{display:flex;gap:10px 28px;flex-wrap:wrap;align-items:baseline;padding:12px 16px;margin:0;background:var(--surface);border:1px solid var(--rule);border-radius:6px}
+.d-price div{display:flex;flex-direction:column}
+.d-price dt{font-size:12.5px;color:var(--muted)}
+.d-price dd{margin:0;font-family:var(--f-mono);font-weight:600;font-size:24px}
+.d-price dd small{font-family:var(--f-body);font-size:12.5px;font-weight:400;color:var(--muted);margin-left:6px}
+.d-price .note{font-size:12.5px;color:var(--muted);flex-basis:100%}
+.cat-tag{display:inline-block;font-size:11.5px;padding:0 7px;border-radius:3px;background:var(--maple);color:var(--on-accent);margin-right:6px}
+.thumbs button{position:relative}
+.thumbs .tc{position:absolute;left:3px;bottom:3px;font-size:10.5px;line-height:1.5;padding:0 5px;border-radius:3px;background:rgba(0,0,0,.6);color:#fff}
+
+/* lightbox */
+.lb{position:fixed;inset:0;background:var(--scrim);z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:calc(16px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.lb img{max-width:100%;max-height:calc(100% - 60px);object-fit:contain}
+.lb p{color:#eee;font-size:14px;text-align:center}
+.lb .x{position:absolute;top:calc(12px + env(safe-area-inset-top,0px));right:max(12px,env(safe-area-inset-right,0px));width:42px;height:42px;border-radius:50%;border:0;background:rgba(255,255,255,.15);color:#fff;font-size:22px;cursor:pointer}
+.lb .gal-nav{background:rgba(255,255,255,.15)}
+.lb .prev{left:max(10px,env(safe-area-inset-left,0px))}.lb .next{right:max(10px,env(safe-area-inset-right,0px))}
+
+@media (max-width:900px){
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .floors{grid-template-columns:minmax(0,1fr)}
+  .layout-sum{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:620px){
+  .facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .facts div:nth-child(3){border-left:0}
+  .near-grid,.pc{grid-template-columns:minmax(0,1fr)}
+  .tr-row{grid-template-columns:56px minmax(0,1fr) 56px;gap:8px}
+  .scale{margin-left:64px;margin-right:64px}
+  .d-head h3{font-size:24px}
+}
+@media (max-width:620px){
+  .cards{display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:84%;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:0 16px 8px;scroll-padding:0 16px;-webkit-overflow-scrolling:touch}
+  .card{scroll-snap-align:start}
+  .swipe-hint{display:block}
+  table{min-width:620px;font-size:13px}
+  th,td{padding:8px 10px}
+  tbody th,thead th:first-child{position:sticky;left:0;z-index:2;background:var(--surface);white-space:normal;width:78px;min-width:78px;box-shadow:1px 0 0 var(--rule)}
+  thead th:first-child{z-index:3}
+  .wrap{gap:44px}
+  .sec-head h2{font-size:24px}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="head">
+    <span class="eyebrow">2026 東京紅葉行 · 住宿比較</span>
+    <h1>東京住宿<em>五選</em></h1>
+    <p class="lede">五間可包棟的住宿（② 是原本的，④–⑧ 是後來加的、客廳有沙發的候選；①、③、⑦ 已刪除，其餘編號不變），資料取自 Booking.com 與 Airbnb 的房源頁。可以點卡片切換，看照片、每層樓的格局、到新宿和澀谷的時間，還有附近吃的和便利商店。</p>
+    <dl class="facts">
+      <div><dt>入住</dt><dd class="num">11/19（四）</dd></div>
+      <div><dt>退房</dt><dd class="num">11/22（日）</dd></div>
+      <div><dt>晚數</dt><dd>3 晚</dd></div>
+      <div><dt>人數</dt><dd>7 位大人</dd></div>
+    </dl>
+  </header>
+
+  <section class="sec" id="overview">
+    <div class="sec-head">
+      <h2>一眼總覽</h2>
+      <p>依推薦排名排序，點排名或卡片會跳到該間的詳細資料。價格是 3 晚總價（台幣，已含稅費），每人每晚以 7 人、3 晚計算。⑧ 的 Booking 連結是用 8 人查的價格。並排比較表和地圖在最下面。</p>
+    </div>
+    <ol class="ranklist" id="ranklist"></ol>
+    <div class="cards" id="cards"></div>
+    <p class="swipe-hint">← 左右滑動看五間卡片 →</p>
+  </section>
+
+  <section class="sec" id="detail">
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div class="detail" id="pane"></div>
+  </section>
+
+  <section class="sec" id="compare">
+    <div class="sec-head">
+      <h2>並排比較</h2>
+      <p>綠底 ★ 是該項最好的一間，黃底是需要特別注意的地方。</p>
+    </div>
+    <p class="swipe-hint">← 表格可以左右滑動 →</p>
+    <div class="tbl-wrap"><table id="cmp"></table></div>
+    <p class="tbl-note">交通時間是 Google 地圖從住宿位置查到 JR 新宿／澀谷／池袋站的大眾運輸時間（11/20 週五 9:00 出發，取 Google 排第一的鐵路路線），已含走路和轉乘。實際時間會因為搭到哪一班而差幾分鐘。</p>
+  </section>
+
+  <section class="sec" id="map">
+    <div class="sec-head">
+      <h2>相對位置</h2>
+      <p>底圖是國土地理院的淡色地圖。② 在中井站旁；⑤ 野方也在同一條西武新宿線上；⑥ 赤羽、⑧ 十條都在 JR 埼京線上；點地圖上的住宿可以跳到該間的詳細資料。</p>
+    </div>
+    <div class="map-wrap" id="mapbox"></div>
+    <ul class="addr-list" id="addrs"></ul>
+  </section>
+
+  <p class="foot">資料來源：Booking.com、Airbnb 房源頁（2026-10-15 擷取）；周邊店家數量與宵夜營業時間取自 OpenStreetMap，資料可能不完整；餐廳評分為 Tabelog 搜尋結果顯示的分數，可能已有變動；地圖底圖：國土地理院 淡色地圖。</p>
+</div>
+
+<div class="lb" id="lb" hidden>
+  <button class="x" id="lbx" aria-label="關閉">×</button>
+  <button class="gal-nav prev" id="lbp" aria-label="上一張">‹</button>
+  <img id="lbimg" alt="">
+  <p id="lbcap"></p>
+  <button class="gal-nav next" id="lbn" aria-label="下一張">›</button>
+</div>
+
+<script>
+const PHOTOS = {"b2": [[10, "格局圖", "1F／2F／3F 格局（每層獨立，靠室外樓梯連接）"], [12, "格局圖", "到主要車站的路線（房東提供）"], [5, "外觀", "外觀與紅色室外樓梯"], [36, "外觀", "換樓層要走的室外樓梯"], [0, "餐廳", "2F 餐廳"], [2, "餐廳", "2F 長餐桌"], [39, "廚房", "2F 廚房"], [40, "廚房", "3F 小廚房"], [29, "臥室", "1F 臥室 1：特大雙人床＋雙人床，同一間有桌子和電視"], [16, "臥室", "1F 臥室 1"], [7, "臥室", "2F 臥室 2：單人床 ×2"], [8, "臥室", "3F 臥室 3：雙人床 ×2"], [22, "臥室", "3F 臥室 4：單人床 ×2"], [25, "浴室", "2F／3F 浴室（有浴缸）"], [31, "浴室", "1F 淋浴間"], [53, "廁所", "廁所（每層 1 間）"], [38, "洗衣", "洗衣機與洗手台"]], "c1": [[2, "外觀", "外觀（房子建在坡上）"], [22, "外觀", "從馬路要走室外樓梯上去"], [36, "外觀", "室內樓梯"], [0, "客廳", "1F 客廳：L 型沙發＋單人椅"], [59, "客廳", "1F 沙發區"], [13, "餐廳", "1F 餐桌"], [7, "廚房", "1F 中島廚房"], [5, "臥室", "2F 洋室 1：雙人床"], [3, "臥室", "2F 洋室 2：單人床 ×2"], [62, "臥室", "2F 和室（日式床墊）"], [32, "臥室", "3F 洋室 3：雙人床＋單人床 ×2"], [45, "臥室", "3F 洋室 3"], [11, "浴室", "1F 浴室（有浴缸）"], [9, "浴室", "2F 淋浴間"], [8, "廁所", "廁所（1F、2F 各 1 間）"], [12, "洗衣", "3F 洗衣機"], [38, "周邊", "附近的坡道樓梯"], [17, "周邊", "從窗戶看得到晴空塔"], [68, "周邊", "房東提供的交通時間表"]], "c3": [[10, "格局圖", "格局（全部在 1F）"], [0, "外觀", "玄關"], [47, "外觀", "外觀"], [1, "客廳", "客餐廳：L 型沙發"], [4, "客廳", "L 型皮沙發"], [2, "客廳", "客廳電視與走道"], [27, "餐廳", "6 人餐桌"], [12, "廚房", "廚房"], [5, "臥室", "臥室（雙人床）"], [24, "臥室", "臥室（雙人床）"], [44, "臥室", "單人床"], [48, "臥室", "臥室 3：雙人床 ×2 並排"], [6, "浴室", "淋浴間 1"], [73, "浴室", "淋浴間 2"], [3, "廁所", "淋浴間與廁所並排"], [35, "廁所", "廁所"], [21, "洗衣", "洗衣機"]], "c4": [[28, "格局圖", "1F／2F／3F 格局（B1 是停車場）"], [87, "外觀", "外觀（2 個停車位）"], [23, "客廳", "1F 客廳：沙發，裡面是和風床區"], [7, "客廳", "1F 電視"], [8, "餐廳", "1F 長餐桌"], [55, "餐廳", "長餐桌"], [19, "廚房", "1F 廚房"], [22, "臥室", "1F 和風床區（玻璃拉門隔開）"], [51, "臥室", "加大雙人床 ×2"], [1, "臥室", "雙人床＋單人床"], [42, "臥室", "小臥室"], [46, "臥室", "特大雙人床"], [58, "臥室", "單人床 ×2，外面是陽台"], [2, "浴室", "1F 浴室（有浴缸）"], [67, "浴室", "淋浴間"], [9, "廁所", "廁所（每層 1 間）"], [4, "洗衣", "洗衣機＋洗面台"], [5, "周邊", "陽台吊椅"], [57, "周邊", "赤羽站前夜景（房東照片）"]], "d2": [[79, "外觀", "玄關"], [74, "外觀", "外觀（面向馬路）"], [24, "外觀", "小庭院"], [72, "外觀", "屋頂露台"], [0, "客廳", "客廳：沙發"], [5, "客廳", "客廳的投影布幕"], [12, "餐廳", "餐桌"], [2, "廚房", "廚房"], [29, "臥室", "洋室：雙人床 ×2"], [61, "臥室", "洋室：雙人床"], [56, "臥室", "和室：日式床墊"], [40, "臥室", "和室：日式床墊"], [44, "浴室", "淋浴間 1"], [47, "浴室", "淋浴間 2"], [22, "廁所", "廁所"], [42, "廁所", "廁所"], [18, "洗衣", "洗衣機"], [82, "周邊", "十條銀座商店街"], [84, "周邊", "房東提供的交通圖"]]};
+const NEAR = {"b2": {"items": [{"kind": "restaurant", "ja": "たかはし", "d": 86, "oh": "", "lat": 35.7141801, "lon": 139.6899974}, {"kind": "convenience", "ja": "FamilyMart", "d": 111, "oh": "", "lat": 35.7140576, "lon": 139.6902211}, {"kind": "restaurant", "ja": "割烹なか井", "d": 126, "oh": "", "lat": 35.7154888, "lon": 139.688374}, {"kind": "restaurant", "ja": "焼肉専門店 味楽亭", "d": 138, "oh": "", "lat": 35.7155798, "lon": 139.6882946}, {"kind": "restaurant", "ja": "サイノ", "d": 140, "oh": "", "lat": 35.7155463, "lon": 139.6882071}, {"kind": "restaurant", "ja": "福しん", "d": 156, "oh": "", "lat": 35.7151375, "lon": 139.6875939}, {"kind": "restaurant", "ja": "サワディー", "d": 156, "oh": "", "lat": 35.7151355, "lon": 139.6875869}, {"kind": "cafe", "ja": "コロラド", "d": 165, "oh": "", "lat": 35.7149049, "lon": 139.6873883}, {"kind": "convenience", "ja": "FamilyMart", "d": 166, "oh": "", "lat": 35.7155393, "lon": 139.6877789}, {"kind": "restaurant", "ja": "中井家", "d": 168, "oh": "", "lat": 35.7153009, "lon": 139.6875381}, {"kind": "fast_food", "ja": "日高屋", "d": 173, "oh": "", "lat": 35.714911, "lon": 139.6872926}, {"kind": "restaurant", "ja": "大漁丼屋", "d": 174, "oh": "", "lat": 35.7156805, "lon": 139.6878179}, {"kind": "convenience", "ja": "トモニー", "d": 176, "oh": "", "lat": 35.7149961, "lon": 139.6872956}, {"kind": "convenience", "ja": "セブン-イレブン", "d": 184, "oh": "24/7", "lat": 35.7158712, "lon": 139.6879162}, {"kind": "cafe", "ja": "MIRAGE", "d": 190, "oh": "", "lat": 35.7149275, "lon": 139.6871038}, {"kind": "restaurant", "ja": "菜来軒", "d": 194, "oh": "", "lat": 35.7144178, "lon": 139.6870224}, {"kind": "restaurant", "ja": "オリーブモンド", "d": 195, "oh": "", "lat": 35.7146669, "lon": 139.6870116}, {"kind": "pub", "ja": "あげあげ", "d": 196, "oh": "", "lat": 35.7143655, "lon": 139.687008}, {"kind": "fast_food", "ja": "松屋", "d": 199, "oh": "", "lat": 35.7145063, "lon": 139.6869652}, {"kind": "pub", "ja": "にしだ屋", "d": 201, "oh": "", "lat": 35.7144313, "lon": 139.6869373}, {"kind": "cafe", "ja": "お茶の間キッチンカブトムシ", "d": 221, "oh": "", "lat": 35.7136975, "lon": 139.686959}, {"kind": "cafe", "ja": "Chambre La Neige", "d": 226, "oh": "", "lat": 35.7136185, "lon": 139.6869405}, {"kind": "restaurant", "ja": "寿司屋", "d": 236, "oh": "", "lat": 35.7141903, "lon": 139.6917372}, {"kind": "restaurant", "ja": "アドト", "d": 265, "oh": "", "lat": 35.7131571, "lon": 139.6867904}, {"kind": "pub", "ja": "スナックさち", "d": 271, "oh": "", "lat": 35.7149615, "lon": 139.6862042}, {"kind": "restaurant", "ja": "ラジ・パリ", "d": 280, "oh": "", "lat": 35.7139282, "lon": 139.6921664}, {"kind": "cafe", "ja": "ToRa1.2.3", "d": 311, "oh": "", "lat": 35.7159553, "lon": 139.6861806}, {"kind": "restaurant", "ja": "うな厷", "d": 313, "oh": "", "lat": 35.7130775, "lon": 139.6862121}, {"kind": "pub", "ja": "錦山", "d": 325, "oh": "", "lat": 35.7148905, "lon": 139.6855854}, {"kind": "restaurant", "ja": "桃源郷", "d": 329, "oh": "", "lat": 35.7148864, "lon": 139.6855445}, {"kind": "pub", "ja": "", "d": 333, "oh": "", "lat": 35.7148854, "lon": 139.685498}, {"kind": "pub", "ja": "スナック K", "d": 342, "oh": "", "lat": 35.7148776, "lon": 139.6853903}, {"kind": "restaurant", "ja": "まつば", "d": 346, "oh": "", "lat": 35.7148744, "lon": 139.6853562}, {"kind": "restaurant", "ja": "じゃかじゃか", "d": 352, "oh": "", "lat": 35.7114418, "lon": 139.6898543}, {"kind": "convenience", "ja": "セブン-イレブン", "d": 355, "oh": "24/7", "lat": 35.7114042, "lon": 139.6897684}, {"kind": "pub", "ja": "康", "d": 359, "oh": "", "lat": 35.7113321, "lon": 139.6889079}, {"kind": "restaurant", "ja": "Soba Cafe 輝", "d": 362, "oh": "", "lat": 35.711321, "lon": 139.6887033}, {"kind": "restaurant", "ja": "山商", "d": 386, "oh": "", "lat": 35.7110852, "lon": 139.6893088}, {"kind": "restaurant", "ja": "ニューカリカ", "d": 393, "oh": "", "lat": 35.7110392, "lon": 139.6895727}, {"kind": "restaurant", "ja": "木曽路", "d": 395, "oh": "", "lat": 35.7121461, "lon": 139.6859532}, {"kind": "supermarket", "ja": "スズタツ", "d": 406, "oh": "", "lat": 35.716045, "lon": 139.693273}, {"kind": "restaurant", "ja": "児ノ木", "d": 415, "oh": "", "lat": 35.7112566, "lon": 139.6913148}, {"kind": "supermarket", "ja": "みらべる", "d": 419, "oh": "Mo-Su,PH 08:00-01:00", "lat": 35.7124501, "lon": 139.6853167}, {"kind": "restaurant", "ja": "焼肉弁当CAN", "d": 424, "oh": "", "lat": 35.7110862, "lon": 139.6872084}, {"kind": "restaurant", "ja": "手打ちうどん さぬき", "d": 425, "oh": "", "lat": 35.7110647, "lon": 139.6910828}, {"kind": "convenience", "ja": "ローソン", "d": 467, "oh": "", "lat": 35.7155034, "lon": 139.6942028}, {"kind": "convenience", "ja": "セブン-イレブン", "d": 485, "oh": "24/7", "lat": 35.7107074, "lon": 139.6866319}, {"kind": "convenience", "ja": "セブンイレブン", "d": 489, "oh": "24/7", "lat": 35.7117567, "lon": 139.6849919}, {"kind": "convenience", "ja": "セブン-イレブン", "d": 491, "oh": "24/7", "lat": 35.7117667, "lon": 139.6849424}, {"kind": "restaurant", "ja": "ふじやん", "d": 504, "oh": "", "lat": 35.7100747, "lon": 139.6883384}, {"kind": "restaurant", "ja": "ヒマラヤ", "d": 512, "oh": "", "lat": 35.7107912, "lon": 139.6859027}, {"kind": "convenience", "ja": "Lawson", "d": 525, "oh": "24/7", "lat": 35.7150669, "lon": 139.6833831}, {"kind": "restaurant", "ja": "福芳", "d": 525, "oh": "", "lat": 35.710712, "lon": 139.6857901}, {"kind": "supermarket", "ja": "マルエツプチ", "d": 526, "oh": "8:00-23:00", "lat": 35.7166821, "lon": 139.6943664}, {"kind": "restaurant", "ja": "人間ばんざい", "d": 546, "oh": "", "lat": 35.7104823, "lon": 139.6857794}, {"kind": "convenience", "ja": "ファミリーマート", "d": 552, "oh": "", "lat": 35.7108342, "lon": 139.6851215}, {"kind": "convenience", "ja": "セブン-イレブン", "d": 561, "oh": "24/7", "lat": 35.7165249, "lon": 139.6948871}, {"kind": "restaurant", "ja": "かるび焼御殿", "d": 568, "oh": "", "lat": 35.7096262, "lon": 139.6875416}, {"kind": "fast_food", "ja": "マクドナルド", "d": 579, "oh": "24/7", "lat": 35.7105621, "lon": 139.6850489}, {"kind": "restaurant", "ja": "うなぎ 源氏", "d": 586, "oh": "Th-Tu 11:30-14:30,17:00-19:30; We off", "lat": 35.7121098, "lon": 139.6834203}, {"kind": "pub", "ja": "日本海庄屋", "d": 589, "oh": "", "lat": 35.7108703, "lon": 139.684476}, {"kind": "supermarket", "ja": "コープとうきょう", "d": 589, "oh": "", "lat": 35.7151885, "lon": 139.6826857}, {"kind": "restaurant", "ja": "かき沖縄", "d": 594, "oh": "", "lat": 35.7093167, "lon": 139.6879123}, {"kind": "supermarket", "ja": "イオン", "d": 596, "oh": "", "lat": 35.7093598, "lon": 139.6875588}, {"kind": "pub", "ja": "丸屋", "d": 606, "oh": "", "lat": 35.7092765, "lon": 139.6875202}, {"kind": "restaurant", "ja": "夢庵", "d": 606, "oh": "", "lat": 35.7107528, "lon": 139.6843528}, {"kind": "convenience", "ja": "セブン-イレブン", "d": 614, "oh": "24/7", "lat": 35.71061, "lon": 139.6844017}, {"kind": "cafe", "ja": "星乃珈琲店", "d": 616, "oh": "", "lat": 35.7106322, "lon": 139.6843493}, {"kind": "restaurant", "ja": "バーミヤン", "d": 619, "oh": "", "lat": 35.7102308, "lon": 139.684856}, {"kind": "restaurant", "ja": "福臨門", "d": 621, "oh": "11:00-14:30, 17:00-00:00", "lat": 35.7109383, "lon": 139.683926}, {"kind": "restaurant", "ja": "TAKE1", "d": 639, "oh": "", "lat": 35.709022, "lon": 139.687244}, {"kind": "supermarket", "ja": "オリンピック", "d": 641, "oh": "10:00-20:30", "lat": 35.7202835, "lon": 139.6899512}, {"kind": "pub", "ja": "けんちゃん", "d": 644, "oh": "", "lat": 35.7139837, "lon": 139.6820647}, {"kind": "restaurant", "ja": "龍栄", "d": 648, "oh": "", "lat": 35.7150186, "lon": 139.696314}, {"kind": "cafe", "ja": "Cafe Kai Zwei", "d": 648, "oh": "", "lat": 35.7104678, "lon": 139.6840442}, {"kind": "restaurant", "ja": "うどん澄", "d": 650, "oh": "", "lat": 35.7099466, "lon": 139.6847409}, {"kind": "restaurant", "ja": "せりか", "d": 655, "oh": "", "lat": 35.7140598, "lon": 139.6819369}, {"kind": "restaurant", "ja": "BuBu", "d": 655, "oh": "", "lat": 35.7088509, "lon": 139.6873436}, {"kind": "pub", "ja": "あさひや", "d": 655, "oh": "", "lat": 35.7136381, "lon": 139.6819999}, {"kind": "pub", "ja": "養老の瀧", "d": 658, "oh": "17:30-02:00", "lat": 35.7103461, "lon": 139.6840451}, {"kind": "restaurant", "ja": "Hasta Luego", "d": 659, "oh": "", "lat": 35.7088238, "lon": 139.6873084}, {"kind": "fast_food", "ja": "松屋", "d": 661, "oh": "", "lat": 35.7103227, "lon": 139.684032}, {"kind": "restaurant", "ja": "とくちゃん", "d": 668, "oh": "", "lat": 35.7097877, "lon": 139.6846577}, {"kind": "deli", "ja": "からあげ とり多津", "d": 670, "oh": "", "lat": 35.7101308, "lon": 139.6841232}, {"kind": "restaurant", "ja": "新一海南鶏飯", "d": 681, "oh": "", "lat": 35.7099431, "lon": 139.6941307}, {"kind": "restaurant", "ja": "まぐろ屋さん", "d": 687, "oh": "", "lat": 35.710108, "lon": 139.6838911}, {"kind": "supermarket", "ja": "いなげや", "d": 687, "oh": "Su-Sa 09:30-22:00", "lat": 35.7095059, "lon": 139.6935414}, {"kind": "restaurant", "ja": "とみや", "d": 689, "oh": "", "lat": 35.7099877, "lon": 139.6943238}, {"kind": "restaurant", "ja": "ナンカレー", "d": 691, "oh": "", "lat": 35.7100531, "lon": 139.6944318}], "stations": [{"ja": "中井", "operator": "東京都交通局", "d": 260, "walk_m": 508}, {"ja": "中井", "operator": "西武鉄道", "d": 266, "walk_m": 610}, {"ja": "落合", "operator": "東京地下鉄", "d": 523, "walk_m": 667}, {"ja": "下落合", "operator": "西武鉄道", "d": 582, "walk_m": 677}, {"ja": "東中野", "operator": "東京都交通局", "d": 964, "walk_m": 1137}, {"ja": "東中野", "operator": "東日本旅客鉄道", "d": 1002, "walk_m": 1249}, {"ja": "落合南長崎", "operator": "東京都交通局", "d": 1088, "walk_m": 1417}, {"ja": "高田馬場", "operator": "東日本旅客鉄道", "d": 1324, "walk_m": null}, {"ja": "高田馬場", "operator": "西武鉄道", "d": 1345, "walk_m": null}, {"ja": "椎名町", "operator": "西武鉄道", "d": 1420, "walk_m": null}, {"ja": "高田馬場", "operator": "東京地下鉄", "d": 1437, "walk_m": null}]}, "c1": {"items": [{"kind": "cafe", "ja": "Tram", "d": 147, "oh": "", "lat": 35.7445171, "lon": 139.7327866}, {"kind": "convenience", "ja": "セブン-イレブン", "d": 212, "oh": "24/7", "lat": 35.7436275, "lon": 139.7338039}, {"kind": "convenience", "ja": "ファミリーマート", "d": 213, "oh": "", "lat": 35.7462941, "lon": 139.7359959}, {"kind": "supermarket", "ja": "肉のハナマサ", "d": 276, "oh": "", "lat": 35.7467322, "lon": 139.7311506}, {"kind": "restaurant", "ja": "大虎鮨", "d": 340, "oh": "", "lat": 35.7441963, "lon": 139.7372215}, {"kind": "convenience", "ja": "ファミリーマート", "d": 387, "oh": "24/7", "lat": 35.7443152, "lon": 139.7298142}, {"kind": "convenience", "ja": "セブン-イレブン", "d": 414, "oh": "24/7", "lat": 35.7492269, "lon": 139.7343798}, {"kind": "convenience", "ja": "ファミリーマート", "d": 416, "oh": "", "lat": 35.748449, "lon": 139.7309419}, {"kind": "restaurant", "ja": "魚沼", "d": 423, "oh": "", "lat": 35.7492793, "lon": 139.7346191}, {"kind": "supermarket", "ja": "シーズンマート", "d": 472, "oh": "", "lat": 35.7432605, "lon": 139.7382495}, {"kind": "convenience", "ja": "セブン-イレブン", "d": 482, "oh": "", "lat": 35.743627, "lon": 139.7386302}, {"kind": "restaurant", "ja": "しゃぶ辰  單人壽喜燒 刷刷鍋", "d": 488, "oh": "", "lat": 35.7441767, "lon": 139.7286908}, {"kind": "convenience", "ja": "セブン-イレブン", "d": 504, "oh": "24/7", "lat": 35.7442148, "lon": 139.7284879}, {"kind": "convenience", "ja": "ローソン", "d": 505, "oh": "", "lat": 35.7440848, "lon": 139.7285267}, {"kind": "cafe", "ja": "BLUEMAN", "d": 510, "oh": "", "lat": 35.7438501, "lon": 139.7390848}, {"kind": "pub", "ja": "たこ八", "d": 522, "oh": "", "lat": 35.7430905, "lon": 139.7387745}, {"kind": "fast_food", "ja": "マクドナルド", "d": 529, "oh": "", "lat": 35.7432469, "lon": 139.7286895}, {"kind": "convenience", "ja": "ファミリーマート", "d": 534, "oh": "", "lat": 35.7420518, "lon": 139.7297572}, {"kind": "cafe", "ja": "BEYOND Z COFFEE", "d": 566, "oh": "Tu-Su 09:00-18:00", "lat": 35.7406814, "lon": 139.735746}, {"kind": "supermarket", "ja": "コープ", "d": 573, "oh": "", "lat": 35.748945, "lon": 139.7290661}, {"kind": "supermarket", "ja": "まいばすけっと", "d": 590, "oh": "", "lat": 35.7404489, "lon": 139.7319571}, {"kind": "pub", "ja": "スナック アップル", "d": 607, "oh": "", "lat": 35.7469624, "lon": 139.7273392}, {"kind": "supermarket", "ja": "スーパーみらべる", "d": 613, "oh": "", "lat": 35.7439302, "lon": 139.7273325}, {"kind": "restaurant", "ja": "うな正", "d": 642, "oh": "", "lat": 35.7504958, "lon": 139.7374505}, {"kind": "supermarket", "ja": "コープみらい", "d": 653, "oh": "", "lat": 35.7397374, "lon": 139.7326589}], "stations": [{"ja": "西ヶ原四丁目", "operator": "東京都交通局", "d": 134, "walk_m": 197}, {"ja": "滝野川一丁目", "operator": "東京都交通局", "d": 243, "walk_m": 423}, {"ja": "西巣鴨", "operator": "東京都交通局", "d": 513, "walk_m": 684}, {"ja": "新庚申塚", "operator": "東京都交通局", "d": 531, "walk_m": 621}, {"ja": "飛鳥山", "operator": "東京都交通局", "d": 609, "walk_m": 783}, {"ja": "西ケ原", "operator": "東京地下鉄", "d": 755, "walk_m": 1118}, {"ja": "庚申塚", "operator": "東京都交通局", "d": 756, "walk_m": 923}, {"ja": "王子", "operator": "東日本旅客鉄道", "d": 857, "walk_m": 1320}, {"ja": "王子駅前", "operator": "東京都交通局", "d": 896, "walk_m": 1221}, {"ja": "栄町", "operator": "東京都交通局", "d": 968, "walk_m": 1458}, {"ja": "王子", "operator": "東京メトロ", "d": 995, "walk_m": 1405}, {"ja": "上中里", "operator": "東日本旅客鉄道", "d": 1144, "walk_m": 1778}, {"ja": "巣鴨新田", "operator": "東京都交通局", "d": 1242, "walk_m": 1407}, {"ja": "板橋", "operator": "東日本旅客鉄道", "d": 1300, "walk_m": null}, {"ja": "新板橋", "operator": "東京都交通局", "d": 1308, "walk_m": null}, {"ja": "巣鴨", "operator": "東京都交通局", "d": 1365, "walk_m": null}, {"ja": "梶原", "operator": "東京都交通局", "d": 1407, "walk_m": null}, {"ja": "巣鴨", "operator": "東日本旅客鉄道", "d": 1439, "walk_m": null}]}, "c3": {"items": [{"kind": "restaurant", "ja": "とんかつ太郎", "d": 35, "oh": "", "lat": 35.7200589, "lon": 139.6516511}, {"kind": "pub", "ja": "与太呂", "d": 50, "oh": "", "lat": 35.7197698, "lon": 139.6516992}, {"kind": "pub", "ja": "フジヤ", "d": 61, "oh": "", "lat": 35.7198085, "lon": 139.6518693}, {"kind": "bar", "ja": "ワインと日本酒 はとまめ", "d": 61, "oh": "", "lat": 35.7194998, "lon": 139.6512927}, {"kind": "supermarket", "ja": "まいばすけっと", "d": 65, "oh": "", "lat": 35.7194713, "lon": 139.6513851}, {"kind": "restaurant", "ja": "広島風お好み焼き ばある", "d": 78, "oh": "", "lat": 35.7193522, "lon": 139.6513502}, {"kind": "restaurant", "ja": "ぎょうざの満洲", "d": 86, "oh": "", "lat": 35.7197196, "lon": 139.6521251}, {"kind": "pub", "ja": "きさぶろう", "d": 94, "oh": "", "lat": 35.7197217, "lon": 139.6522266}, {"kind": "pub", "ja": "まつもと", "d": 94, "oh": "", "lat": 35.7192508, "lon": 139.6508947}, {"kind": "restaurant", "ja": "あまちゃん", "d": 95, "oh": "", "lat": 35.7192219, "lon": 139.6515518}, {"kind": "restaurant", "ja": "牛繁", "d": 100, "oh": "", "lat": 35.7203523, "lon": 139.6523032}, {"kind": "restaurant", "ja": "香家", "d": 105, "oh": "", "lat": 35.719836, "lon": 139.6523962}, {"kind": "pub", "ja": "すっぴん酒場", "d": 111, "oh": "", "lat": 35.7190461, "lon": 139.6513094}, {"kind": "pub", "ja": "一心鳥", "d": 112, "oh": "", "lat": 35.7190428, "lon": 139.6511478}, {"kind": "restaurant", "ja": "焼肉基順館", "d": 112, "oh": "", "lat": 35.7190493, "lon": 139.6510864}, {"kind": "restaurant", "ja": "次男房", "d": 113, "oh": "", "lat": 35.7201716, "lon": 139.6525026}, {"kind": "convenience", "ja": "ダモア", "d": 115, "oh": "", "lat": 35.7206682, "lon": 139.6522836}, {"kind": "convenience", "ja": "ファミリーマート", "d": 119, "oh": "", "lat": 35.7200346, "lon": 139.6525797}, {"kind": "pub", "ja": "魚民", "d": 119, "oh": "", "lat": 35.7200812, "lon": 139.6525821}, {"kind": "fast_food", "ja": "マクドナルド", "d": 120, "oh": "", "lat": 35.7195773, "lon": 139.6524536}, {"kind": "restaurant", "ja": "焼肉レストラン三宝苑", "d": 124, "oh": "", "lat": 35.7189307, "lon": 139.6513649}, {"kind": "convenience", "ja": "セブン-イレブン", "d": 126, "oh": "Mo-Su,PH 00:00-24:00", "lat": 35.7189089, "lon": 139.6512458}, {"kind": "supermarket", "ja": "サカガミ", "d": 127, "oh": "", "lat": 35.7205028, "lon": 139.6525475}, {"kind": "pub", "ja": "てっぱん523", "d": 127, "oh": "", "lat": 35.7189203, "lon": 139.6510531}, {"kind": "restaurant", "ja": "おおひら", "d": 127, "oh": "", "lat": 35.7189411, "lon": 139.6516319}, {"kind": "pub", "ja": "NEIGHBOR", "d": 128, "oh": "", "lat": 35.7208642, "lon": 139.6522622}, {"kind": "bar", "ja": "串かつ若菜", "d": 131, "oh": "", "lat": 35.7202928, "lon": 139.652675}, {"kind": "restaurant", "ja": "海の丼", "d": 134, "oh": "", "lat": 35.7193014, "lon": 139.6524244}, {"kind": "restaurant", "ja": "トマちゃん", "d": 134, "oh": "", "lat": 35.7195318, "lon": 139.652599}, {"kind": "pub", "ja": "蘭太郎", "d": 134, "oh": "", "lat": 35.7190282, "lon": 139.6504582}, {"kind": "restaurant", "ja": "Raza Dinning and Bar", "d": 140, "oh": "", "lat": 35.719441, "lon": 139.6526158}, {"kind": "restaurant", "ja": "安花里", "d": 140, "oh": "", "lat": 35.718972, "lon": 139.6504413}, {"kind": "pub", "ja": "オキラク酒場", "d": 141, "oh": "", "lat": 35.7190239, "lon": 139.6521786}, {"kind": "restaurant", "ja": "寿司食堂一銀", "d": 150, "oh": "", "lat": 35.7210097, "lon": 139.6524273}, {"kind": "pub", "ja": "晴れ桜", "d": 151, "oh": "", "lat": 35.7200616, "lon": 139.6529351}, {"kind": "restaurant", "ja": "餃子の王将", "d": 152, "oh": "", "lat": 35.7188947, "lon": 139.6521749}, {"kind": "restaurant", "ja": "野方食堂", "d": 156, "oh": "", "lat": 35.7189671, "lon": 139.6523727}, {"kind": "pub", "ja": "まめたい商店", "d": 159, "oh": "", "lat": 35.7211094, "lon": 139.6524455}, {"kind": "fast_food", "ja": "松屋", "d": 163, "oh": "", "lat": 35.718948, "lon": 139.6524569}, {"kind": "pub", "ja": "備長", "d": 165, "oh": "", "lat": 35.721301, "lon": 139.6522377}, {"kind": "restaurant", "ja": "CoCo壱番屋", "d": 170, "oh": "Mo-Su 11:00-01:00", "lat": 35.7190062, "lon": 139.652645}, {"kind": "fast_food", "ja": "吉野家", "d": 174, "oh": "", "lat": 35.7188062, "lon": 139.6524344}, {"kind": "pub", "ja": "まきまき", "d": 181, "oh": "", "lat": 35.718745, "lon": 139.6524658}, {"kind": "pub", "ja": "清瀧", "d": 186, "oh": "", "lat": 35.7186911, "lon": 139.6524695}, {"kind": "restaurant", "ja": "ガスト", "d": 189, "oh": "", "lat": 35.7188548, "lon": 139.6527473}, {"kind": "convenience", "ja": "ファミリーマート", "d": 191, "oh": "24/7", "lat": 35.7188216, "lon": 139.6527468}, {"kind": "pub", "ja": "みつぼし", "d": 193, "oh": "", "lat": 35.7186227, "lon": 139.6524852}, {"kind": "cafe", "ja": "ABU", "d": 196, "oh": "", "lat": 35.7202559, "lon": 139.6534147}, {"kind": "cafe", "ja": "MISTY", "d": 200, "oh": "", "lat": 35.7185441, "lon": 139.6524872}, {"kind": "convenience", "ja": "セブン-イレブン", "d": 203, "oh": "", "lat": 35.7215966, "lon": 139.652439}, {"kind": "restaurant", "ja": "松乃家", "d": 207, "oh": "", "lat": 35.7187841, "lon": 139.6529405}, {"kind": "fast_food", "ja": "松のや", "d": 208, "oh": "", "lat": 35.7187599, "lon": 139.6529352}, {"kind": "restaurant", "ja": "幸楽", "d": 209, "oh": "", "lat": 35.721747, "lon": 139.6522409}, {"kind": "pub", "ja": "庄や", "d": 212, "oh": "", "lat": 35.7187628, "lon": 139.6529942}, {"kind": "supermarket", "ja": "丸正", "d": 223, "oh": "", "lat": 35.7185267, "lon": 139.6528756}, {"kind": "fast_food", "ja": "ちよだ鮨", "d": 231, "oh": "", "lat": 35.7186781, "lon": 139.6531871}, {"kind": "restaurant", "ja": "たん純", "d": 239, "oh": "", "lat": 35.7220143, "lon": 139.6523364}, {"kind": "restaurant", "ja": "とりこ", "d": 242, "oh": "", "lat": 35.7187612, "lon": 139.6534177}, {"kind": "restaurant", "ja": "野方キッチン", "d": 245, "oh": "", "lat": 35.7220671, "lon": 139.6523502}, {"kind": "restaurant", "ja": "じゃぐら", "d": 249, "oh": "", "lat": 35.7186413, "lon": 139.6534068}, {"kind": "restaurant", "ja": "Cicciobello", "d": 253, "oh": "", "lat": 35.7186283, "lon": 139.6534533}, {"kind": "convenience", "ja": "東方物産", "d": 253, "oh": "", "lat": 35.7195734, "lon": 139.6540026}, {"kind": "convenience", "ja": "サンクス", "d": 271, "oh": "", "lat": 35.7210297, "lon": 139.6540012}, {"kind": "restaurant", "ja": "花道庵", "d": 279, "oh": "", "lat": 35.7223559, "lon": 139.6524552}, {"kind": "restaurant", "ja": "おむおむ", "d": 288, "oh": "", "lat": 35.7224404, "lon": 139.6524792}, {"kind": "supermarket", "ja": "まいばすけっと", "d": 294, "oh": "", "lat": 35.7224094, "lon": 139.6527167}, {"kind": "restaurant", "ja": "さ和乃", "d": 303, "oh": "", "lat": 35.7185884, "lon": 139.648429}, {"kind": "restaurant", "ja": "花みずき", "d": 305, "oh": "", "lat": 35.7183971, "lon": 139.6539643}, {"kind": "convenience", "ja": "セブン-イレブン", "d": 312, "oh": "", "lat": 35.7184649, "lon": 139.6541179}, {"kind": "restaurant", "ja": "天若", "d": 324, "oh": "", "lat": 35.7227514, "lon": 139.6526052}, {"kind": "restaurant", "ja": "ほんま門", "d": 332, "oh": "", "lat": 35.7228175, "lon": 139.6526195}, {"kind": "fast_food", "ja": "オリジン弁当", "d": 344, "oh": "", "lat": 35.7228586, "lon": 139.6528337}, {"kind": "restaurant", "ja": "野方餃子", "d": 344, "oh": "", "lat": 35.7230482, "lon": 139.6521666}, {"kind": "convenience", "ja": "ローソンストア100", "d": 360, "oh": "", "lat": 35.7232858, "lon": 139.6511909}, {"kind": "restaurant", "ja": "おぎわら", "d": 370, "oh": "", "lat": 35.7230458, "lon": 139.6530248}, {"kind": "restaurant", "ja": "丼丸", "d": 371, "oh": "", "lat": 35.7232113, "lon": 139.6525657}, {"kind": "restaurant", "ja": "カレーや 満店堂", "d": 372, "oh": "", "lat": 35.7230499, "lon": 139.6530619}, {"kind": "restaurant", "ja": "金角", "d": 374, "oh": "", "lat": 35.72339, "lon": 139.6517006}, {"kind": "restaurant", "ja": "北京", "d": 386, "oh": "", "lat": 35.7235186, "lon": 139.6512874}, {"kind": "restaurant", "ja": "ノトヤ", "d": 386, "oh": "", "lat": 35.7230341, "lon": 139.6534454}, {"kind": "restaurant", "ja": "MOGU MOGU", "d": 389, "oh": "", "lat": 35.7230396, "lon": 139.6534864}, {"kind": "convenience", "ja": "ローソン", "d": 457, "oh": "24/7", "lat": 35.7229444, "lon": 139.6548442}, {"kind": "restaurant", "ja": "デニーズ", "d": 463, "oh": "", "lat": 35.723754, "lon": 139.6489241}, {"kind": "bar", "ja": "orsetto", "d": 475, "oh": "", "lat": 35.7240021, "lon": 139.6492701}, {"kind": "pub", "ja": "美津沢", "d": 477, "oh": "", "lat": 35.7189708, "lon": 139.6461473}, {"kind": "restaurant", "ja": "こけし", "d": 478, "oh": "", "lat": 35.7189993, "lon": 139.6461217}, {"kind": "restaurant", "ja": "MangaSta", "d": 507, "oh": "", "lat": 35.7199802, "lon": 139.6456427}, {"kind": "restaurant", "ja": "鳥八", "d": 520, "oh": "", "lat": 35.719937, "lon": 139.6455033}, {"kind": "restaurant", "ja": "モティマハル", "d": 533, "oh": "", "lat": 35.7200588, "lon": 139.6453585}, {"kind": "pub", "ja": "みいらく", "d": 535, "oh": "", "lat": 35.7201003, "lon": 139.6453394}, {"kind": "supermarket", "ja": "サミット", "d": 540, "oh": "", "lat": 35.7239742, "lon": 139.6477347}, {"kind": "restaurant", "ja": "そば処　かしわや", "d": 564, "oh": "", "lat": 35.7163782, "lon": 139.646943}, {"kind": "pub", "ja": "わたら瀬", "d": 565, "oh": "", "lat": 35.7208781, "lon": 139.6450883}, {"kind": "supermarket", "ja": "まいばすけっと", "d": 574, "oh": "", "lat": 35.7206689, "lon": 139.6449467}, {"kind": "cafe", "ja": "STEP3", "d": 576, "oh": "", "lat": 35.720745, "lon": 139.644935}, {"kind": "cafe", "ja": "MAIN STREET CAFE", "d": 592, "oh": "", "lat": 35.7209169, "lon": 139.6447935}, {"kind": "restaurant", "ja": "や台ずし", "d": 599, "oh": "", "lat": 35.721314, "lon": 139.6448138}, {"kind": "convenience", "ja": "セブン-イレブン", "d": 608, "oh": "", "lat": 35.7155225, "lon": 139.6474853}, {"kind": "convenience", "ja": "ファミリーマート", "d": 619, "oh": "", "lat": 35.7242238, "lon": 139.6467324}, {"kind": "fast_food", "ja": "Mary Burger", "d": 621, "oh": "", "lat": 35.7214089, "lon": 139.6445898}, {"kind": "fast_food", "ja": "BEER DINING", "d": 624, "oh": "", "lat": 35.7213974, "lon": 139.6445528}, {"kind": "pub", "ja": "かっぱ屋", "d": 624, "oh": "", "lat": 35.7215932, "lon": 139.6446129}, {"kind": "restaurant", "ja": "十八番", "d": 637, "oh": "", "lat": 35.7146333, "lon": 139.6535762}, {"kind": "convenience", "ja": "セブン-イレブン", "d": 638, "oh": "24/7", "lat": 35.7215915, "lon": 139.6444536}, {"kind": "supermarket", "ja": "ピーコックストア", "d": 646, "oh": "", "lat": 35.7225933, "lon": 139.6448299}, {"kind": "restaurant", "ja": "アイキッチン", "d": 647, "oh": "", "lat": 35.7219613, "lon": 139.6444966}, {"kind": "restaurant", "ja": "にくじろう", "d": 661, "oh": "", "lat": 35.7220366, "lon": 139.6443638}, {"kind": "fast_food", "ja": "ケンタッキーフライドチキン", "d": 677, "oh": "", "lat": 35.7225986, "lon": 139.6444506}, {"kind": "pub", "ja": "バルめし", "d": 691, "oh": "", "lat": 35.7223704, "lon": 139.6441621}, {"kind": "restaurant", "ja": "とん味", "d": 693, "oh": "", "lat": 35.7227926, "lon": 139.6581468}, {"kind": "supermarket", "ja": "マルエツ", "d": 696, "oh": "", "lat": 35.7228276, "lon": 139.6443589}], "stations": [{"ja": "野方", "operator": "西武鉄道", "d": 173, "walk_m": 237}, {"ja": "都立家政", "operator": "西武鉄道", "d": 651, "walk_m": 826}, {"ja": "鷺ノ宮", "operator": "西武鉄道", "d": 1097, "walk_m": 1366}, {"ja": "沼袋", "operator": "西武鉄道", "d": 1208, "walk_m": 1442}]}, "c4": {"items": [{"kind": "restaurant", "ja": "サイゼリヤ", "d": 147, "oh": "", "lat": 35.7780198, "lon": 139.714599}, {"kind": "supermarket", "ja": "マルエツ", "d": 265, "oh": "", "lat": 35.7773182, "lon": 139.7135549}, {"kind": "convenience", "ja": "ファミリーマート", "d": 279, "oh": "", "lat": 35.7776995, "lon": 139.7178989}, {"kind": "supermarket", "ja": "いまどや", "d": 319, "oh": "", "lat": 35.7817846, "lon": 139.7168528}, {"kind": "cafe", "ja": "ティルーム サンサロ", "d": 328, "oh": "", "lat": 35.7817413, "lon": 139.7171894}, {"kind": "convenience", "ja": "ファミリーマート", "d": 330, "oh": "", "lat": 35.7772532, "lon": 139.7181759}, {"kind": "restaurant", "ja": "ジョナサン", "d": 332, "oh": "24/7", "lat": 35.7795195, "lon": 139.7190477}, {"kind": "fast_food", "ja": "松屋", "d": 336, "oh": "", "lat": 35.7781867, "lon": 139.7189135}, {"kind": "fast_food", "ja": "日高屋", "d": 340, "oh": "Mo-Su 00:00-00:30,11:00-24:00", "lat": 35.7793761, "lon": 139.7191539}, {"kind": "restaurant", "ja": "八幡蕎麦 赤羽屋", "d": 341, "oh": "11:00-20:00; We closed", "lat": 35.781596, "lon": 139.7177208}, {"kind": "convenience", "ja": "ローソン", "d": 352, "oh": "24/7", "lat": 35.7791202, "lon": 139.7192971}, {"kind": "restaurant", "ja": "つけめん屋 赤羽京介", "d": 353, "oh": "", "lat": 35.7773968, "lon": 139.71863}, {"kind": "supermarket", "ja": "ビビオ", "d": 367, "oh": "", "lat": 35.777982, "lon": 139.7191819}, {"kind": "supermarket", "ja": "フジ", "d": 369, "oh": "Mo-Su 10:00-21:00", "lat": 35.7793978, "lon": 139.7194691}, {"kind": "cafe", "ja": "カフェ・ド・クリエ", "d": 372, "oh": "Mo-Su 09:00-21:00", "lat": 35.7800896, "lon": 139.7193573}, {"kind": "restaurant", "ja": "サイゼリヤ", "d": 374, "oh": "", "lat": 35.7777927, "lon": 139.7191733}, {"kind": "pub", "ja": "日本海", "d": 380, "oh": "", "lat": 35.778738, "lon": 139.719573}, {"kind": "cafe", "ja": "ドトールコーヒーショップ", "d": 392, "oh": "Mo-Sa 07:30-22:00; Su,PH 08:00-21:00", "lat": 35.7790472, "lon": 139.7197293}, {"kind": "convenience", "ja": "ファミリーマート", "d": 400, "oh": "", "lat": 35.7780626, "lon": 139.7196057}, {"kind": "fast_food", "ja": "ピザハット", "d": 405, "oh": "", "lat": 35.7759411, "lon": 139.7174524}, {"kind": "supermarket", "ja": "イトーヨーカドー", "d": 415, "oh": "", "lat": 35.7771727, "lon": 139.7192711}, {"kind": "fast_food", "ja": "サブウェイ", "d": 417, "oh": "Mo-Fr 07:00-21:00; Sa-Su,PH 10:00-21:00", "lat": 35.7778167, "lon": 139.7197049}, {"kind": "fast_food", "ja": "ケンタッキーフライドチキン", "d": 421, "oh": "", "lat": 35.7785239, "lon": 139.7199891}, {"kind": "restaurant", "ja": "イタリアンダイニング Dona", "d": 423, "oh": "", "lat": 35.7786973, "lon": 139.7200423}, {"kind": "restaurant", "ja": "", "d": 426, "oh": "", "lat": 35.7777338, "lon": 139.7197678}, {"kind": "cafe", "ja": "スターバックス", "d": 427, "oh": "Mo-Fr 07:00-22:30; Sa-Su,PH 08:00-22:30", "lat": 35.7784413, "lon": 139.7200413}, {"kind": "convenience", "ja": "セブン-イレブン", "d": 428, "oh": "24/7", "lat": 35.7812959, "lon": 139.7193569}, {"kind": "pub", "ja": "麦酒酒場 なかなか", "d": 428, "oh": "Mo off; Tu-Fr 16:00-24:00; Sa-Su 11:30-23:00", "lat": 35.7801697, "lon": 139.719972}, {"kind": "restaurant", "ja": "千葉", "d": 436, "oh": "", "lat": 35.7807863, "lon": 139.7198036}, {"kind": "pub", "ja": "超からあげ番長", "d": 436, "oh": "", "lat": 35.7798409, "lon": 139.7201515}, {"kind": "bar", "ja": "Nico", "d": 438, "oh": "", "lat": 35.7809105, "lon": 139.7197467}, {"kind": "fast_food", "ja": "てんや", "d": 440, "oh": "", "lat": 35.7787889, "lon": 139.7202504}, {"kind": "restaurant", "ja": "川栄", "d": 442, "oh": "11:30-22:00; We off", "lat": 35.7800407, "lon": 139.7201763}, {"kind": "pub", "ja": "もつ焼き 米山", "d": 443, "oh": "", "lat": 35.7819805, "lon": 139.7188733}, {"kind": "supermarket", "ja": "コープみらい　ミニコープ桐ヶ丘店", "d": 443, "oh": "Mo-Su 09:00-21:00", "lat": 35.7794726, "lon": 139.7104902}, {"kind": "restaurant", "ja": "寿", "d": 445, "oh": "", "lat": 35.7788197, "lon": 139.7203014}, {"kind": "pub", "ja": "マリア", "d": 446, "oh": "", "lat": 35.7808012, "lon": 139.7199126}, {"kind": "pub", "ja": "火一刀", "d": 448, "oh": "", "lat": 35.778831, "lon": 139.7203409}, {"kind": "restaurant", "ja": "インド食堂バーワルチー", "d": 450, "oh": "", "lat": 35.779522, "lon": 139.72036}, {"kind": "restaurant", "ja": "インド料理 バーワルチ", "d": 451, "oh": "", "lat": 35.779481, "lon": 139.720372}, {"kind": "pub", "ja": "ミルクホール 三珍亭", "d": 452, "oh": "", "lat": 35.780283, "lon": 139.720211}, {"kind": "restaurant", "ja": "大阪王将", "d": 453, "oh": "", "lat": 35.7788454, "lon": 139.7203983}, {"kind": "pub", "ja": "八起", "d": 454, "oh": "", "lat": 35.780064, "lon": 139.720303}, {"kind": "restaurant", "ja": "チェゴヤ", "d": 462, "oh": "", "lat": 35.7788902, "lon": 139.7205004}, {"kind": "pub", "ja": "赤羽 トロ函 OK横丁", "d": 462, "oh": "", "lat": 35.7797967, "lon": 139.7204509}, {"kind": "bar", "ja": "", "d": 463, "oh": "", "lat": 35.7797266, "lon": 139.7204823}, {"kind": "cafe", "ja": "BECK'S COFFEE SHOP", "d": 463, "oh": "", "lat": 35.7788253, "lon": 139.7205069}, {"kind": "restaurant", "ja": "OK横丁", "d": 464, "oh": "", "lat": 35.780078, "lon": 139.720414}, {"kind": "bar", "ja": "Bar Spoon style", "d": 465, "oh": "", "lat": 35.7819462, "lon": 139.7192461}, {"kind": "convenience", "ja": "セブン-イレブン", "d": 467, "oh": "24/7", "lat": 35.7769626, "lon": 139.71979}, {"kind": "pub", "ja": "まるます家", "d": 467, "oh": "", "lat": 35.779987, "lon": 139.720476}, {"kind": "convenience", "ja": "ローソン", "d": 469, "oh": "", "lat": 35.7808653, "lon": 139.7201594}, {"kind": "pub", "ja": "つぼ八", "d": 478, "oh": "", "lat": 35.779334, "lon": 139.720682}, {"kind": "pub", "ja": "串松", "d": 480, "oh": "", "lat": 35.780708, "lon": 139.720363}, {"kind": "restaurant", "ja": "チャオチャオ", "d": 480, "oh": "", "lat": 35.7797354, "lon": 139.7206686}, {"kind": "restaurant", "ja": "来来軒", "d": 480, "oh": "", "lat": 35.780197, "lon": 139.720565}, {"kind": "pub", "ja": "Wine & Tapas BOTE", "d": 481, "oh": "", "lat": 35.780552, "lon": 139.720445}, {"kind": "restaurant", "ja": "デニーズ", "d": 483, "oh": "", "lat": 35.7789016, "lon": 139.7207298}, {"kind": "cafe", "ja": "コメダ珈琲店", "d": 483, "oh": "", "lat": 35.7793324, "lon": 139.7207468}, {"kind": "restaurant", "ja": "海里(みさと)", "d": 484, "oh": "", "lat": 35.7814528, "lon": 139.719969}, {"kind": "fast_food", "ja": "富士そば", "d": 486, "oh": "", "lat": 35.7793023, "lon": 139.7207759}, {"kind": "fast_food", "ja": "松屋", "d": 488, "oh": "", "lat": 35.7794629, "lon": 139.7207911}, {"kind": "bar", "ja": "フィリピンパブ スティファニー", "d": 488, "oh": "", "lat": 35.7794823, "lon": 139.720792}, {"kind": "pub", "ja": "Bonne Viande", "d": 488, "oh": "", "lat": 35.7810737, "lon": 139.7202734}, {"kind": "restaurant", "ja": "東京チゲ屋", "d": 489, "oh": "", "lat": 35.7798682, "lon": 139.7207403}, {"kind": "bar", "ja": "SHISHAdeTREE", "d": 489, "oh": "", "lat": 35.7800991, "lon": 139.7206911}, {"kind": "restaurant", "ja": "北海道ラーメンひむろ", "d": 490, "oh": "", "lat": 35.7798132, "lon": 139.720772}, {"kind": "fast_food", "ja": "マクドナルド", "d": 492, "oh": "", "lat": 35.7775447, "lon": 139.7204612}, {"kind": "bar", "ja": "Teenage Blue", "d": 492, "oh": "17:00-24:00", "lat": 35.7810448, "lon": 139.7203332}, {"kind": "restaurant", "ja": "串かつ でんがな", "d": 495, "oh": "", "lat": 35.779702, "lon": 139.720839}, {"kind": "restaurant", "ja": "ラーメン 金字塔", "d": 496, "oh": "", "lat": 35.7822639, "lon": 139.7193661}, {"kind": "fast_food", "ja": "丸健水産", "d": 498, "oh": "", "lat": 35.7800304, "lon": 139.7208076}, {"kind": "convenience", "ja": "ファミリーマート", "d": 501, "oh": "", "lat": 35.7796479, "lon": 139.7209198}, {"kind": "pub", "ja": "鉄板酒場 鐡一", "d": 503, "oh": "", "lat": 35.779542, "lon": 139.720954}, {"kind": "convenience", "ja": "ファミリーマート", "d": 505, "oh": "", "lat": 35.7748295, "lon": 139.7169958}, {"kind": "fast_food", "ja": "マクドナルド", "d": 506, "oh": "24/7", "lat": 35.7792983, "lon": 139.7209966}, {"kind": "pub", "ja": "金の蔵", "d": 510, "oh": "", "lat": 35.7793572, "lon": 139.7210419}, {"kind": "supermarket", "ja": "アピレ", "d": 511, "oh": "", "lat": 35.7771204, "lon": 139.7204613}, {"kind": "fast_food", "ja": "冬馬", "d": 512, "oh": "", "lat": 35.7768781, "lon": 139.7203037}, {"kind": "restaurant", "ja": "ろば炭魚", "d": 513, "oh": "", "lat": 35.7807782, "lon": 139.7207294}, {"kind": "pub", "ja": "大阪名物 串かつでんがな", "d": 516, "oh": "", "lat": 35.779553, "lon": 139.721097}, {"kind": "pub", "ja": "大衆酒場のぼせ商店", "d": 519, "oh": "", "lat": 35.779903, "lon": 139.7210764}, {"kind": "restaurant", "ja": "麺 高はし", "d": 525, "oh": "11:00-13:20, 17:20-18:10; Sa, PH 10:20-12:45; Su off", "lat": 35.7809805, "lon": 139.7207642}, {"kind": "pub", "ja": "RETZE", "d": 528, "oh": "Mo-Fr 11:30-23:30; Sa,Su 16:00-23:30", "lat": 35.7795403, "lon": 139.7212301}, {"kind": "restaurant", "ja": "大戸屋", "d": 528, "oh": "", "lat": 35.7792704, "lon": 139.7212452}, {"kind": "pub", "ja": "鳥貴族", "d": 528, "oh": "", "lat": 35.7796444, "lon": 139.721216}, {"kind": "convenience", "ja": "ファミリーマート", "d": 529, "oh": "", "lat": 35.7824459, "lon": 139.7196461}, {"kind": "restaurant", "ja": "安楽亭", "d": 530, "oh": "", "lat": 35.7793359, "lon": 139.7212632}, {"kind": "fast_food", "ja": "かつや", "d": 532, "oh": "", "lat": 35.7792932, "lon": 139.7212852}, {"kind": "cafe", "ja": "昔ながらの喫茶店友路有 赤羽2号店", "d": 533, "oh": "", "lat": 35.7782788, "lon": 139.7211996}, {"kind": "fast_food", "ja": "ミスタードーナツ", "d": 537, "oh": "", "lat": 35.778274, "lon": 139.7212381}, {"kind": "pub", "ja": "かぶら屋", "d": 541, "oh": "", "lat": 35.77948, "lon": 139.721376}, {"kind": "fast_food", "ja": "日高屋", "d": 541, "oh": "", "lat": 35.7782297, "lon": 139.7212738}, {"kind": "restaurant", "ja": "中華料理 吾作", "d": 544, "oh": "", "lat": 35.7826794, "lon": 139.7195976}, {"kind": "cafe", "ja": "梅の木", "d": 545, "oh": "", "lat": 35.7789958, "lon": 139.7214329}, {"kind": "restaurant", "ja": "魚がし寿司", "d": 546, "oh": "", "lat": 35.7763608, "lon": 139.7203504}, {"kind": "fast_food", "ja": "ケンタッキーフライドチキン", "d": 549, "oh": "Mo-Su 10:00-22:00", "lat": 35.779318, "lon": 139.7214764}, {"kind": "pub", "ja": "佐藤商店", "d": 549, "oh": "", "lat": 35.779483, "lon": 139.721461}, {"kind": "restaurant", "ja": "天宝楼菜館", "d": 550, "oh": "", "lat": 35.778025, "lon": 139.721317}, {"kind": "pub", "ja": "白木屋", "d": 561, "oh": "", "lat": 35.7784566, "lon": 139.7215487}, {"kind": "pub", "ja": "魚民", "d": 563, "oh": "", "lat": 35.7784588, "lon": 139.7215668}, {"kind": "cafe", "ja": "梅の木新館", "d": 565, "oh": "", "lat": 35.7781242, "lon": 139.7215143}, {"kind": "fast_food", "ja": "松屋", "d": 566, "oh": "", "lat": 35.7784728, "lon": 139.72161}, {"kind": "restaurant", "ja": "カツキッチン", "d": 569, "oh": "", "lat": 35.7826931, "lon": 139.7199685}, {"kind": "cafe", "ja": "PRONTO", "d": 569, "oh": "", "lat": 35.7777547, "lon": 139.7214555}, {"kind": "restaurant", "ja": "大阪焼肉ホルモンふたご", "d": 571, "oh": "", "lat": 35.7783131, "lon": 139.7216314}, {"kind": "pub", "ja": "名物串カツ 田中", "d": 572, "oh": "", "lat": 35.779491, "lon": 139.721722}, {"kind": "pub", "ja": "鳥貴族", "d": 572, "oh": "", "lat": 35.7787282, "lon": 139.7217105}, {"kind": "bar", "ja": "", "d": 572, "oh": "", "lat": 35.7794398, "lon": 139.7217273}, {"kind": "pub", "ja": "庄や", "d": 576, "oh": "", "lat": 35.777953, "lon": 139.721597}, {"kind": "restaurant", "ja": "炭焼ビストロ HIRAKU", "d": 576, "oh": "", "lat": 35.7794428, "lon": 139.7217681}, {"kind": "convenience", "ja": "ファミリーマート", "d": 577, "oh": "", "lat": 35.7790398, "lon": 139.7217857}, {"kind": "restaurant", "ja": "すし三昧", "d": 577, "oh": "", "lat": 35.7796137, "lon": 139.7217669}, {"kind": "pub", "ja": "博多劇場", "d": 579, "oh": "", "lat": 35.7780368, "lon": 139.721649}, {"kind": "pub", "ja": "吉蔵", "d": 581, "oh": "", "lat": 35.7779561, "lon": 139.7216539}, {"kind": "convenience", "ja": "ファミリーマート", "d": 583, "oh": "", "lat": 35.7793653, "lon": 139.7218504}, {"kind": "pub", "ja": "大庄水産", "d": 584, "oh": "", "lat": 35.777959, "lon": 139.721686}, {"kind": "pub", "ja": "135酒場", "d": 584, "oh": "", "lat": 35.7793929, "lon": 139.7218568}, {"kind": "pub", "ja": "さくら", "d": 593, "oh": "", "lat": 35.7784817, "lon": 139.7219075}, {"kind": "restaurant", "ja": "和", "d": 593, "oh": "", "lat": 35.7784556, "lon": 139.7219052}, {"kind": "pub", "ja": "肉汁餃子のダンダダン", "d": 596, "oh": "", "lat": 35.7779761, "lon": 139.7218329}, {"kind": "pub", "ja": "火の鳥", "d": 598, "oh": "", "lat": 35.778014, "lon": 139.721868}, {"kind": "pub", "ja": "いこい", "d": 600, "oh": "Mo-Sa 11:00-22:00; Su 11:00-21:00", "lat": 35.778317, "lon": 139.721959}, {"kind": "restaurant", "ja": "Masuya", "d": 603, "oh": "", "lat": 35.7772962, "lon": 139.721657}, {"kind": "restaurant", "ja": "とらふぐ亭", "d": 607, "oh": "", "lat": 35.7774913, "lon": 139.7217973}, {"kind": "cafe", "ja": "昔ながらの喫茶店友路有 赤羽本店", "d": 609, "oh": "", "lat": 35.7794319, "lon": 139.72214}, {"kind": "pub", "ja": "白頭山", "d": 610, "oh": "", "lat": 35.777868, "lon": 139.7219614}, {"kind": "fast_food", "ja": "吉野家", "d": 610, "oh": "", "lat": 35.7793922, "lon": 139.7221471}, {"kind": "supermarket", "ja": "アミカ", "d": 613, "oh": "", "lat": 35.7753223, "lon": 139.72025}, {"kind": "fast_food", "ja": "大勝軒", "d": 614, "oh": "", "lat": 35.7783079, "lon": 139.7221144}, {"kind": "fast_food", "ja": "バーガーキング", "d": 614, "oh": "", "lat": 35.77943, "lon": 139.7221873}, {"kind": "restaurant", "ja": "神保町食肉センター", "d": 617, "oh": "", "lat": 35.7782346, "lon": 139.7221305}, {"kind": "fast_food", "ja": "くら寿司", "d": 617, "oh": "", "lat": 35.7790597, "lon": 139.7222278}, {"kind": "convenience", "ja": "デイリーヤマザキ", "d": 622, "oh": "", "lat": 35.7764567, "lon": 139.721416}, {"kind": "fast_food", "ja": "モスバーガー", "d": 624, "oh": "Mo-Sa 07:00-01:00; Su,PH 07:00-23:00", "lat": 35.7773458, "lon": 139.7219261}, {"kind": "cafe", "ja": "baton", "d": 628, "oh": "", "lat": 35.7772946, "lon": 139.7219565}, {"kind": "cafe", "ja": "カスタマカフェ", "d": 629, "oh": "", "lat": 35.777708, "lon": 139.7221197}, {"kind": "pub", "ja": "桜商店", "d": 632, "oh": "", "lat": 35.7776887, "lon": 139.722148}, {"kind": "pub", "ja": "赤羽霊園", "d": 635, "oh": "", "lat": 35.782074, "lon": 139.721451}, {"kind": "restaurant", "ja": "ten", "d": 637, "oh": "", "lat": 35.7771849, "lon": 139.7220105}, {"kind": "pub", "ja": "赤羽 魚一", "d": 637, "oh": "Mo-Sa 17:00-01:00; Su 16:00-24:00", "lat": 35.7832882, "lon": 139.7203063}, {"kind": "convenience", "ja": "ミニストップ", "d": 638, "oh": "", "lat": 35.778551, "lon": 139.7224179}, {"kind": "restaurant", "ja": "自由軒", "d": 638, "oh": "", "lat": 35.7771736, "lon": 139.7220167}, {"kind": "convenience", "ja": "ローソンストア100", "d": 642, "oh": "", "lat": 35.7778516, "lon": 139.7223226}, {"kind": "restaurant", "ja": "友星", "d": 644, "oh": "", "lat": 35.7770837, "lon": 139.7220532}, {"kind": "convenience", "ja": "ローソン", "d": 646, "oh": "", "lat": 35.783582, "lon": 139.7107287}, {"kind": "restaurant", "ja": "亀戸のホルモン青木", "d": 648, "oh": "", "lat": 35.7767353, "lon": 139.7219171}, {"kind": "pub", "ja": "磯丸水産", "d": 650, "oh": "", "lat": 35.7770242, "lon": 139.7220903}, {"kind": "restaurant", "ja": "鑫味城", "d": 650, "oh": "", "lat": 35.7770628, "lon": 139.722109}, {"kind": "restaurant", "ja": "海人", "d": 654, "oh": "", "lat": 35.7772486, "lon": 139.7222415}, {"kind": "pub", "ja": "楽市", "d": 655, "oh": "", "lat": 35.7766592, "lon": 139.721955}, {"kind": "restaurant", "ja": "だん家", "d": 664, "oh": "", "lat": 35.7765473, "lon": 139.7219963}, {"kind": "cafe", "ja": "やなか珈琲店", "d": 664, "oh": "", "lat": 35.7769125, "lon": 139.7221995}, {"kind": "restaurant", "ja": "すし屋銀蔵", "d": 669, "oh": "", "lat": 35.7764725, "lon": 139.722022}, {"kind": "convenience", "ja": "ファミリーマート", "d": 672, "oh": "", "lat": 35.779383, "lon": 139.7228369}, {"kind": "restaurant", "ja": "大地の恵", "d": 673, "oh": "", "lat": 35.7775477, "lon": 139.7225803}, {"kind": "bar", "ja": "", "d": 674, "oh": "", "lat": 35.7818654, "lon": 139.7220919}, {"kind": "pub", "ja": "鍛冶屋文蔵", "d": 676, "oh": "", "lat": 35.7763867, "lon": 139.7220508}, {"kind": "pub", "ja": "いこい支店", "d": 684, "oh": "", "lat": 35.7769394, "lon": 139.7224576}, {"kind": "fast_food", "ja": "すき家", "d": 685, "oh": "24/7", "lat": 35.776282, "lon": 139.722097}, {"kind": "restaurant", "ja": "アジア屋台料理アジアンパーム", "d": 692, "oh": "", "lat": 35.779499, "lon": 139.723051}, {"kind": "convenience", "ja": "セブン-イレブン", "d": 693, "oh": "24/7", "lat": 35.776582, "lon": 139.7223732}, {"kind": "restaurant", "ja": "Bloom", "d": 699, "oh": "Mo-Fr 11:00-15:00, 17:00-23:30; Sa-Su 11:00-23:30", "lat": 35.7826067, "lon": 139.7218794}], "stations": [{"ja": "赤羽", "operator": "東日本旅客鉄道", "d": 495, "walk_m": 851}, {"ja": "赤羽岩淵", "operator": "", "d": 769, "walk_m": 878}, {"ja": "北赤羽", "operator": "東日本旅客鉄道", "d": 1196, "walk_m": 1358}]}, "d2": {"items": [{"kind": "convenience", "ja": "セブン-イレブン", "d": 134, "oh": "", "lat": 35.7627945, "lon": 139.7214449}, {"kind": "fast_food", "ja": "たこ焼き本舗 銀座ジュウ兵衛", "d": 135, "oh": "", "lat": 35.7631719, "lon": 139.7214406}, {"kind": "supermarket", "ja": "みらべる", "d": 142, "oh": "", "lat": 35.7620709, "lon": 139.7217999}, {"kind": "cafe", "ja": "ドトール", "d": 144, "oh": "Mo-Fr 07:30-22:00; Sa-Su,PH 08:00-22:00", "lat": 35.7625939, "lon": 139.7213894}, {"kind": "fast_food", "ja": "タコとハイボール", "d": 147, "oh": "", "lat": 35.7630929, "lon": 139.7212849}, {"kind": "fast_food", "ja": "てこや", "d": 148, "oh": "", "lat": 35.7629469, "lon": 139.721274}, {"kind": "pub", "ja": "立ち飲み 勝", "d": 149, "oh": "", "lat": 35.7631733, "lon": 139.7212768}, {"kind": "supermarket", "ja": "asai", "d": 150, "oh": "", "lat": 35.7624139, "lon": 139.7213946}, {"kind": "pub", "ja": "ひかる屋", "d": 154, "oh": "", "lat": 35.7633375, "lon": 139.7212644}, {"kind": "bar", "ja": "スナックV", "d": 156, "oh": "", "lat": 35.7616245, "lon": 139.722438}, {"kind": "bar", "ja": "五九六三(ゴクローサン)", "d": 157, "oh": "", "lat": 35.7620002, "lon": 139.7216496}, {"kind": "restaurant", "ja": "タイ イサーン", "d": 158, "oh": "", "lat": 35.7615821, "lon": 139.7225198}, {"kind": "restaurant", "ja": "Bisan", "d": 159, "oh": "", "lat": 35.7615939, "lon": 139.7234068}, {"kind": "bar", "ja": "スナック天国", "d": 160, "oh": "", "lat": 35.7615843, "lon": 139.7224427}, {"kind": "pub", "ja": "鮒忠 十条店", "d": 160, "oh": "", "lat": 35.7615359, "lon": 139.7229698}, {"kind": "restaurant", "ja": "和洋食 とんかつの店 じゅん", "d": 160, "oh": "", "lat": 35.7616496, "lon": 139.7236276}, {"kind": "restaurant", "ja": "田や 大眾割烹", "d": 161, "oh": "Tu-Su 16:00-24:00", "lat": 35.7615197, "lon": 139.722878}, {"kind": "supermarket", "ja": "しなのや", "d": 161, "oh": "", "lat": 35.7624692, "lon": 139.7212368}, {"kind": "restaurant", "ja": "竹寿司", "d": 162, "oh": "", "lat": 35.7615174, "lon": 139.722782}, {"kind": "pub", "ja": "江戸屋", "d": 166, "oh": "", "lat": 35.7614918, "lon": 139.7227015}, {"kind": "bar", "ja": "焼酎 創作鉄板料理 一期一会", "d": 167, "oh": "", "lat": 35.7616688, "lon": 139.7238351}, {"kind": "fast_food", "ja": "たこやき いわっち", "d": 169, "oh": "", "lat": 35.761455, "lon": 139.7229228}, {"kind": "restaurant", "ja": "楊", "d": 172, "oh": "", "lat": 35.7614494, "lon": 139.722547}, {"kind": "restaurant", "ja": "ベストキッチン", "d": 172, "oh": "", "lat": 35.7614289, "lon": 139.7228149}, {"kind": "pub", "ja": "日野屋", "d": 173, "oh": "", "lat": 35.7614189, "lon": 139.7227525}, {"kind": "cafe", "ja": "アルカード", "d": 173, "oh": "", "lat": 35.7615554, "lon": 139.7237114}, {"kind": "restaurant", "ja": "甘蘭牛肉麺", "d": 173, "oh": "", "lat": 35.762053, "lon": 139.7213639}, {"kind": "restaurant", "ja": "馬ござる", "d": 174, "oh": "", "lat": 35.7614118, "lon": 139.7227257}, {"kind": "pub", "ja": "でんがな", "d": 176, "oh": "", "lat": 35.7614341, "lon": 139.72244}, {"kind": "bar", "ja": "CUE TIME", "d": 176, "oh": "", "lat": 35.7615625, "lon": 139.7237925}, {"kind": "pub", "ja": "フィリピンバー スイートハート", "d": 177, "oh": "", "lat": 35.7614405, "lon": 139.7223918}, {"kind": "restaurant", "ja": "中華料理シャーミー", "d": 177, "oh": "", "lat": 35.7642389, "lon": 139.7241059}, {"kind": "restaurant", "ja": "牛繁 十条店", "d": 177, "oh": "", "lat": 35.7618939, "lon": 139.7214649}, {"kind": "restaurant", "ja": "うなぎ 和孝", "d": 180, "oh": "", "lat": 35.7638938, "lon": 139.7212693}, {"kind": "restaurant", "ja": "桃や", "d": 181, "oh": "", "lat": 35.7642485, "lon": 139.7241516}, {"kind": "pub", "ja": "華", "d": 183, "oh": "", "lat": 35.761328, "lon": 139.722721}, {"kind": "restaurant", "ja": "川忠", "d": 183, "oh": "", "lat": 35.7615984, "lon": 139.7218003}, {"kind": "restaurant", "ja": "そば 越後屋", "d": 184, "oh": "", "lat": 35.7614303, "lon": 139.7221765}, {"kind": "pub", "ja": "温", "d": 185, "oh": "", "lat": 35.7614757, "lon": 139.7220249}, {"kind": "bar", "ja": "BAR HTMC", "d": 185, "oh": "", "lat": 35.76159, "lon": 139.7240524}, {"kind": "restaurant", "ja": "東秀", "d": 185, "oh": "Mo-Fr 11:00-23:00; Sa-Su 11:00-22:30", "lat": 35.7620339, "lon": 139.7212116}, {"kind": "pub", "ja": "串八珍", "d": 186, "oh": "", "lat": 35.7614534, "lon": 139.7220545}, {"kind": "pub", "ja": "風来坊", "d": 188, "oh": "", "lat": 35.7614608, "lon": 139.7219666}, {"kind": "restaurant", "ja": "ホルモン十条タンセイ", "d": 189, "oh": "Mo-Fr 17:00-23:00; Sa-Su,PH 12:00-14:30,16:00-23:00", "lat": 35.7640081, "lon": 139.7212522}, {"kind": "restaurant", "ja": "博多ラーメン 一心堂", "d": 191, "oh": "", "lat": 35.761439, "lon": 139.7219619}, {"kind": "cafe", "ja": "カラオケ ひまわり", "d": 194, "oh": "", "lat": 35.7643984, "lon": 139.7216702}, {"kind": "fast_food", "ja": "ちよだ鮨", "d": 194, "oh": "", "lat": 35.7619012, "lon": 139.7212106}, {"kind": "restaurant", "ja": "桂園", "d": 195, "oh": "", "lat": 35.7614768, "lon": 139.7217852}, {"kind": "convenience", "ja": "ファミリーマート", "d": 198, "oh": "24/7", "lat": 35.7641302, "lon": 139.7212531}, {"kind": "restaurant", "ja": "焼肉 山河", "d": 198, "oh": "", "lat": 35.7644088, "lon": 139.7216085}, {"kind": "restaurant", "ja": "や台ずし", "d": 198, "oh": "", "lat": 35.7613295, "lon": 139.7220685}, {"kind": "pub", "ja": "居酒屋 源", "d": 199, "oh": "", "lat": 35.7643756, "lon": 139.7215482}, {"kind": "restaurant", "ja": "千成亭", "d": 200, "oh": "", "lat": 35.7643039, "lon": 139.7244067}, {"kind": "restaurant", "ja": "骨肉茶", "d": 201, "oh": "", "lat": 35.7613615, "lon": 139.7218922}, {"kind": "pub", "ja": "中華居酒屋 龍虎", "d": 201, "oh": "", "lat": 35.7615527, "lon": 139.7215301}, {"kind": "restaurant", "ja": "香港亭", "d": 202, "oh": "", "lat": 35.7613215, "lon": 139.7219814}, {"kind": "restaurant", "ja": "お好み焼き EDWARD", "d": 204, "oh": "", "lat": 35.7643952, "lon": 139.7214905}, {"kind": "cafe", "ja": "Cafe Restrant KIRIN", "d": 204, "oh": "", "lat": 35.7616273, "lon": 139.7244507}, {"kind": "bar", "ja": "晩杯屋", "d": 204, "oh": "", "lat": 35.7613489, "lon": 139.7218442}, {"kind": "supermarket", "ja": "スーパーまいにち", "d": 205, "oh": "", "lat": 35.761504, "lon": 139.721534}, {"kind": "restaurant", "ja": "京十苑", "d": 206, "oh": "", "lat": 35.7616206, "lon": 139.7213555}, {"kind": "restaurant", "ja": "家庭料理かなもり", "d": 208, "oh": "", "lat": 35.761717, "lon": 139.7246247}, {"kind": "convenience", "ja": "ローソンストア100", "d": 208, "oh": "", "lat": 35.7640315, "lon": 139.7210192}, {"kind": "bar", "ja": "じゃじゃ馬", "d": 209, "oh": "", "lat": 35.7615836, "lon": 139.7213568}, {"kind": "pub", "ja": "やきとり 神ちゃん", "d": 210, "oh": "", "lat": 35.7611212, "lon": 139.7224528}, {"kind": "pub", "ja": "居酒屋 お効楽や", "d": 211, "oh": "", "lat": 35.761266, "lon": 139.7218915}, {"kind": "supermarket", "ja": "まいばすけっと", "d": 214, "oh": "", "lat": 35.7613304, "lon": 139.7216759}, {"kind": "convenience", "ja": "ファミリーマート", "d": 215, "oh": "", "lat": 35.7611418, "lon": 139.722146}, {"kind": "bar", "ja": "ALBIONS' BAR", "d": 219, "oh": "", "lat": 35.764381, "lon": 139.7212203}, {"kind": "restaurant", "ja": "きゃべつはうす", "d": 221, "oh": "", "lat": 35.7618389, "lon": 139.7249251}, {"kind": "fast_food", "ja": "日高屋", "d": 221, "oh": "", "lat": 35.7615239, "lon": 139.7212288}, {"kind": "supermarket", "ja": "激安本舗", "d": 222, "oh": "", "lat": 35.7644197, "lon": 139.7212196}, {"kind": "pub", "ja": "キッチン＆バー 和", "d": 223, "oh": "", "lat": 35.7618465, "lon": 139.7249606}, {"kind": "fast_food", "ja": "富士そば", "d": 225, "oh": "", "lat": 35.7614597, "lon": 139.7212451}, {"kind": "convenience", "ja": "セブン-イレブン", "d": 226, "oh": "", "lat": 35.7644893, "lon": 139.7245785}, {"kind": "pub", "ja": "Dinner BarG Collection", "d": 227, "oh": "", "lat": 35.7614268, "lon": 139.7212578}, {"kind": "cafe", "ja": "サンマルクカフェ", "d": 228, "oh": "Mo-Su 07:30-22:00", "lat": 35.7612927, "lon": 139.7214565}, {"kind": "restaurant", "ja": "焼鳥 たなべ", "d": 228, "oh": "", "lat": 35.7616985, "lon": 139.7248949}, {"kind": "restaurant", "ja": "カレーの虎", "d": 231, "oh": "", "lat": 35.7614208, "lon": 139.7212073}, {"kind": "cafe", "ja": "梅の木", "d": 234, "oh": "", "lat": 35.7613551, "lon": 139.7212583}, {"kind": "cafe", "ja": "Cafe space 10J", "d": 236, "oh": "", "lat": 35.761784, "lon": 139.7250793}, {"kind": "pub", "ja": "ささやん", "d": 236, "oh": "", "lat": 35.7619146, "lon": 139.7251846}, {"kind": "bar", "ja": "焼き鳥串一", "d": 248, "oh": "", "lat": 35.761144, "lon": 139.7213321}, {"kind": "convenience", "ja": "ローソン", "d": 253, "oh": "", "lat": 35.7608738, "lon": 139.7218302}, {"kind": "pub", "ja": "鳥貴族", "d": 254, "oh": "", "lat": 35.7609683, "lon": 139.721552}, {"kind": "fast_food", "ja": "てんや", "d": 255, "oh": "", "lat": 35.7608797, "lon": 139.7217402}, {"kind": "fast_food", "ja": "マクドナルド", "d": 257, "oh": "", "lat": 35.7608959, "lon": 139.7216605}, {"kind": "fast_food", "ja": "かっぱ寿司", "d": 261, "oh": "", "lat": 35.7618362, "lon": 139.7254387}, {"kind": "restaurant", "ja": "KAMA KAMA", "d": 266, "oh": "", "lat": 35.7619454, "lon": 139.7255702}, {"kind": "cafe", "ja": "ボニーカフェ", "d": 271, "oh": "", "lat": 35.7615233, "lon": 139.7205021}, {"kind": "restaurant", "ja": "みのや", "d": 275, "oh": "", "lat": 35.7647239, "lon": 139.7250611}, {"kind": "restaurant", "ja": "カルビヤ", "d": 276, "oh": "", "lat": 35.7614825, "lon": 139.7204686}, {"kind": "pub", "ja": "気楽", "d": 277, "oh": "", "lat": 35.7608818, "lon": 139.7212444}, {"kind": "pub", "ja": "加賀屋", "d": 285, "oh": "", "lat": 35.7616196, "lon": 139.7202285}, {"kind": "restaurant", "ja": "かわなみ鮨", "d": 289, "oh": "", "lat": 35.7615445, "lon": 139.7202279}, {"kind": "restaurant", "ja": "", "d": 294, "oh": "", "lat": 35.7647754, "lon": 139.7252956}, {"kind": "pub", "ja": "ニュー加賀屋", "d": 295, "oh": "", "lat": 35.7647988, "lon": 139.7252807}, {"kind": "restaurant", "ja": "縁", "d": 296, "oh": "", "lat": 35.7616148, "lon": 139.7200824}, {"kind": "restaurant", "ja": "焼鳥どん 東十条店", "d": 298, "oh": "", "lat": 35.7646871, "lon": 139.7254477}, {"kind": "restaurant", "ja": "焼肉 麻布", "d": 314, "oh": "", "lat": 35.7616271, "lon": 139.7198557}, {"kind": "restaurant", "ja": "ノンラー", "d": 319, "oh": "", "lat": 35.7615359, "lon": 139.719849}, {"kind": "pub", "ja": "もつ焼 碁えん", "d": 320, "oh": "", "lat": 35.76163, "lon": 139.7197773}, {"kind": "restaurant", "ja": "貴", "d": 324, "oh": "", "lat": 35.7616305, "lon": 139.7197213}, {"kind": "bar", "ja": "たぬき", "d": 329, "oh": "", "lat": 35.764797, "lon": 139.7257876}, {"kind": "pub", "ja": "ほろ酔い", "d": 331, "oh": "", "lat": 35.7649413, "lon": 139.7256616}, {"kind": "restaurant", "ja": "いつものところ", "d": 343, "oh": "", "lat": 35.7615565, "lon": 139.7195298}, {"kind": "pub", "ja": "たかしろ", "d": 349, "oh": "", "lat": 35.761556, "lon": 139.7194596}, {"kind": "restaurant", "ja": "ニュージュンタラ", "d": 350, "oh": "", "lat": 35.7616349, "lon": 139.7193947}, {"kind": "restaurant", "ja": "吉良亭", "d": 355, "oh": "", "lat": 35.7656798, "lon": 139.720821}, {"kind": "supermarket", "ja": "The Bengal Super Mart", "d": 358, "oh": "", "lat": 35.762367, "lon": 139.7268092}, {"kind": "restaurant", "ja": "明かり富士", "d": 360, "oh": "", "lat": 35.7657149, "lon": 139.7207985}, {"kind": "pub", "ja": "パブ倶留夢", "d": 368, "oh": "", "lat": 35.7616849, "lon": 139.719157}, {"kind": "pub", "ja": "くるくる", "d": 377, "oh": "", "lat": 35.7624605, "lon": 139.7270386}, {"kind": "restaurant", "ja": "雨ニモマケズ", "d": 382, "oh": "", "lat": 35.7615576, "lon": 139.719049}, {"kind": "convenience", "ja": "セブン-イレブン", "d": 384, "oh": "24/7", "lat": 35.7622351, "lon": 139.7270754}, {"kind": "pub", "ja": "小料理 馬酔木", "d": 386, "oh": "", "lat": 35.7614782, "lon": 139.7190504}, {"kind": "cafe", "ja": "ドトールコーヒーショップ", "d": 393, "oh": "Mo-Fr 07:00-20:00; Sa 07:00-19:00; Su,PH 08:00-19:00", "lat": 35.7594564, "lon": 139.7224416}, {"kind": "restaurant", "ja": "餃子の王将", "d": 394, "oh": "", "lat": 35.7599247, "lon": 139.7206889}, {"kind": "restaurant", "ja": "蕎縁 まつ屋", "d": 395, "oh": "", "lat": 35.7594343, "lon": 139.7225322}, {"kind": "restaurant", "ja": "讃岐うどん いわい", "d": 396, "oh": "", "lat": 35.7615456, "lon": 139.7188948}, {"kind": "restaurant", "ja": "ようがんや", "d": 399, "oh": "", "lat": 35.7622716, "lon": 139.7272514}, {"kind": "restaurant", "ja": "炭火串焼 曙鶏", "d": 400, "oh": "", "lat": 35.7623988, "lon": 139.7272914}, {"kind": "convenience", "ja": "ファミリーマート", "d": 410, "oh": "", "lat": 35.7662429, "lon": 139.7208247}, {"kind": "cafe", "ja": "Yoshi's Cafe", "d": 412, "oh": "", "lat": 35.7604617, "lon": 139.7195518}, {"kind": "restaurant", "ja": "大吉繁店", "d": 416, "oh": "", "lat": 35.7592942, "lon": 139.7220636}, {"kind": "restaurant", "ja": "野々家", "d": 418, "oh": "", "lat": 35.7592644, "lon": 139.7221624}, {"kind": "convenience", "ja": "ファミリーマート", "d": 420, "oh": "", "lat": 35.7592007, "lon": 139.7226138}, {"kind": "restaurant", "ja": "鷄笑本店", "d": 421, "oh": "", "lat": 35.7615391, "lon": 139.7185931}, {"kind": "cafe", "ja": "リトルコ", "d": 423, "oh": "", "lat": 35.7616213, "lon": 139.718524}, {"kind": "pub", "ja": "カラオケ スナック ゆき", "d": 423, "oh": "", "lat": 35.7667205, "lon": 139.7236967}, {"kind": "restaurant", "ja": "麺屋 力", "d": 425, "oh": "", "lat": 35.7612213, "lon": 139.7271051}, {"kind": "bar", "ja": "Beer++", "d": 425, "oh": "", "lat": 35.7592037, "lon": 139.7221467}, {"kind": "restaurant", "ja": "魚丼屋 聴家", "d": 434, "oh": "", "lat": 35.7652475, "lon": 139.7268185}, {"kind": "bar", "ja": "Prima", "d": 438, "oh": "", "lat": 35.761609, "lon": 139.718356}, {"kind": "pub", "ja": "ふうりんそう", "d": 439, "oh": "", "lat": 35.761633, "lon": 139.7183399}, {"kind": "convenience", "ja": "ファミリーマート", "d": 442, "oh": "", "lat": 35.7591472, "lon": 139.7242491}, {"kind": "supermarket", "ja": "OK", "d": 443, "oh": "", "lat": 35.7654606, "lon": 139.7190786}, {"kind": "restaurant", "ja": "らあめん花月嵐", "d": 446, "oh": "", "lat": 35.7654201, "lon": 139.7268253}, {"kind": "fast_food", "ja": "たこ焼き", "d": 447, "oh": "", "lat": 35.7652134, "lon": 139.7270201}, {"kind": "pub", "ja": "しちりん炭火焼 鉄人", "d": 448, "oh": "", "lat": 35.765306, "lon": 139.726957}, {"kind": "pub", "ja": "あい", "d": 449, "oh": "", "lat": 35.7656448, "lon": 139.7266433}, {"kind": "pub", "ja": "かぶら屋", "d": 450, "oh": "", "lat": 35.7651863, "lon": 139.727082}, {"kind": "pub", "ja": "友", "d": 453, "oh": "", "lat": 35.7656572, "lon": 139.7266813}, {"kind": "fast_food", "ja": "富士そば", "d": 454, "oh": "", "lat": 35.7653252, "lon": 139.7270288}, {"kind": "pub", "ja": "水源", "d": 459, "oh": "", "lat": 35.7656805, "lon": 139.7267442}, {"kind": "pub", "ja": "どん八", "d": 467, "oh": "", "lat": 35.7651689, "lon": 139.7273216}, {"kind": "restaurant", "ja": "とんかつ やす平", "d": 473, "oh": "", "lat": 35.7656749, "lon": 139.7269602}, {"kind": "restaurant", "ja": "花寿司", "d": 473, "oh": "", "lat": 35.7656346, "lon": 139.7269937}, {"kind": "restaurant", "ja": "四川刀削麺", "d": 473, "oh": "", "lat": 35.7657478, "lon": 139.7268898}, {"kind": "pub", "ja": "杯一", "d": 477, "oh": "", "lat": 35.7658446, "lon": 139.7268302}, {"kind": "restaurant", "ja": "CAPTAIN Cow", "d": 484, "oh": "Mo-Fr 17:30-23:00, Sa-Su 18:00-24:00", "lat": 35.761495, "lon": 139.7178655}, {"kind": "pub", "ja": "龍馬", "d": 487, "oh": "", "lat": 35.7657881, "lon": 139.7270497}, {"kind": "restaurant", "ja": "土鍋・大餃子", "d": 487, "oh": "", "lat": 35.7647016, "lon": 139.727866}, {"kind": "convenience", "ja": "セブン-イレブン", "d": 489, "oh": "24/7", "lat": 35.7609993, "lon": 139.7180692}, {"kind": "restaurant", "ja": "ひだ", "d": 490, "oh": "", "lat": 35.7615037, "lon": 139.7177904}, {"kind": "pub", "ja": "もめん", "d": 492, "oh": "", "lat": 35.7659216, "lon": 139.7269762}, {"kind": "bar", "ja": "キッチンバル伸", "d": 496, "oh": "", "lat": 35.7614956, "lon": 139.7177207}, {"kind": "fast_food", "ja": "日高屋", "d": 498, "oh": "", "lat": 35.7654916, "lon": 139.7274773}, {"kind": "restaurant", "ja": "魚角", "d": 504, "oh": "", "lat": 35.7655235, "lon": 139.7275298}, {"kind": "pub", "ja": "かすみそう", "d": 504, "oh": "", "lat": 35.7662522, "lon": 139.7267574}, {"kind": "fast_food", "ja": "松屋", "d": 512, "oh": "24/7", "lat": 35.7657572, "lon": 139.7274251}, {"kind": "convenience", "ja": "ローソン", "d": 519, "oh": "", "lat": 35.7649529, "lon": 139.7281192}, {"kind": "restaurant", "ja": "NoaNop", "d": 520, "oh": "", "lat": 35.7651082, "lon": 139.7280329}, {"kind": "restaurant", "ja": "中華　あかしや", "d": 521, "oh": "", "lat": 35.7656311, "lon": 139.7276682}, {"kind": "pub", "ja": "いーぐる", "d": 525, "oh": "", "lat": 35.7653732, "lon": 139.7279232}, {"kind": "restaurant", "ja": "つち活", "d": 527, "oh": "", "lat": 35.7628978, "lon": 139.7287545}, {"kind": "supermarket", "ja": "みらべる", "d": 528, "oh": "", "lat": 35.7659605, "lon": 139.7274618}, {"kind": "fast_food", "ja": "スシロー", "d": 529, "oh": "", "lat": 35.7658098, "lon": 139.727622}, {"kind": "fast_food", "ja": "ロッテリア", "d": 540, "oh": "", "lat": 35.7657173, "lon": 139.727852}, {"kind": "fast_food", "ja": "ひらお", "d": 545, "oh": "", "lat": 35.7662608, "lon": 139.7273908}, {"kind": "restaurant", "ja": "温野菜", "d": 549, "oh": "", "lat": 35.7663814, "lon": 139.7273049}, {"kind": "convenience", "ja": "セブン-イレブン", "d": 550, "oh": "", "lat": 35.7640672, "lon": 139.7288547}, {"kind": "convenience", "ja": "ローソンストア100", "d": 551, "oh": "", "lat": 35.7616755, "lon": 139.7170159}, {"kind": "restaurant", "ja": "グリケン", "d": 552, "oh": "", "lat": 35.7660673, "lon": 139.7276875}, {"kind": "pub", "ja": "北洋", "d": 553, "oh": "", "lat": 35.7661622, "lon": 139.7276125}, {"kind": "restaurant", "ja": "絆", "d": 560, "oh": "", "lat": 35.766328, "lon": 139.7275447}, {"kind": "pub", "ja": "ゼロワン", "d": 561, "oh": "", "lat": 35.7659552, "lon": 139.7279305}, {"kind": "restaurant", "ja": "えび豚骨", "d": 562, "oh": "", "lat": 35.76582, "lon": 139.7280619}, {"kind": "restaurant", "ja": "魚料理 泉屋", "d": 562, "oh": "", "lat": 35.7663626, "lon": 139.7275255}, {"kind": "restaurant", "ja": "ゾアヨ", "d": 563, "oh": "", "lat": 35.7636642, "lon": 139.7290915}, {"kind": "restaurant", "ja": "牛角", "d": 564, "oh": "", "lat": 35.7664531, "lon": 139.7274589}, {"kind": "convenience", "ja": "セブン-イレブン", "d": 570, "oh": "24/7", "lat": 35.7665308, "lon": 139.7274591}, {"kind": "fast_food", "ja": "ケンタッキーフライドチキン", "d": 571, "oh": "", "lat": 35.7658488, "lon": 139.7281529}, {"kind": "cafe", "ja": "ドトールコーヒーショップ", "d": 578, "oh": "Mo-Fr 07:00-21:00; Sa-Su,PH 07:30-21:00", "lat": 35.7660087, "lon": 139.7281166}, {"kind": "pub", "ja": "たんぽぽ", "d": 580, "oh": "", "lat": 35.7664442, "lon": 139.7277077}, {"kind": "pub", "ja": "金未来", "d": 583, "oh": "", "lat": 35.7662612, "lon": 139.7279376}, {"kind": "pub", "ja": "山ぼうし", "d": 583, "oh": "", "lat": 35.7665685, "lon": 139.7276193}, {"kind": "cafe", "ja": "E’PLONTO", "d": 588, "oh": "", "lat": 35.7659203, "lon": 139.7283154}, {"kind": "restaurant", "ja": "中村屋", "d": 588, "oh": "", "lat": 35.7645612, "lon": 139.7166917}, {"kind": "pub", "ja": "酒だる", "d": 588, "oh": "", "lat": 35.7628365, "lon": 139.7294249}, {"kind": "pub", "ja": "ゆうこ", "d": 588, "oh": "", "lat": 35.766272, "lon": 139.7280054}, {"kind": "convenience", "ja": "Lawson", "d": 592, "oh": "", "lat": 35.7660767, "lon": 139.7282342}, {"kind": "restaurant", "ja": "東十条シャーピン", "d": 596, "oh": "", "lat": 35.765874, "lon": 139.7284625}, {"kind": "fast_food", "ja": "すき家", "d": 597, "oh": "", "lat": 35.765967, "lon": 139.728404}, {"kind": "restaurant", "ja": "cafe&eatery pan", "d": 597, "oh": "Tu-Su 11:00-19:00", "lat": 35.7630514, "lon": 139.7295302}, {"kind": "pub", "ja": "東十条4丁目", "d": 598, "oh": "", "lat": 35.7668514, "lon": 139.7275032}, {"kind": "cafe", "ja": "べにすずめ 喫茶", "d": 599, "oh": "", "lat": 35.7671579, "lon": 139.7270832}, {"kind": "pub", "ja": "むろ野", "d": 599, "oh": "", "lat": 35.767193, "lon": 139.7270397}, {"kind": "pub", "ja": "swiing pub synphony", "d": 601, "oh": "", "lat": 35.7626268, "lon": 139.7295568}, {"kind": "pub", "ja": "居酒屋くまちゃん", "d": 604, "oh": "", "lat": 35.7661989, "lon": 139.7282926}, {"kind": "pub", "ja": "sono", "d": 607, "oh": "", "lat": 35.7628089, "lon": 139.7296354}, {"kind": "pub", "ja": "", "d": 611, "oh": "", "lat": 35.7625005, "lon": 139.729664}, {"kind": "convenience", "ja": "ローソン", "d": 612, "oh": "24/7", "lat": 35.7632506, "lon": 139.7296886}, {"kind": "pub", "ja": "もつやき新潟屋", "d": 621, "oh": "Mo-Fr 16:00-21:00", "lat": 35.7635013, "lon": 139.7297632}, {"kind": "pub", "ja": "華", "d": 621, "oh": "", "lat": 35.7669703, "lon": 139.7277204}, {"kind": "restaurant", "ja": "きつね", "d": 625, "oh": "", "lat": 35.7661167, "lon": 139.7286534}, {"kind": "restaurant", "ja": "自由軒", "d": 625, "oh": "", "lat": 35.7663888, "lon": 139.7284075}, {"kind": "fast_food", "ja": "タコとハイボール", "d": 628, "oh": "", "lat": 35.7661008, "lon": 139.7287095}, {"kind": "restaurant", "ja": "暫", "d": 631, "oh": "", "lat": 35.7665529, "lon": 139.7283292}, {"kind": "pub", "ja": "いさみ", "d": 631, "oh": "", "lat": 35.7623938, "lon": 139.7298652}, {"kind": "restaurant", "ja": "そば処", "d": 634, "oh": "", "lat": 35.763285, "lon": 139.72993}, {"kind": "restaurant", "ja": "マドゥ バラ", "d": 637, "oh": "", "lat": 35.7662685, "lon": 139.7286876}, {"kind": "restaurant", "ja": "やきとん埼玉屋", "d": 642, "oh": "", "lat": 35.7631655, "lon": 139.7300238}, {"kind": "fast_food", "ja": "飛葉", "d": 655, "oh": "", "lat": 35.7672362, "lon": 139.7279157}, {"kind": "restaurant", "ja": "和久", "d": 659, "oh": "", "lat": 35.762018, "lon": 139.7301238}, {"kind": "fast_food", "ja": "ひらお", "d": 660, "oh": "", "lat": 35.7662553, "lon": 139.7289986}, {"kind": "convenience", "ja": "ファミリーマート", "d": 674, "oh": "", "lat": 35.762015, "lon": 139.7155305}, {"kind": "restaurant", "ja": "浜新", "d": 686, "oh": "", "lat": 35.7666982, "lon": 139.7289681}, {"kind": "fast_food", "ja": "モスバーガー", "d": 690, "oh": "", "lat": 35.7663916, "lon": 139.729291}, {"kind": "convenience", "ja": "ローソンストア100", "d": 696, "oh": "", "lat": 35.7664127, "lon": 139.7293577}, {"kind": "fast_food", "ja": "麺処ほん田", "d": 697, "oh": "", "lat": 35.762747, "lon": 139.730628}, {"kind": "pub", "ja": "フラワー", "d": 700, "oh": "", "lat": 35.7680525, "lon": 139.7274849}], "stations": [{"ja": "十条", "operator": "東日本旅客鉄道", "d": 334, "walk_m": 404}, {"ja": "東十条", "operator": "東日本旅客鉄道", "d": 373, "walk_m": 672}, {"ja": "王子神谷", "operator": "東京地下鉄", "d": 1178, "walk_m": 1542}]}};
+
+const LINES = {
+  seibu:['西武新宿線','--line-seibu'], oedo:['都營大江戶線','--line-oedo'], tozai:['東西線','--line-tozai'],
+  marunouchi:['丸之內線','--line-marunouchi'], tojo:['東武東上線','--line-tojo'], fukutoshin:['副都心線','--line-fukutoshin'],
+  yurakucho:['有樂町線','--line-yurakucho'], yamanote:['JR 山手線','--line-yamanote'],
+  mita:['都營三田線','--line-mita'], saikyo:['JR 埼京線','--line-saikyo'], arakawa:['都電荒川線','--line-arakawa'], namboku:['南北線','--line-namboku'], keihin:['JR 京濱東北線','--line-keihin'], bus:['巴士','--line-bus']
+};
+
+const STAYS = [
+ {
+  id:'b2', no:'②', name:'Erin cort Nibankan', jp:'エリンコート弐番館', area:'新宿區 上落合', booked:false,
+  src:'Booking.com', url:'https://www.booking.com/hotel/jp/erin-cort-nibankan.zh-tw.html?checkin=2026-11-19&checkout=2026-11-22&group_adults=7',
+  lat:35.7145574, lng:139.6891632, addr:'東京都新宿區上落合（中井站南側）',
+  price:23584, fee:4649, rating:'9.5', ratingMax:10, reviews:4,
+  size:116, floors:3, bedrooms:4, toilets:3, showers:3, tubs:2, maxGuests:15,
+  checkin:'16:00 後', checkout:'11:00',
+  plans:[10,12],
+  layout:[
+   {f:'1F', note:'獨立一戶', rooms:[
+     {n:'臥室 1', beds:[['特大雙人床',1,1],['雙人床',1,1]], d:'整層最大的房間，2019 年新裝潢'},
+     {n:'淋浴間＋洗面室＋廁所', wet:true, d:'1F 只有淋浴，沒有浴缸'}
+   ]},
+   {f:'2F', note:'獨立一戶，大家一起吃飯的樓層', rooms:[
+     {n:'餐廳＋廚房', d:'長餐桌可坐約 10 人；這間沒有客廳'},
+     {n:'臥室 2', beds:[['單人床',2,1]]},
+     {n:'浴室（浴缸）＋廁所＋洗衣間', wet:true}
+   ]},
+   {f:'3F', note:'獨立一戶', rooms:[
+     {n:'臥室 3', beds:[['雙人床',2,1]], d:'附小廚房'},
+     {n:'臥室 4', beds:[['單人床',2,1]]},
+     {n:'浴室（浴缸）＋廁所＋洗衣間', wet:true}
+   ]}
+  ],
+  bedsNote:'每層樓都是獨立的一戶，彼此只靠室外樓梯連接，要換樓層得先出門。正式床共 8 張（特大雙人床 1、雙人床 3、單人床 4），另有日式床墊 ×3。7 人每人都能睡正式床，還有空床。',
+  stations:[
+   {n:'中井', lines:['oedo'], key:'中井', op:'東京都交通局', min:4, src:'大江戶線出口在住宿西南方，從地圖量約 320 m'},
+   {n:'中井', lines:['seibu'], key:'中井', op:'西武鉄道', min:5, src:'要過妙正寺川，從地圖量約 340 m；房東也寫步行 5 分'},
+   {n:'落合', lines:['tozai'], key:'落合', op:'東京地下鉄'},
+   {n:'下落合', lines:['seibu'], key:'下落合', op:'西武鉄道'}
+  ],
+  transit:[
+   {to:'新宿', min:19, walk:8, ride:11, route:[['oedo','中井 → 新宿（大江戶線直達，11 分）']], tip:'', dest:'新宿駅'},
+   {to:'澀谷', min:30, walk:7, ride:17, route:[['seibu','中井 → 高田馬場（4 分）'],['yamanote','高田馬場 → 澀谷（13 分）']], tip:'', dest:'渋谷駅'},
+   {to:'池袋', min:22, walk:7, ride:9, route:[['seibu','中井 → 高田馬場（4 分）'],['yamanote','高田馬場 → 池袋（5 分）']], tip:'', dest:'池袋駅'}
+  ],
+  pros:['評分 9.5，設施和清潔都是 10 分','4 間臥室、8 張正式床，7 人每人都有正式床','2 間浴缸，泡澡不用搶','2019 年建，裝潢新','2F 餐廳的長桌可以大家一起吃飯'],
+  cons:['三層樓之間只靠室外樓梯，11 月晚上換樓層會冷','沒有電梯，1F 入口有台階','住宿期間不換毛巾、床單，也不打掃','22:00–08:00 要放低音量','損壞最多可能要賠 ¥15,000'],
+  amen:['免費 Wi-Fi','洗衣機 ×2','冰箱','微波爐','爐台','電熱水壺','電子鍋','浴缸','免治馬桶','毛巾','拖鞋','吹風機','各房獨立空調','書桌','隔音設備'],
+  linen:'房東明確寫「住宿期間不提供毛巾、床單更換及清潔服務」。'
+ },
+ {
+  id:'c1', no:'④', short:'MOON STAY', name:'MOON STAY 西ヶ原', jp:'Newly opened… Private rental for 9 people', area:'北區 西ヶ原', booked:false,
+  src:'Booking.com', url:'https://www.booking.com/hotel/jp/newly-opened-within-walking-distance-of-the-station-spacious-dining-area-direct.zh-tw.html?checkin=2026-11-19&checkout=2026-11-22&group_adults=7',
+  lat:35.7455316, lng:139.7338283, addr:'東京都北區西ヶ原 4-42-11',
+  price:22591, fee:4104, rating:'7.5', ratingMax:10, reviews:2,
+  size:90, floors:3, bedrooms:4, toilets:2, showers:2, tubs:1, maxGuests:9,
+  checkin:'16:00 後', checkout:'11:00',
+  plans:[],
+  layout:[
+   {f:'1F', note:'公共空間＋浴室', rooms:[
+     {n:'客廳＋餐廳', d:'L 型沙發加單人椅，6 人餐桌'},
+     {n:'廚房', d:'中島式廚房，IH 爐、微波爐、電子鍋'},
+     {n:'浴室（浴缸）＋洗面室＋廁所', wet:true, d:'浴室裡沒有馬桶，廁所另外一間'}
+   ]},
+   {f:'2F', note:'三間臥室', rooms:[
+     {n:'洋室 1', beds:[['雙人床 140cm',1,1]]},
+     {n:'洋室 2', beds:[['單人床',2,1]]},
+     {n:'和室', beds:[['日式床墊',1,0]]},
+     {n:'淋浴間＋洗面室＋廁所', wet:true}
+   ]},
+   {f:'3F', note:'大臥室＋陽台', rooms:[
+     {n:'洋室 3', beds:[['雙人床',1,1],['單人床',2,1]], d:'三張床在同一間'},
+     {n:'洗衣機＋陽台'}
+   ]}
+  ],
+  bedsNote:'房東寫的配置：雙人床 ×2、單人床 ×4，另有和室日式床墊。7 人時 6 張正式床加 1 張雙人床兩人睡，或 1 人睡和室。Booking 寫 150㎡，但房東說約 90㎡（地下室車庫不能用），這裡用 90㎡。',
+  stations:[
+   {n:'西ヶ原四丁目', lines:['arakawa'], key:'西ヶ原四丁目', op:'東京都交通局', min:2, src:'步行路線約 200 m，Google 地圖算 2 分；都電是路面電車，到大塚轉 JR 山手線'},
+   {n:'西巢鴨', lines:['mita'], key:'西巣鴨', op:'東京都交通局', min:9, src:'步行路線約 680 m；房東寫 10 分'},
+   {n:'西ヶ原', lines:['namboku'], key:'西ケ原', op:'東京地下鉄', min:14, src:'步行路線約 1.1 km；房東寫 10 分'}
+  ],
+  transit:[
+   {to:'新宿', min:29, walk:3, ride:22, route:[['arakawa','西ヶ原四丁目 → 大塚站前（都電，約 10 分）'],['yamanote','大塚 → 新宿（12 分）']], tip:'房東寫的 24 分是不含走路的乘車時間。走到西巢鴨搭三田線的路線要 39 分。', dest:'新宿駅'},
+   {to:'澀谷', min:37, walk:3, ride:29, route:[['arakawa','西ヶ原四丁目 → 大塚站前（都電，約 10 分）'],['yamanote','大塚 → 澀谷（19 分）']], tip:'', dest:'渋谷駅'},
+   {to:'池袋', min:20, walk:3, ride:13, route:[['arakawa','西ヶ原四丁目 → 大塚站前（都電，約 10 分）'],['yamanote','大塚 → 池袋（3 分）']], tip:'Google 也列了直達池袋的巴士（王40甲、草64），約 21–23 分。', dest:'池袋駅'}
+  ],
+  pros:['1F 客廳有 L 型沙發，客廳和餐廳是一體的大空間','有浴缸','三層都是新裝潢（2026 新上架）','附近便利商店多（600 m 內 9 家）','飛鳥山公園步行約 10 分'],
+  cons:['房子在坡上，從馬路要爬一段室外樓梯，提行李辛苦','最近的車站是都電（路面電車）西ヶ原四丁目，走 2–3 分就到，但都電慢：到新宿約 29 分、澀谷約 37 分，都要在大塚轉山手線；地下鐵站要走 9 分以上','周邊店家少，600 m 內餐廳只有 3 家','只有 2 則評語，住宿地點評分 7.5','只有 2 間廁所'],
+  amen:['免費 Wi-Fi','洗衣機','冰箱','微波爐','IH 爐','電子鍋','咖啡機','浴缸','免治馬桶','陽台','空調','吹風機','拖鞋','免費盥洗用品'],
+  linen:'Booking 沒有寫明是否提供毛巾和寢具的更換。'
+ },
+ {
+  id:'c3', no:'⑤', short:'星の宿', name:'Nakano Hoshi no Yado 101', jp:'星の宿 101（平面一層）', area:'中野區 野方', booked:false,
+  src:'Booking.com', url:'https://www.booking.com/hotel/jp/hoshi-no-yado-101.zh-tw.html?checkin=2026-11-19&checkout=2026-11-22&group_adults=7',
+  lat:35.7200456, lng:139.6512605, addr:'東京都中野區野方 5-33-18 101 號',
+  price:20539, fee:3489, rating:'10', ratingMax:10, reviews:43,
+  size:60, floors:1, bedrooms:3, toilets:2, showers:2, tubs:0, maxGuests:9,
+  checkin:'16:00–23:00', checkout:'10:00',
+  plans:[10],
+  layout:[
+   {f:'1F', note:'全部在同一層，沒有樓梯', rooms:[
+     {n:'客餐廳（LDK）', d:'L 型皮沙發、6 人餐桌、電視、飲水機'},
+     {n:'臥室 1', beds:[['雙人床',1,1]]},
+     {n:'臥室 2', beds:[['雙人床',1,1],['單人床',1,1]]},
+     {n:'臥室 3', beds:[['雙人床',2,1]], d:'兩張雙人床並排'},
+     {n:'淋浴間 ×2、廁所 ×2', wet:true, d:'各自獨立，沒有浴缸；洗衣機在洗面台旁'}
+   ]}
+  ],
+  bedsNote:'格局圖：雙人床 ×4、單人床 ×1。7 人時要有 2 組人睡同一張雙人床。全部房間在同一層，沒有樓梯。',
+  stations:[
+   {n:'野方', lines:['seibu'], key:'野方', op:'西武鉄道', min:3, src:'步行路線約 240 m；房東寫 2 分'},
+   {n:'都立家政', lines:['seibu'], key:'都立家政', op:'西武鉄道'}
+  ],
+  transit:[
+   {to:'新宿', min:25, walk:3, ride:17, route:[['seibu','野方 → 高田馬場（約 12 分）'],['yamanote','高田馬場 → 新宿（5 分）']], tip:'野方只停普通車。', dest:'新宿駅'},
+   {to:'澀谷', min:33, walk:3, ride:25, route:[['seibu','野方 → 高田馬場（約 12 分）'],['yamanote','高田馬場 → 澀谷（13 分）']], tip:'', dest:'渋谷駅'},
+   {to:'池袋', min:32, walk:3, ride:16, route:[['seibu','野方 → 高田馬場（約 12 分）'],['yamanote','高田馬場 → 池袋（4 分）']], tip:'Google 首選是巴士（王78）轉西武有樂町線，33 分，差不多。', dest:'池袋駅'}
+  ],
+  pros:['離車站最近，走到野方站約 3 分','客餐廳一體，有 L 型沙發','全部在同一層，沒有樓梯','2 間淋浴＋2 間廁所，各自獨立','野方站前商店街很熱鬧，600 m 內餐廳 47 家、居酒屋 21 家'],
+  cons:['到新宿、澀谷都要在高田馬場轉車（約 25／33 分）','只有 60㎡，五間裡最小','沒有浴缸','正式床 5 張，要有 2 組人兩人同睡','Booking 還沒有評語（10 分是其他網站的 43 則）','無人管理的住宿；21:00–09:00 要放低音量；退房 10:00'],
+  amen:['免費 Wi-Fi','洗衣機','冰箱','微波爐','電熱水壺','電子鍋','飲水機','吹風機','空調','暖氣','毛巾','寢具','行李寄存'],
+  linen:'Booking 寫「提供毛巾和寢具」；沒有寫住宿期間是否更換。'
+ },
+ {
+  id:'c4', no:'⑥', name:'ManOku', jp:'萬屋 · 赤羽台獨棟', area:'北區 赤羽台', booked:false,
+  src:'Booking.com', url:'https://www.booking.com/hotel/jp/myman-yi.zh-tw.html?checkin=2026-11-19&checkout=2026-11-22&group_adults=7',
+  lat:35.7791762, lng:139.7153917, addr:'東京都北區赤羽台 3-14-5',
+  price:25133, fee:6156, rating:'7.5', ratingMax:10, reviews:20,
+  size:200, floors:3, bedrooms:6, toilets:3, showers:2, tubs:1, maxGuests:20,
+  checkin:'16:00–24:00', checkout:'10:30–11:00',
+  plans:[28],
+  layout:[
+   {f:'1F', note:'公共空間＋浴室', rooms:[
+     {n:'客廳＋餐廳＋廚房', beds:[['沙發床',1,0]], d:'沙發、大電視、長餐桌、吧台'},
+     {n:'和風床區', beds:[['特大雙人床',1,1]], d:'在客廳旁，用玻璃拉門隔開'},
+     {n:'浴室（浴缸）＋洗面室＋廁所', wet:true, d:'洗衣機在洗面室'}
+   ]},
+   {f:'2F', note:'三間臥室', rooms:[
+     {n:'臥室', beds:[['加大雙人床',2,1]], d:'兩張並排，附陽台'},
+     {n:'臥室', beds:[['加大雙人床',1,1],['單人床',1,1]]},
+     {n:'小臥室', d:'一張床＋化妝台（Booking 床位表沒列這間）'},
+     {n:'廁所＋洗手台', wet:true}
+   ]},
+   {f:'3F', note:'兩間臥室', rooms:[
+     {n:'臥室', beds:[['特大雙人床',1,1]], d:'附書桌'},
+     {n:'臥室', beds:[['單人床',2,1]], d:'附陽台'},
+     {n:'淋浴間＋廁所', wet:true}
+   ]}
+  ],
+  bedsNote:'Booking 床位：特大雙人床 ×2、加大雙人床 ×3、單人床 ×3、沙發床 ×1。7 人每人都有正式床還有剩。各床在哪一層是我依格局圖和照片推測的。有電梯，B1 是 2 個停車位。',
+  stations:[
+   {n:'赤羽', lines:['saikyo'], key:'赤羽', op:'東日本旅客鉄道', min:11, src:'步行路線約 850 m；住客評語寫約 10 分'},
+   {n:'赤羽岩淵', lines:['namboku'], key:'赤羽岩淵', op:'', min:11, src:'步行路線約 880 m'}
+  ],
+  transit:[
+   {to:'新宿', min:26, walk:11, ride:14, route:[['saikyo','赤羽 → 新宿（埼京線直達，14 分）']], tip:'', dest:'新宿駅'},
+   {to:'澀谷', min:30, walk:11, ride:20, route:[['saikyo','赤羽 → 澀谷（埼京線直達，20 分）']], tip:'', dest:'渋谷駅'},
+   {to:'池袋', min:20, walk:11, ride:8, route:[['saikyo','赤羽 → 池袋（埼京線直達，8 分）']], tip:'', dest:'池袋駅'}
+  ],
+  pros:['五間裡最大（200㎡），6 間臥室，7 人每人一張正式床還有剩','有電梯，行李不用扛樓梯','有浴缸；每層都有廁所','客廳有沙發和大電視，長餐桌可以大家一起吃','赤羽是有名的居酒屋街，站前餐廳、超市很多'],
+  cons:['離車站最遠之一，走到赤羽站約 11 分','換樓層主要靠電梯（一次約 2 人加行李）。2026 年 1 月有住客說電梯整段住宿期間都壞掉，只能走室外樓梯搬行李；之後 5 月、7 月的評語沒再提到。訂之前建議先問房東電梯是否正常','評分只有 7.5（20 則），員工素質 7.7','只有 2 間衛浴（1 浴缸、1 淋浴）','照片修圖很重，實際可能比較舊'],
+  amen:['免費 Wi-Fi','電梯','免費停車（2 台）','洗衣機','冰箱','微波爐','電子鍋','電熱水壺','浴缸','免治馬桶','陽台','空調','暖氣','吹風機','拖鞋','行李寄存'],
+  linen:'Booking 寫「提供毛巾和寢具」；沒有寫住宿期間是否更換。'
+ },
+ {
+  id:'d2', no:'⑧', short:'叙園', name:'Jone 叙園', jp:'商店街近隣 駅徒步5分 新宿12分', area:'北區 中十条', booked:false,
+  src:'Booking.com', url:'https://www.booking.com/hotel/jp/jonexu-yuan-shang-dian-jie-jin-lin-yi-tu-bu-5fen-xin-su.zh-tw.html?checkin=2026-11-19&checkout=2026-11-22&group_adults=8',
+  lat:35.7629708, lng:139.7229118, addr:'東京都北區中十条 3-8-4',
+  price:21836, fee:3078, rating:'8.6', ratingMax:10, reviews:21,
+  size:95, floors:3, bedrooms:4, toilets:3, showers:2, tubs:0, maxGuests:8,
+  checkin:'16:00 後', checkout:'11:00',
+  plans:[],
+  layout:[
+   {f:'公共區', note:'客廳樓層', rooms:[
+     {n:'客廳', beds:[['沙發床',1,0]], d:'沙發、投影機和布幕；玄關直接進客廳'},
+     {n:'餐廳＋廚房', d:'4 人餐桌、瓦斯爐、大冰箱'},
+     {n:'庭院', d:'小庭院，有桌椅'}
+   ]},
+   {f:'臥室區', note:'四間臥室', rooms:[
+     {n:'臥室 1', beds:[['雙人床',2,1]], d:'洋室，兩張並排'},
+     {n:'臥室 2', beds:[['日式床墊',2,0]], d:'和室'},
+     {n:'臥室 3', beds:[['雙人床',1,1]], d:'洋室'},
+     {n:'臥室 4', beds:[['日式床墊',2,0]], d:'和室'}
+   ]},
+   {f:'衛浴', note:'分散在各層', rooms:[
+     {n:'淋浴間 ×2', wet:true, d:'沒有浴缸'},
+     {n:'廁所 ×3', wet:true, d:'每層 1 間；住客說 1F 廁所容易堵'},
+     {n:'屋頂露台', d:'可以晾衣服、看夜景'}
+   ]}
+  ],
+  bedsNote:'Booking 床位：臥室 1 雙人床 ×2、臥室 2 日式床墊 ×2、臥室 3 雙人床 ×1、臥室 4 日式床墊 ×2、客廳沙發床 ×1。正式床 3 張，7 人時要有人睡日式床墊或兩人同睡雙人床。房源沒有格局圖，哪間在哪層看不出來，所以用「公共區／臥室區」表示。',
+  stations:[
+   {n:'十條', lines:['saikyo'], key:'十条', op:'東日本旅客鉄道', src:'步行路線約 400 m；房東寫 5 分'},
+   {n:'東十條', lines:['keihin'], key:'東十条', op:'東日本旅客鉄道'}
+  ],
+  transit:[
+   {to:'新宿', min:19, walk:7, ride:12, route:[['saikyo','十條 → 新宿（埼京線直達，12 分）']], tip:'房東寫的「新宿 12 分」是乘車時間，查證屬實。', dest:'新宿駅'},
+   {to:'澀谷', min:23, walk:7, ride:16, route:[['saikyo','十條 → 澀谷（埼京線直達，16 分）']], tip:'', dest:'渋谷駅'},
+   {to:'池袋', min:13, walk:7, ride:6, route:[['saikyo','十條 → 池袋（埼京線直達，6 分）']], tip:'', dest:'池袋駅'}
+  ],
+  pros:['通勤最快：走 5 分到十條站，埼京線直達新宿 12 分、澀谷 17 分、池袋 6 分，都不用轉車','4 間臥室','客廳有沙發和投影機','3 間廁所、2 間淋浴','十條銀座商店街就在旁邊，600 m 內餐廳 76 家、居酒屋 50 家','住宿地點評分 9.6'],
+  cons:['沒有浴缸','正式床只有 3 張，另外 4 人要睡和室日式床墊或擠床','總評分 8.6（21 則），設施 8.6','住客說 1F 廁所容易堵','21:00–08:00 要放低音量'],
+  amen:['免費 Wi-Fi','洗衣機','冰箱','微波爐','瓦斯爐','電熱水壺','電子鍋','投影機','免治馬桶','庭院','屋頂露台','空調','暖氣','吹風機','熨斗','免費盥洗用品'],
+  linen:'Booking 有列免費盥洗用品；沒有寫住宿期間是否更換毛巾床單。'
+ }
+];
+
+const SOFA = {
+  b2:[0,'沒有客廳，2F 是餐廳＋廚房'],
+  c1:[1,'有，L 型沙發＋單人椅'], c3:[1,'有，L 型皮沙發'], c4:[1,'有，沙發＋大電視'],
+  d2:[1,'有，沙發＋投影機']
+};
+const REVIEW = {
+  c4:[1,'房間最多（6 間臥室、8 張正式床），7 個人每人一張床還有剩；客廳很大，旁邊那張床可以不睡人，直接當客廳的一部分用，還有陽台。評分偏低主要是有住客遇到電梯故障，之後的評語沒再提到，應該已經修好，訂之前跟房東確認一下就好。缺點是五間裡最貴，走到赤羽站要 11 分。'],
+  c1:[2,'評價只有 2 則，參考價值低；客廳還行，L 型沙發和餐桌是一體的空間，三層都是新裝潢。位置清幽，走 2 分就到都電西ヶ原四丁目站，但都電慢，到新宿約 29 分；附近吃的很少，從馬路進門要爬一段室外樓梯。'],
+  d2:[3,'中規中矩：有客廳（沙發加投影機），地點、通勤和周邊吃的都是五間裡最好，到新宿 19 分、池袋 13 分，十條銀座商店街就在旁邊。但有兩間房是榻榻米，正式床只有 3 張，有 4 個人要睡日式床墊。'],
+  c3:[4,'客廳大，但房間很小，全部在同一層，60㎡ 是五間裡最小的。價格最便宜，評價也好；缺點是到新宿、澀谷都要在高田馬場轉車。'],
+  b2:[5,'大包棟、房間大，有 8 張正式床和 2 個浴缸；但沒有客廳，壁紙很醜，三層樓之間只靠室外樓梯，住宿期間也不換毛巾床單。']
+};
+STAYS.sort((a, b) => REVIEW[a.id][0] - REVIEW[b.id][0]);
+const $ = (s, el=document) => el.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt = n => n.toLocaleString('zh-TW');
+const MAPS = {"overview": {"z": 13, "x0": 1861815.0556444447, "y0": 825045.0259023523, "w": 1040, "h": 1000}, "b1": {"z": 17, "x0": 29796551.361524623, "y0": 13208601.69107075, "w": 1200, "h": 900}, "b2": {"z": 17, "x0": 29796589.688142505, "y0": 13208723.019556835, "w": 1200, "h": 900}, "a3": {"z": 17, "x0": 29792780.96184889, "y0": 13202413.663661998, "w": 1200, "h": 900}, "c1": {"z": 17, "x0": 29800752.777200073, "y0": 13205166.62012233, "w": 1200, "h": 900}, "c3": {"z": 17, "x0": 29793056.900448713, "y0": 13208092.975548781, "w": 1200, "h": 900}, "c4": {"z": 17, "x0": 29799034.361530595, "y0": 13201302.042058472, "w": 1200, "h": 900}, "d1": {"z": 17, "x0": 29798383.75973547, "y0": 13205831.14321526, "w": 1200, "h": 900}, "d2": {"z": 17, "x0": 29799735.28565305, "y0": 13203163.67506472, "w": 1200, "h": 900}};
+function px(m, lat, lng){
+  const n = 256 * 2 ** m.z;
+  const x = (lng + 180) / 360 * n - m.x0;
+  const r = lat * Math.PI / 180;
+  const y = (1 - Math.log(Math.tan(r) + 1 / Math.cos(r)) / Math.PI) / 2 * n - m.y0;
+  return [x, y];
+}
+function geo(name, m, inner, cls){
+  return `<div class="geo ${cls || ''}"><img class="tile-l" src="maps/${name}-l.jpg" alt="" width="${m.w}" height="${m.h}"><img class="tile-d" src="maps/${name}-d.jpg" alt="" width="${m.w}" height="${m.h}">
+    <svg viewBox="0 0 ${m.w} ${m.h}" aria-hidden="true">${inner}</svg></div>`;
+}
+function miniMap(s){
+  const m = MAPS[s.id];
+  const it = (NEAR[s.id] && NEAR[s.id].items) || [];
+  const mPerPx = 156543.03 * Math.cos(s.lat * Math.PI / 180) / 2 ** m.z;
+  const [cx, cy] = px(m, s.lat, s.lng);
+  const r = 400 / mPerPx;
+  let g = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="var(--maple)" fill-opacity=".07" stroke="var(--maple)" stroke-dasharray="8 8" stroke-width="2.5"/>`;
+  g += `<text x="${cx}" y="${cy - r - 10}" font-size="22" fill="var(--maple)" text-anchor="middle">步行約 5 分鐘範圍</text>`;
+  it.filter(i => i.kind === 'convenience' && i.lat).forEach(i => { const [x, y] = px(m, i.lat, i.lon); g += `<circle cx="${x}" cy="${y}" r="9" fill="var(--line-tozai)" stroke="var(--surface)" stroke-width="3"/>`; });
+  it.filter(i => i.kind === 'supermarket' && i.lat).forEach(i => { const [x, y] = px(m, i.lat, i.lon); g += `<rect x="${x - 9}" y="${y - 9}" width="18" height="18" fill="var(--good)" stroke="var(--surface)" stroke-width="3"/>`; });
+  g += `<circle cx="${cx}" cy="${cy}" r="15" fill="var(--maple)" stroke="var(--surface)" stroke-width="4"/><text x="${cx + 22}" y="${cy + 9}" font-size="28" font-weight="700" fill="var(--maple)">${s.no} 住宿${s.approx ? '（大概位置）' : ''}</text>`;
+  return geo(s.id, m, g) + `<div class="legend"><span><i style="background:var(--maple)"></i>住宿</span><span><i style="background:var(--line-tozai)"></i>便利商店</span><span><i style="background:var(--good);border-radius:0"></i>超市</span><span>車站名稱印在底圖上（綠字「〇〇駅」）</span></div>`;
+}
+const total = s => s.price == null ? null : s.price + s.fee;
+const perPerson = s => s.price == null ? null : Math.round(total(s) / 7);
+const money = v => v == null ? '待補' : 'NT$' + fmt(v);
+const heroOf = s => { const p = PHOTOS[s.id]; const f = ['客廳','廚房','外觀'].map(c => p.find(x => x[1] === c)).find(Boolean) || p[0]; return f[0]; };
+const gpos = s => `https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lng}`;
+const addrLink = s => `<a href="${gpos(s)}" target="_blank" rel="noopener">${esc(s.addr)} ↗</a>`;
+const photo = (s, i) => 'photos/' + s.id + '/' + String(i).padStart(2, '0') + '.jpg';
+const CATS = ['客廳','廚房','餐廳','外觀','臥室','浴室','廁所','洗衣','格局圖','周邊'];
+const gmap = (s, dest) => `https://www.google.com/maps/dir/?api=1&origin=${s.lat},${s.lng}&destination=${encodeURIComponent(dest)}&travelmode=transit`;
+const lineTag = k => `<span class="ln" style="--c:var(${LINES[k][1]})">${LINES[k][0]}</span>`;
+const walkMin = m => Math.max(1, Math.round(m / 80));
+function stWalk(x){ return x.min || x.host || (x.m ? walkMin(x.m) : '—'); }
+
+// fill station walking distance from OSM routing
+STAYS.forEach(s => {
+  const st = (NEAR[s.id] && NEAR[s.id].stations) || [];
+  s.stations.forEach(x => {
+    const hit = st.find(o => o.ja === x.key && (o.operator || '').includes(x.op) && o.walk_m);
+    x.m = hit ? hit.walk_m : null;
+  });
+});
+
+/* ---------- cards ---------- */
+function renderRank(){
+  $('#ranklist').innerHTML = STAYS.map(s => `<li><button data-id="${s.id}"><span class="rk num">${REVIEW[s.id][0]}</span><span class="rn"><b><span class="badge">${s.no}</span> ${esc(s.short || s.name)}</b><small class="num">NT$${fmt(total(s))}</small></span><span class="rt">${esc(REVIEW[s.id][1])}</span></button></li>`).join('');
+  document.querySelectorAll('#ranklist button').forEach(c => c.addEventListener('click', () => {
+    select(c.dataset.id);
+    $('#detail').scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+  }));
+}
+function renderCards(){
+  $('#cards').innerHTML = STAYS.map(s => `
+    <button class="card" data-id="${s.id}" aria-pressed="false">
+      <img src="${photo(s, heroOf(s))}" alt="${esc(s.name)} 外觀或客廳" loading="lazy">
+      <div class="card-body">
+        <div class="card-top"><span class="badge">${s.no}</span><span class="pill rank">推薦 #${REVIEW[s.id][0]}</span>${s.booked ? '<span class="pill booked">已訂</span>' : ''}<span class="sub">${s.src}</span></div>
+        <h3>${esc(s.name)}</h3>
+        <span class="sub">${esc(s.area)}</span>
+        <div class="price">${s.price == null ? '<b class="tbd">價格待補</b>' : `<b>NT$${fmt(total(s))}</b><span>每人 NT$${fmt(perPerson(s))}</span>`}</div>
+        <dl class="mini">
+          <dt>格局</dt><dd>${s.bedrooms} 房 · ${s.toilets} 廁 · ${s.showers} 淋浴${s.tubs ? ` · ${s.tubs} 浴缸` : ''}</dd>
+          <dt>面積</dt><dd>${s.size}㎡ · ${s.floors} 層</dd>
+          <dt>車站</dt><dd>${esc(s.stations[0].n)}（${LINES[s.stations[0].lines[0]][0]}）步行 ${stWalk(s.stations[0])} 分</dd>
+          <dt>新宿／澀谷</dt><dd>${s.transit[0].min} 分／${s.transit[1].min} 分</dd>
+          <dt>客廳沙發</dt><dd class="${SOFA[s.id][0] ? '' : 'no'}">${esc(SOFA[s.id][1])}</dd>
+          <dt>評分</dt><dd>${s.rating} / ${s.ratingMax}（${s.reviews} 則）</dd>
+        </dl>
+      </div>
+    </button>`).join('');
+  document.querySelectorAll('.card').forEach(c => c.addEventListener('click', () => {
+    select(c.dataset.id);
+    $('#detail').scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+  }));
+}
+
+/* ---------- compare table ---------- */
+function renderTable(){
+  const rows = [
+    ['3 晚總價', s => total(s), money, 'min'],
+    ['每人', s => perPerson(s), money, 'min'],
+    ['每人每晚', s => s.price == null ? null : Math.round(total(s) / 21), money, 'min'],
+    ['客廳沙發', s => SOFA[s.id][0], (v, s) => SOFA[s.id][1], 'max'],
+    ['面積', s => s.size, v => v + '㎡', 'max'],
+    ['每人面積', s => +(s.size / 7).toFixed(1), v => v + '㎡', 'max'],
+    ['臥室', s => s.bedrooms, v => v + ' 間', 'max'],
+    ['正式床（不含沙發床、日式床墊）', s => realBeds(s), v => v + ' 張', 'max'],
+    ['廁所', s => s.toilets, v => v + ' 間', 'max'],
+    ['淋浴', s => s.showers, v => v + ' 間', 'max'],
+    ['浴缸', s => s.tubs, v => v ? v + ' 個' : '沒有', 'max'],
+    ['最近車站步行', s => +stWalk(s.stations[0]), v => v + ' 分', 'min'],
+    ['到新宿', s => s.transit[0].min, v => '約 ' + v + ' 分', 'min'],
+    ['到澀谷', s => s.transit[1].min, v => '約 ' + v + ' 分', 'min'],
+    ['到池袋', s => s.transit[2].min, v => '約 ' + v + ' 分', 'min'],
+    ['600m 內便利商店', s => countKind(s, ['convenience']), v => v + ' 家', 'max'],
+    ['600m 內餐飲', s => countKind(s, ['restaurant','fast_food','cafe','bar','pub']), v => v + ' 家', 'max'],
+    ['評分', s => s.rating / s.ratingMax * 10, (v, s) => `${s.rating} / ${s.ratingMax}（${s.reviews} 則）`, 'max'],
+    ['退房', s => parseInt(s.checkout), (v, s) => s.checkout, 'max']
+  ];
+  const warn = {
+    '每人面積': v => v < 9, '客廳沙發': v => !v, '最近車站步行': v => v > 6, '到澀谷': v => v > 35, '到新宿': v => v > 30, '浴缸': v => v === 0
+  };
+  let h = '<thead><tr><th></th>' + STAYS.map(s => `<th scope="col"><span class="badge">${s.no}</span><b>${esc(s.name)}</b>${s.booked ? '<span class="pill booked">已訂</span>' : ''}</th>`).join('') + '</tr></thead><tbody>';
+  rows.forEach(([label, get, show, dir]) => {
+    const vals = STAYS.map(get);
+    const known = vals.filter(v => v != null);
+    const best = dir === 'min' ? Math.min(...known) : Math.max(...known);
+    const unique = known.length > 1 && known.filter(v => v === best).length < known.length;
+    h += `<tr><th scope="row">${label}</th>` + STAYS.map((s, i) => {
+      if (vals[i] == null) return '<td class="num tbd">待補</td>';
+      const cls = unique && vals[i] === best ? 'best' : (warn[label] && warn[label](vals[i]) ? 'bad' : '');
+      return `<td class="num ${cls}">${show(vals[i], s)}</td>`;
+    }).join('') + '</tr>';
+  });
+  h += '<tr><th scope="row">地址（Google 地圖）</th>' + STAYS.map(s => `<td style="font-size:13px">${addrLink(s)}</td>`).join('') + '</tr>';
+  h += '<tr><th scope="row">換毛巾床單</th>' + STAYS.map(s => `<td class="${s.id === 'b2' ? 'bad' : ''}" style="font-size:13px">${esc(s.linen)}</td>`).join('') + '</tr>';
+  $('#cmp').innerHTML = h + '</tbody>';
+}
+function realBeds(s){ let n = 0; s.layout.forEach(f => f.rooms.forEach(r => (r.beds || []).forEach(b => { if (b[2]) n += b[1]; }))); return n; }
+function countKind(s, kinds){ const it = (NEAR[s.id] && NEAR[s.id].items) || []; return it.filter(i => kinds.includes(i.kind) && i.d <= 600).length; }
+
+/* ---------- map ---------- */
+function renderMap(){
+  const m = MAPS.overview;
+  const lm = [
+    {n:'新宿', lat:35.6896, lng:139.7006}, {n:'澀谷', lat:35.6580, lng:139.7016},
+    {n:'池袋', lat:35.7295, lng:139.7109}
+  ];
+  let g = '';
+  lm.forEach(p => { const [x, y] = px(m, p.lat, p.lng); g += `<rect x="${x - 10}" y="${y - 10}" width="20" height="20" rx="3" fill="var(--ink)"/><text x="${x - 16}" y="${y + 9}" font-size="26" font-weight="700" fill="var(--ink)" text-anchor="end">${p.n}</text>`; });
+  STAYS.forEach(s => {
+    const [x, y] = px(m, s.lat, s.lng);
+    const left = s.id === 'b2' || s.id === 'c3';
+    g += `<g class="pin" data-id="${s.id}" style="cursor:pointer"><circle cx="${x}" cy="${y}" r="15" fill="var(--maple)" stroke="var(--surface)" stroke-width="4"/>`;
+    g += `<text x="${x + (left ? -24 : 24)}" y="${y + 10}" font-size="27" font-weight="700" fill="var(--maple)" text-anchor="${left ? 'end' : 'start'}">${s.no} ${esc(s.short || s.name.split(' ')[0])}</text></g>`;
+  });
+  $('#mapbox').innerHTML = geo('overview', m, g, 'geo-overview');
+  $('#addrs').innerHTML = STAYS.map(s => `<li><span class="badge">${s.no}</span><b>${esc(s.name)}</b>${addrLink(s)}</li>`).join('');
+  document.querySelectorAll('.pin').forEach(p => p.addEventListener('click', () => { select(p.dataset.id); $('#detail').scrollIntoView(); }));
+}
+
+/* ---------- detail ---------- */
+let cur = null, galIdx = 0, galFilter = 'all';
+function galList(s){
+  const all = PHOTOS[s.id].map(([i, cat, cap]) => ({i, cat, cap, f: s.id + '/' + String(i).padStart(2, '0') + '.jpg'}))
+    .sort((a, b) => CATS.indexOf(a.cat) - CATS.indexOf(b.cat));
+  return galFilter === 'all' ? all : all.filter(p => p.cat === galFilter);
+}
+function renderTabs(){
+  $('#tabs').innerHTML = STAYS.map(s => `<button role="tab" data-id="${s.id}" aria-selected="false"><span class="badge">${s.no}</span>${esc(s.name)}</button>`).join('');
+  document.querySelectorAll('#tabs button').forEach(b => b.addEventListener('click', () => select(b.dataset.id)));
+}
+function select(id){
+  cur = STAYS.find(s => s.id === id); galIdx = 0; galFilter = 'all';
+  try { localStorage.setItem('stay-tab', id); } catch (e) {}
+  document.querySelectorAll('#tabs button').forEach(b => b.setAttribute('aria-selected', b.dataset.id === id));
+  document.querySelectorAll('.card').forEach(b => b.setAttribute('aria-pressed', b.dataset.id === id));
+  renderPane();
+}
+function renderPane(){
+  const s = cur;
+  const near = NEAR[s.id] || {items:[], stations:[]};
+  const maxMin = 50;
+  const tr = s.transit.map(t => {
+    const wait = Math.max(0, t.min - t.walk - t.ride);
+    const seg = (v, cls, label) => `<span class="${cls}" style="width:${v / maxMin * 100}%">${label}</span>`;
+    const rideSegs = t.route.map(([ln, txt]) => {
+      const m = +(txt.match(/(\d+) 分/) || [0, t.ride / t.route.length])[1];
+      return `<span style="width:${m / maxMin * 100}%;background:var(${LINES[ln][1]})">${LINES[ln][0]}</span>`;
+    }).join('');
+    return `<div class="tr-row">
+      <span class="tr-dest">${t.to}</span>
+      <div class="tr-bar" title="走到車站並上車約 ${t.walk} 分、轉乘約 ${wait} 分、乘車 ${t.ride} 分">${seg(t.walk, 'walk', '步行')}${wait ? seg(wait, 'wait', '') : ''}${rideSegs}</div>
+      <span class="tr-min">${t.min}<small> 分</small></span>
+      <p class="tr-route">${t.route.map(r => r[1]).join(' → ')}。${esc(t.tip)} <a href="${gmap(s, t.dest)}" target="_blank" rel="noopener">在 Google 地圖查看 ↗</a></p>
+    </div>`;
+  }).join('');
+
+  const st = s.stations.map(x => `<div class="st"><span class="walkmin">${stWalk(x)} 分</span><b>${esc(x.n)}站</b>${x.lines.map(lineTag).join('')}<span class="foot">${x.src ? esc(x.src) : x.host ? `房東標示步行 ${x.host} 分（Airbnb 位置是大概值）` : `步行路線約 ${x.m} m`}${x.note ? '；' + esc(x.note) : ''}</span></div>`).join('');
+
+  const k = kinds => near.items.filter(i => kinds.includes(i.kind) && i.d <= 600).length;
+  const meters = [
+    ['餐廳', k(['restaurant']), 50], ['居酒屋／酒吧', k(['bar','pub']), 30], ['咖啡／速食', k(['cafe','fast_food']), 25],
+    ['便利商店', k(['convenience']), 15], ['超市', k(['supermarket']), 12]
+  ].map(([n, v, max]) => `<div class="meter"><span>${n}</span><div class="track"><div class="fill" style="width:${Math.min(100, v / max * 100)}%"></div></div><span class="v">${v}</span></div>`).join('');
+
+  const shopLi = kinds => near.items.filter(i => kinds.includes(i.kind) && i.ja).slice(0, 6)
+    .map(i => `<li><span class="nm">${esc(i.ja)}${i.oh ? `<small>${esc(ohShort(i.oh))}</small>` : ''}</span><span class="ds">${i.d} m</span></li>`).join('');
+
+  const top = (TOP[s.id] || []).map(r => `<li><span class="nm">${esc(r.n)}<small>${esc(r.g)}</small></span><span class="rt">${r.r}</span><span class="why">${esc(r.why)}</span></li>`).join('');
+  const late = lateList(s).map(i => `<li><span class="nm">${esc(i.ja)}<small>${esc(i.label)}</small></span><span class="ds">${i.d} m</span><span class="why">${esc(i.oh)}</span></li>`).join('') || '<li class="foot">OpenStreetMap 沒有登錄營業時間，請以便利商店為主。</li>';
+
+  const floors = s.layout.map(f => `<div class="floor"><h5>${f.f}<span>${esc(f.note)}</span></h5>${f.rooms.map(r => `
+    <div class="room ${r.wet ? 'wet' : ''}"><b>${esc(r.n)}</b>
+      ${r.beds ? `<div class="beds">${r.beds.map(b => `<span class="bed ${b[2] ? 'real' : ''}">${esc(b[0])} ×${b[1]}</span>`).join('')}</div>` : ''}
+      ${r.d ? `<p>${esc(r.d)}</p>` : ''}</div>`).join('')}</div>`).join('');
+
+  const list = galList(s);
+  $('#pane').innerHTML = `
+    <div class="d-head">
+      <div><span class="eyebrow">${s.no} · ${esc(s.src)} · ${esc(s.area)}</span><h3>${esc(s.name)}</h3><p class="sub">${esc(s.jp)} · ${addrLink(s)}</p></div>
+      <div class="links">
+        <a class="btn" href="${s.url}" target="_blank" rel="noopener">開啟 ${esc(s.src)} 房源 ↗</a>
+        <a class="btn" href="${gpos(s)}" target="_blank" rel="noopener">Google 地圖位置 ↗</a>
+      </div>
+    </div>
+    <p class="verdict"><b>推薦 #${REVIEW[s.id][0]}</b>${esc(REVIEW[s.id][1])}</p>
+    <dl class="d-price">
+      ${s.price == null ? `<div><dt>3 晚總價</dt><dd class="tbd">待補</dd></div><p class="note">Booking 要選日期才顯示價格，我這邊抓不到；請把 11/19–11/22、7 人的價格給我。</p>` : `
+      <div><dt>3 晚總價</dt><dd>NT$${fmt(total(s))}</dd></div>
+      <div><dt>每人每晚</dt><dd>NT$${fmt(Math.round(total(s) / 21))}<small>7 人 × 3 晚</small></dd></div>
+      <p class="note">房價 NT$${fmt(s.price)}${s.fee ? ` ＋ 稅費 NT$${fmt(s.fee)}` : '（已含稅費）'}${s.booked ? ' · 已經訂好' : ''}</p>`}
+    </dl>
+
+    <div class="block">
+      <h4>照片 <small>精選 ${PHOTOS[s.id].length} 張，依房間分類；點大圖可全螢幕，鍵盤 ← → 切換</small></h4>
+      <div class="gal-filter">
+        <button class="chip" data-f="all" aria-pressed="${galFilter === 'all'}">全部</button>
+        ${CATS.map(c => [c, PHOTOS[s.id].filter(p => p[1] === c).length]).filter(x => x[1]).map(([c, n]) => `<button class="chip" data-f="${c}" aria-pressed="${galFilter === c}">${c} ${n}</button>`).join('')}
+      </div>
+      <div class="gal">
+        <div class="gal-main" id="galmain"><img id="galimg" alt=""><span class="gal-count num" id="galcount"></span><span class="gal-cap" id="galcap"></span>
+          <button class="gal-nav prev" id="galp" aria-label="上一張">‹</button><button class="gal-nav next" id="galn" aria-label="下一張">›</button></div>
+        <div class="thumbs" id="thumbs">${list.map((p, j) => `<button data-j="${j}" aria-label="${esc(p.cat + '：' + p.cap)}"><img src="photos/${p.f}" alt="" loading="lazy"><span class="tc">${p.cat}</span></button>`).join('')}</div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h4>格局 <small>依房源格局圖與照片整理</small></h4>
+      <dl class="layout-sum">
+        <div class="stat"><dt>臥室</dt><dd>${s.bedrooms}<small>間</small></dd></div>
+        <div class="stat"><dt>廁所</dt><dd>${s.toilets}<small>間</small></dd></div>
+        <div class="stat"><dt>淋浴／浴缸</dt><dd>${s.showers}<small>淋浴</small> ${s.tubs}<small>浴缸</small></dd></div>
+        <div class="stat"><dt>面積</dt><dd>${s.size}<small>㎡ · ${s.floors} 層</small></dd></div>
+      </dl>
+      <div class="floors" style="--fc:${Math.min(3, s.layout.length)}">${floors}</div>
+      <p class="sleep"><b>客廳沙發：</b>${esc(SOFA[s.id][1])}<br>${esc(s.bedsNote)}<br><span class="foot">綠框是正式床，灰框是沙發床。</span></p>
+      <div class="floor-plan">${PHOTOS[s.id].filter(p => p[1] === '格局圖').map(p => `<button class="btn" data-plan="${p[0]}">看${esc(p[2])}</button>`).join('')}</div>
+    </div>
+
+    <div class="block">
+      <h4>優缺點</h4>
+      <div class="pc">
+        <div class="panel pro"><h5>優點</h5><ul>${s.pros.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>
+        <div class="panel con"><h5>要注意</h5><ul>${s.cons.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h4>交通 <small>Google 地圖門到門時間（11/20 週五 9:00 出發）</small></h4>
+      ${miniMap(s)}
+      <div class="stations">${st}</div>
+      <div class="transit">${tr}</div>
+      <div class="scale"><span>0</span><span>10</span><span>20</span><span>30</span><span>40</span><span>50 分</span></div>
+    </div>
+
+    <div class="block">
+      <h4>周邊 <small>以住宿為中心 600 m 內（步行約 8 分鐘）${s.approx ? '；Airbnb 只公開大概位置，數字僅供參考' : ''}</small></h4>
+      <div class="near-grid">
+        <div class="panel"><h5>熱鬧程度<small>OpenStreetMap 登錄的店家數</small></h5>${meters}<p class="foot">${esc(VIBE[s.id])}</p></div>
+        <div class="panel"><h5>高評分餐廳<small>Tabelog 分數</small></h5><ul class="plist">${top || '<li class="foot">這一區還沒查到可靠的 Tabelog 分數。</li>'}</ul></div>
+        <div class="panel"><h5>宵夜（23:00 後還開）</h5><ul class="plist">${late}</ul></div>
+        <div class="panel"><h5>便利商店<small>最近 6 家</small></h5><ul class="plist">${shopLi(['convenience'])}</ul>
+          <h5>超市</h5><ul class="plist">${shopLi(['supermarket'])}</ul></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h4>入住資訊</h4>
+      <div class="panel"><h5>入住資訊</h5>
+        <p style="font-size:14px">入住 ${esc(s.checkin)} · 退房 ${esc(s.checkout)} · 最多 ${s.maxGuests} 人 · ${s.price == null ? '價格待補' : `價格 NT$${fmt(s.price)}${s.fee ? ` ＋ 稅費 NT$${fmt(s.fee)}` : ''} ＝ NT$${fmt(total(s))}`}</p>
+        <p style="font-size:14px;color:var(--ink-2)">毛巾床單：${esc(s.linen)}</p>
+        <div class="facts-list">${s.amen.map(a => `<span>${esc(a)}</span>`).join('')}</div>
+      </div>
+    </div>`;
+
+  document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => { galFilter = c.dataset.f; galIdx = 0; renderPane(); }));
+  document.querySelectorAll('[data-plan]').forEach(b => b.addEventListener('click', () => {
+    galFilter = '格局圖'; renderPane(); galShow(galList(s).findIndex(p => p.i === +b.dataset.plan)); $('#galmain').scrollIntoView({block:'center'});
+  }));
+  document.querySelectorAll('#thumbs button').forEach(b => b.addEventListener('click', () => galShow(+b.dataset.j)));
+  $('#galp').addEventListener('click', e => { e.stopPropagation(); galShow(galIdx - 1); });
+  $('#galn').addEventListener('click', e => { e.stopPropagation(); galShow(galIdx + 1); });
+  $('#galmain').addEventListener('click', () => lbOpen());
+  swipe($('#galmain'), d => galShow(galIdx + d));
+  galShow(galIdx);
+}
+function capOf(s, p){ return p.cat + (p.cap ? '｜' + p.cap : ''); }
+function galShow(j){
+  const list = galList(cur); if (!list.length) return;
+  galIdx = (j + list.length) % list.length;
+  const p = list[galIdx];
+  $('#galimg').src = 'photos/' + p.f; $('#galimg').alt = capOf(cur, p) || cur.name + ' 照片';
+  $('#galcap').innerHTML = `<span class="cat-tag">${esc(p.cat)}</span>${esc(p.cap)}`;
+  $('#galcount').textContent = `${galIdx + 1} / ${list.length}`;
+  document.querySelectorAll('#thumbs button').forEach(b => b.setAttribute('aria-current', +b.dataset.j === galIdx));
+  const t = document.querySelector(`#thumbs button[data-j="${galIdx}"]`);
+  if (t) t.parentNode.scrollTo({left: t.offsetLeft - t.parentNode.clientWidth / 2 + 48, behavior:'smooth'});
+  if (!$('#lb').hidden) lbSync();
+}
+function lbSync(){ const p = galList(cur)[galIdx]; $('#lbimg').src = 'photos/' + p.f; $('#lbimg').alt = capOf(cur, p); $('#lbcap').textContent = `${galIdx + 1} / ${galList(cur).length}  ${capOf(cur, p)}`; }
+function lbOpen(){ $('#lb').hidden = false; lbSync(); $('#lbx').focus(); }
+function lbClose(){ $('#lb').hidden = true; }
+$('#lbx').addEventListener('click', lbClose);
+$('#lbp').addEventListener('click', () => galShow(galIdx - 1));
+$('#lbn').addEventListener('click', () => galShow(galIdx + 1));
+$('#lb').addEventListener('click', e => { if (e.target.id === 'lb') lbClose(); });
+swipe($('#lb'), d => galShow(galIdx + d));
+document.addEventListener('keydown', e => {
+  if (!cur) return;
+  const inLb = !$('#lb').hidden;
+  if (e.key === 'Escape' && inLb) lbClose();
+  if (e.key === 'ArrowLeft' && (inLb || document.activeElement.closest('.gal'))) galShow(galIdx - 1);
+  if (e.key === 'ArrowRight' && (inLb || document.activeElement.closest('.gal'))) galShow(galIdx + 1);
+});
+function swipe(el, cb){
+  let x0 = null;
+  el.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, {passive:true});
+  el.addEventListener('touchend', e => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) cb(dx < 0 ? 1 : -1); x0 = null; });
+}
+
+/* ---------- nearby helpers ---------- */
+const TOP = {"c4": [{"n": "鯉とうなぎのまるます家 総本店", "g": "鰻魚・鯉魚・居酒屋 · 百名店 2021", "r": "3.49", "why": "赤羽站東口一番街，早上 9 點就開的老店"}], "b2": [{"n": "中華そば 児ノ木", "g": "拉麵", "r": "3.81", "why": "落合站約 520 m、中井站約 570 m"}, {"n": "手打ちそば 山商", "g": "手打蕎麥麵・居酒屋", "r": "3.55", "why": "落合站約 340 m"}, {"n": "洋食の店 ぺいざん", "g": "洋食・漢堡排・咖哩", "r": "—", "why": "中井站約 200 m，房東照片有介紹；午餐套餐約 ¥850"}, {"n": "とんかつ たかはし", "g": "豬排", "r": "—", "why": "離住宿約 200 m"}]};
+const VIBE = {"b2": "以住宅區為主，中井站前有小商店街。房客評語提到住宿周邊很安靜。想熱鬧一點可以搭 1 站到高田馬場，或搭 3 站到歌舞伎町。", "c1": "安靜的坡上住宅區，600 m 內餐廳只有 3 家，便利商店倒是有 9 家。旁邊是都電荒川線（路面電車）和飛鳥山公園；想吃東西要去巢鴨地藏通商店街或王子。", "c3": "周邊很熱鬧（僅次於 ⑧ 十條）：野方站前商店街加上野方文化市場，600 m 內有 47 家餐廳、21 家居酒屋。巷子裡是住宅區。", "d2": "十條銀座商店街就在旁邊，是東京有名的庶民商店街，熟食、小吃、居酒屋很多，600 m 內餐廳 76 家、居酒屋 50 家。住客說晚上回來吃東西很方便，電車聲不大。", "c4": "赤羽是有名的「千元喝到醉」居酒屋街（一番街、OK 橫丁），站前商場、超市很多；但住宿在赤羽台的坡上住宅區，走到站前約 11 分，晚上很安靜。"};
+const LATE_EXTRA = {"b2": [{"ja": "松屋（牛丼）", "d": 199, "oh": "連鎖店，中井分店通常 24 小時營業，請以店家公告為準", "label": "牛丼 · 通常 24 小時"}, {"ja": "日高屋 中井駅前店", "d": 173, "oh": "網路資料顯示營業到 23:30", "label": "拉麵・中華"}], "c1": [], "c3": [], "c4": [], "d2": []};
+function ohShort(oh){ return /24\/7/.test(oh) ? '24 小時' : ''; }
+function lateList(s){
+  const it = ((NEAR[s.id] && NEAR[s.id].items) || []).filter(i => i.d <= 700 && i.ja && i.kind !== 'station' && i.kind !== 'convenience');
+  const extra = (LATE_EXTRA[s.id] || []);
+  const late = it.filter(i => isLate(i.oh)).map(i => ({...i, label: (i.kind === 'supermarket' ? '超市 · ' : '') + (i.oh.includes('24/7') ? '24 小時' : '營業到 23 點後')}));
+  return [...extra, ...late].sort((a, b) => a.d - b.d).slice(0, 9);
+}
+function isLate(oh){
+  if (!oh) return false;
+  if (/24\/7/.test(oh)) return true;
+  const ends = [...oh.matchAll(/\d{1,2}:\d{2}\s*-\s*(\d{1,2}):(\d{2})/g)].map(m => +m[1] + (+m[2]) / 60);
+  return ends.some(h => h > 23 || h <= 6);
+}
+
+renderRank(); renderCards(); renderTable(); renderMap(); renderTabs();
+let start = STAYS[0].id;
+try { const v = localStorage.getItem('stay-tab'); if (STAYS.some(s => s.id === v)) start = v; } catch (e) {}
+select(start);
+</script>
