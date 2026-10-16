@@ -559,8 +559,8 @@ const SOFA = {
 const REVIEW = {
   c4:[1,'房間最多（6 間臥室、8 張正式床），7 個人每人一張床還有剩；客廳很大，旁邊那張床可以不睡人，直接當客廳的一部分用，還有陽台。評分偏低主要是有住客遇到電梯故障，之後的評語沒再提到，應該已經修好，訂之前跟房東確認一下就好。缺點是五間裡最貴，走到赤羽站要 11 分。'],
   c1:[2,'評價只有 2 則，參考價值低；客廳還行，L 型沙發和餐桌是一體的空間，三層都是新裝潢。位置清幽，走 2 分就到都電西ヶ原四丁目站，但都電慢，到新宿約 29 分；附近吃的很少，從馬路進門要爬一段室外樓梯。'],
-  d2:[3,'中規中矩：有客廳（沙發加投影機），地點、通勤和周邊吃的都是五間裡最好，到新宿 19 分、池袋 13 分，十條銀座商店街就在旁邊。但有兩間房是榻榻米，正式床只有 3 張，有 4 個人要睡日式床墊。'],
-  c3:[4,'客廳大，但房間很小，全部在同一層，60㎡ 是五間裡最小的。價格最便宜，評價也好；缺點是到新宿、澀谷都要在高田馬場轉車。'],
+  d2:[4,'中規中矩：有客廳（沙發加投影機），地點、通勤和周邊吃的都是五間裡最好，到新宿 19 分、池袋 13 分，十條銀座商店街就在旁邊。但有兩間房是榻榻米，正式床只有 3 張，有 4 個人要睡日式床墊。'],
+  c3:[3,'客廳大，但房間很小，全部在同一層，60㎡ 是五間裡最小的。價格最便宜，評價也好；缺點是到新宿、澀谷都要在高田馬場轉車。'],
   b2:[5,'大包棟、房間大，有 8 張正式床和 2 個浴缸；但沒有客廳，壁紙很醜，三層樓之間只靠室外樓梯，住宿期間也不換毛巾床單。']
 };
 STAYS.sort((a, b) => REVIEW[a.id][0] - REVIEW[b.id][0]);
@@ -782,7 +782,7 @@ function renderPane(){
       ${s.price == null ? `<div><dt>3 晚總價</dt><dd class="tbd">待補</dd></div><p class="note">Booking 要選日期才顯示價格，我這邊抓不到；請把 11/19–11/22、7 人的價格給我。</p>` : `
       <div><dt>3 晚總價</dt><dd>NT$${fmt(total(s))}</dd></div>
       <div><dt>每人每晚</dt><dd>NT$${fmt(Math.round(total(s) / 21))}<small>7 人 × 3 晚</small></dd></div>
-      <p class="note">房價 NT$${fmt(s.price)}${s.fee ? ` ＋ 稅費 NT$${fmt(s.fee)}` : '（已含稅費）'}${s.booked ? ' · 已經訂好' : ''}</p>`}
+`}
     </dl>
 
     <div class="block">
@@ -841,7 +841,7 @@ function renderPane(){
     <div class="block">
       <h4>入住資訊</h4>
       <div class="panel"><h5>入住資訊</h5>
-        <p style="font-size:14px">入住 ${esc(s.checkin)} · 退房 ${esc(s.checkout)} · 最多 ${s.maxGuests} 人 · ${s.price == null ? '價格待補' : `價格 NT$${fmt(s.price)}${s.fee ? ` ＋ 稅費 NT$${fmt(s.fee)}` : ''} ＝ NT$${fmt(total(s))}`}</p>
+        <p style="font-size:14px">入住 ${esc(s.checkin)} · 退房 ${esc(s.checkout)} · 最多 ${s.maxGuests} 人</p>
         <p style="font-size:14px;color:var(--ink-2)">毛巾床單：${esc(s.linen)}</p>
         <div class="facts-list">${s.amen.map(a => `<span>${esc(a)}</span>`).join('')}</div>
       </div>
