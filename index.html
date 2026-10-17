@@ -94,6 +94,10 @@ img{display:block;max-width:100%}
 .mini dd{margin:0;color:var(--ink-2);font-variant-numeric:tabular-nums}
 .pill{display:inline-block;font-size:11.5px;line-height:1.7;padding:0 8px;border-radius:99px;font-weight:500}
 .swipe-hint{display:none;font-size:12.5px;color:var(--muted);margin-top:-8px}
+mark.hl-good,mark.hl-bad{padding:0 3px;border-radius:3px;font-weight:600;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+mark.hl-good{background:var(--good-soft);color:var(--good)}
+mark.hl-bad{background:var(--warn-soft);color:var(--warn)}
+.verdict mark.hl-bad{background:var(--surface)}
 .pill.rank{background:var(--maple-soft);color:var(--maple)}
 .ranklist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;border:1px solid var(--rule);border-radius:6px;background:var(--surface);overflow:hidden}
 .ranklist li + li{border-top:1px solid var(--rule-soft)}
@@ -301,6 +305,7 @@ tr:last-child th,tr:last-child td{border-bottom:0}
   <section class="sec" id="overview">
     <div class="sec-head">
       <h2>一眼總覽</h2>
+      <p><mark class="hl-good">綠色</mark>是優點，<mark class="hl-bad">黃色</mark>是要注意的地方。</p>
     </div>
     <ol class="ranklist" id="ranklist"></ol>
     <div class="cards" id="cards"></div>
@@ -545,13 +550,14 @@ const SOFA = {
   c2:[1,'有，大沙發＋投影機＋撞球桌'], e2:[1,'有，大 L 型沙發＋投影機'], c3:[1,'有，L 型皮沙發'], c4:[1,'有，沙發＋大電視'],
 };
 const REVIEW = {
-  c4:[1,'房間最多（6 間臥室、8 張正式床），7 個人每人一張床還有剩；客廳很大，旁邊那張床可以不睡人，直接當客廳的一部分用，還有陽台。評分偏低主要是有住客遇到電梯故障，之後的評語沒再提到，應該已經修好，訂之前跟房東確認一下就好。缺點是價格偏高（五間裡第三貴），走到赤羽站要 11 分。'],
-  c3:[5,'客廳大，但房間很小，全部在同一層，60㎡ 是五間裡最小的。價格最便宜，評價也好；缺點是到新宿、澀谷都要在高田馬場轉車。'],
-  b1:[4,'三層獨棟，4 間廁所是五間裡最多，分散在各層，想拉就拉，早上不用排隊；走 4 分到中井站，有西武新宿線和大江戶線，到新宿 18 分。1F 客廳是地板桌加坐墊，可以大家席地圍坐，但沒有沙發（沙發床在臥室裡），正式床 5 張、沒有浴缸，退房 10:00，而且是五間裡最貴。'],
-  e2:[2,'到新宿最快（方南町站走 2 分，丸之內線約 11 分），120㎡ 整層有電梯，每人都有自己的床，大客廳加投影機，20 則評價平均 4.9、最近一年都是好評，價格也是五間裡第二便宜。最大缺點是只有 1 間廁所（平面圖、Airbnb 標示、照片和住客評價都一致），住客說要排隊；三間臥室隔間上方是開放的，會互相聽到聲音；退房 10:00。'],
-  c2:[3,'客廳最好玩：大沙發、投影機、撞球桌、桌球桌，晚上大家可以一起玩；評分 9.6（7 則），住客說乾淨、安靜；有浴缸，走 5 分到沼袋站，搭西武新宿線到高田馬場轉山手線，新宿 25 分。但只有 2 間臥室、5 張正式床（其中 2 張是上下舖），要有 2 組人兩人睡一張雙人床；退房 10:00，價格跟 ① 差不多，屬於最貴的一級。'],
+  c4:[1,'{+房間最多（6 間臥室、8 張正式床），7 個人每人一張床還有剩+}；{+客廳很大+}，旁邊那張床可以不睡人，直接當客廳的一部分用，還有陽台。評分偏低主要是有住客{-遇到電梯故障-}，之後的評語沒再提到，應該已經修好，{-訂之前跟房東確認-}一下就好。缺點是{-價格偏高（五間裡第三貴）-}，{-走到赤羽站要 11 分-}。'],
+  c3:[5,'{+客廳大+}，但{-房間很小-}，全部在同一層，{-60㎡ 是五間裡最小的-}。{+價格最便宜+}，評價也好；缺點是{-到新宿、澀谷都要在高田馬場轉車-}。'],
+  b1:[4,'三層獨棟，{+4 間廁所是五間裡最多+}，分散在各層，{+想拉就拉，早上不用排隊+}；走 4 分到中井站，有西武新宿線和大江戶線，{+到新宿 18 分+}。1F 客廳是地板桌加坐墊，可以大家席地圍坐，但{-沒有沙發-}（沙發床在臥室裡），{-正式床 5 張、沒有浴缸-}，退房 10:00，而且是{-五間裡最貴-}。'],
+  e2:[2,'{+到新宿最快（方南町站走 2 分，丸之內線約 11 分）+}，120㎡ 整層{+有電梯+}，{+每人都有自己的床+}，大客廳加投影機，{+20 則評價平均 4.9+}、最近一年都是好評，價格也是五間裡第二便宜。最大缺點是{-只有 1 間廁所-}（平面圖、Airbnb 標示、照片和住客評價都一致），住客說要排隊；{-三間臥室隔間上方是開放的，會互相聽到聲音-}；退房 10:00。'],
+  c2:[3,'{+客廳最好玩：大沙發、投影機、撞球桌、桌球桌+}，晚上大家可以一起玩；{+評分 9.6（7 則）+}，住客說乾淨、安靜；有浴缸，走 5 分到沼袋站，搭西武新宿線到高田馬場轉山手線，新宿 25 分。但{-只有 2 間臥室、5 張正式床（其中 2 張是上下舖）-}，{-要有 2 組人兩人睡一張雙人床-}；退房 10:00，價格跟 ① 差不多，屬於{-最貴的一級-}。'],
 };
 STAYS.sort((a, b) => REVIEW[a.id][0] - REVIEW[b.id][0]);
+const hl = s => esc(s).replace(/\{\+(.+?)\+\}/g, '<mark class="hl-good">$1</mark>').replace(/\{-(.+?)-\}/g, '<mark class="hl-bad">$1</mark>');
 const rankLabel = s => REVIEW[s.id][0] >= 90 ? '待排名' : '推薦 #' + REVIEW[s.id][0];
 const $ = (s, el=document) => el.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -610,7 +616,7 @@ STAYS.forEach(s => {
 
 /* ---------- cards ---------- */
 function renderRank(){
-  $('#ranklist').innerHTML = STAYS.map(s => `<li><button data-id="${s.id}"><span class="rk num">${REVIEW[s.id][0] >= 90 ? '–' : REVIEW[s.id][0]}</span><span class="rn"><b><span class="badge">${s.no}</span> ${esc(s.short || s.name)}</b><small class="num">NT$${fmt(total(s))}</small></span><span class="rt">${esc(REVIEW[s.id][1])}</span></button></li>`).join('');
+  $('#ranklist').innerHTML = STAYS.map(s => `<li><button data-id="${s.id}"><span class="rk num">${REVIEW[s.id][0] >= 90 ? '–' : REVIEW[s.id][0]}</span><span class="rn"><b><span class="badge">${s.no}</span> ${esc(s.short || s.name)}</b><small class="num">NT$${fmt(total(s))}</small></span><span class="rt">${hl(REVIEW[s.id][1])}</span></button></li>`).join('');
   document.querySelectorAll('#ranklist button').forEach(c => c.addEventListener('click', () => {
     select(c.dataset.id);
     $('#detail').scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
@@ -771,7 +777,7 @@ function renderPane(){
         <a class="btn" href="${gpos(s)}" target="_blank" rel="noopener">Google 地圖位置 ↗</a>
       </div>
     </div>
-    <p class="verdict"><b>${rankLabel(s)}</b>${esc(REVIEW[s.id][1])}</p>
+    <p class="verdict"><b>${rankLabel(s)}</b>${hl(REVIEW[s.id][1])}</p>
     <dl class="d-price">
       ${s.price == null ? `<div><dt>3 晚總價</dt><dd class="tbd">待補</dd></div><p class="note">Booking 要選日期才顯示價格，我這邊抓不到；請把 11/19–11/22、7 人的價格給我。</p>` : `
       <div><dt>3 晚總價</dt><dd>NT$${fmt(total(s))}</dd></div>
