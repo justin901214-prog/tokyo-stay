@@ -1,0 +1,836 @@
+<title>箱根富士兩晚住宿</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;900&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a sticky "two-night ticket" (night 1 + night 2 = total) on top, night tabs, then candidate cards beside a schematic Hakone line map. */
+:root{
+  --ground:#ECEEEB; --paper:#F8F9F6; --ink:#17201C; --ink-2:#3A4540; --muted:#69736E;
+  --rule:#D3D8D2; --rule-soft:#E2E6E0;
+  --hk:#B3261E; --hk-soft:#F3DEDA;          /* 箱根 night: maple */
+  --fj:#2C5B9E; --fj-soft:#DCE5F2;          /* 富士 night: lake blue */
+  --pub:#1F6E6A; --pub-soft:#D7ECEA;        /* 公共溫泉 */
+  --pri:#8A3A86; --pri-soft:#EEDDEC;        /* 房內溫泉 */
+  --ok:#2F6B45; --warn:#9A5B00; --warn-soft:#F5E7CC;
+  --rail:#2E8B57; --cable:#C4572A; --rope:#6B6F3A; --bus:#8A8F8B;
+  --on-accent:#FFFFFF;
+  --f-display:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"Consolas",monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#111513; --paper:#181D1A; --ink:#E6EAE5; --ink-2:#C2C9C3; --muted:#949E98;
+    --rule:#2F3833; --rule-soft:#232A26;
+    --hk:#E5675C; --hk-soft:#3A2420; --fj:#7FA6E0; --fj-soft:#1E2A3C;
+    --pub:#6CC2BC; --pub-soft:#183331; --pri:#CF8BCB; --pri-soft:#33213A;
+    --ok:#7DBF8D; --warn:#E0A848; --warn-soft:#352A16;
+    --rail:#6CC08E; --cable:#E58A62; --rope:#B4B97A; --bus:#7E857F;
+    --on-accent:#111513; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#111513; --paper:#181D1A; --ink:#E6EAE5; --ink-2:#C2C9C3; --muted:#949E98;
+  --rule:#2F3833; --rule-soft:#232A26;
+  --hk:#E5675C; --hk-soft:#3A2420; --fj:#7FA6E0; --fj-soft:#1E2A3C;
+  --pub:#6CC2BC; --pub-soft:#183331; --pri:#CF8BCB; --pri-soft:#33213A;
+  --ok:#7DBF8D; --warn:#E0A848; --warn-soft:#352A16;
+  --rail:#6CC08E; --cable:#E58A62; --rope:#B4B97A; --bus:#7E857F;
+  --on-accent:#111513; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.7}
+h1,h2,h3,p{margin:0}
+h1,h2,h3{text-wrap:balance}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--hk);outline-offset:2px;border-radius:3px}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.wrap{max-width:1160px;margin:0 auto;padding-inline:clamp(16px,4vw,40px);padding-block:32px 72px;display:flex;flex-direction:column;gap:28px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;color:var(--hk);font-weight:600}
+.note{font-size:12.5px;color:var(--muted);line-height:1.6}
+
+/* header */
+.head h1{font-family:var(--f-display);font-weight:900;font-size:clamp(28px,4.6vw,42px);line-height:1.2;margin-top:6px}
+.head p{color:var(--ink-2);margin-top:8px;max-width:62ch}
+
+/* ticket */
+.ticket{position:sticky;top:calc(env(safe-area-inset-top,0px) + 8px);z-index:5;background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:12px;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,.9fr);gap:10px;align-items:stretch;box-shadow:0 6px 18px -14px rgba(0,0,0,.5)}
+.slot{border-radius:8px;padding:8px 12px;display:flex;flex-direction:column;gap:1px;min-width:0;cursor:pointer;border:1px dashed var(--rule);background:none;text-align:left}
+.slot.n1{border-color:var(--hk)}
+.slot.n2{border-color:var(--fj)}
+.slot.filled.n1{background:var(--hk-soft);border-style:solid}
+.slot.filled.n2{background:var(--fj-soft);border-style:solid}
+.slot .lbl{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;color:var(--muted)}
+.slot .nm{font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.slot .pr{font-family:var(--f-mono);font-size:13px;color:var(--ink-2)}
+.op{align-self:center;font-family:var(--f-mono);font-size:20px;color:var(--muted)}
+.sum{display:flex;flex-direction:column;justify-content:center;padding:4px 8px;min-width:0}
+.sum .big{font-family:var(--f-mono);font-size:22px;font-weight:600;line-height:1.2}
+.sum .pp{font-family:var(--f-mono);font-size:12.5px;color:var(--ink-2)}
+@media (max-width:760px){
+  .ticket{grid-template-columns:1fr 1fr;position:static}
+  .op{display:none}
+  .sum{grid-column:1/-1;flex-direction:row;align-items:baseline;gap:12px;flex-wrap:wrap;border-top:1px solid var(--rule);padding-top:8px}
+}
+
+/* tabs */
+.nights{display:flex;flex-direction:column;gap:8px}
+.nights>.q{font-weight:700;font-size:14px;color:var(--ink-2)}
+.c-sum{margin:6px 0 0;font-weight:700;color:var(--ink);background:var(--ground);border-left:3px solid var(--ink-2);border-radius:4px;padding:6px 10px;font-size:14px;line-height:1.6}
+.ov-t .sm{font-size:12px;line-height:1.5;color:var(--ink-2)}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tab{border:2px solid var(--rule);background:var(--paper);color:var(--ink);border-radius:12px;padding:12px 16px;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;font:inherit;transition:border-color .2s,background .2s}
+.tab .d{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;color:var(--muted)}
+.tab .t{font-family:var(--f-display);font-weight:900;font-size:22px;line-height:1.3}
+.tab .h{font-size:13px;font-weight:700}
+.tab[data-n="1"]{--c:var(--hk);--cs:var(--hk-soft)} .tab[data-n="2"]{--c:var(--fj);--cs:var(--fj-soft)}
+.tab[aria-selected="false"] .h{color:var(--c)}
+.tab[aria-selected="false"]:hover{border-color:var(--c)}
+.tab[aria-selected="true"]{background:var(--c);border-color:var(--c);color:#fff}
+.tab[aria-selected="true"] .d{color:rgba(255,255,255,.85)}
+.tab:focus-visible{outline:3px solid var(--c);outline-offset:2px}
+
+/* filters */
+.filters{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:flex-end}
+.fg{display:flex;flex-direction:column;gap:5px}
+.fg>span{font-size:11.5px;letter-spacing:.08em;color:var(--muted)}
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:7px;overflow:hidden;background:var(--paper)}
+.seg button{border:0;background:none;padding:6px 12px;font-size:13px;cursor:pointer;border-right:1px solid var(--rule)}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.chk{display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;padding-bottom:6px}
+.chk input{accent-color:var(--hk);width:16px;height:16px}
+
+/* main grid */
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:24px;align-items:start}
+@media (max-width:980px){.grid{grid-template-columns:minmax(0,1fr)}}
+.list{display:flex;flex-direction:column;gap:14px}
+.side{position:sticky;top:120px;display:flex;flex-direction:column;gap:14px}
+@media (max-width:980px){.side{position:static;order:-1}}
+
+/* card */
+.card{background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:12px;transition:border-color .2s,box-shadow .2s,opacity .2s}
+.card{scroll-margin-top:150px}
+.card.sel{border-color:var(--hk);box-shadow:0 0 0 2px var(--hk)}
+.card.hover{border-color:var(--ink-2)}
+.card.na{opacity:.55}
+.c-top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 16px;align-items:start}
+.c-name{font-family:var(--f-display);font-weight:900;font-size:19px;line-height:1.35}
+.c-name small{display:block;font-family:var(--f-body);font-weight:500;font-size:12.5px;color:var(--muted)}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.bdg{font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.bdg.pub{background:var(--pub-soft);color:var(--pub)}
+.bdg.pri{background:var(--pri-soft);color:var(--pri)}
+.bdg.bk{background:var(--ok);color:var(--paper)}
+.day{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.day>div{border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--paper);display:flex;flex-direction:column}
+.day>div.no{border-style:dashed}
+.day-img{all:unset;display:block;position:relative;cursor:zoom-in;aspect-ratio:16/9}
+.day-img img{width:100%;height:100%;object-fit:cover;display:block}
+.day-img span{position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,.6);color:#fff;font-size:11.5px;padding:2px 8px;border-radius:999px}
+.day-th{display:grid;grid-template-columns:repeat(6,1fr);gap:2px;margin-top:2px}
+.day-th button{all:unset;cursor:zoom-in;aspect-ratio:4/3;display:block}
+.day-th img{width:100%;height:100%;object-fit:cover;display:block}
+.day-img:focus-visible,.day-th button:focus-visible{outline:2px solid var(--fj);outline-offset:-2px}
+.day .b{padding:10px 12px 12px;display:flex;flex-direction:column;gap:8px;font-size:13px;color:var(--ink-2);flex:1}
+.day h5{font-size:15px;margin:0;color:var(--ink);display:flex;flex-direction:column}
+.day h5 small{font-size:11.5px;font-weight:500;color:var(--muted)}
+.day dl{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;margin:0}
+.day dt{color:var(--muted);font-weight:700;white-space:nowrap}
+.day dd{margin:0}
+.day ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:3px}
+.day .tot{margin:auto 0 0;border-top:1px solid var(--rule);padding-top:8px;display:grid;grid-template-columns:auto 1fr;align-items:baseline;gap:3px 10px}
+.day .tot dt{font-size:12px}
+.day .tot dd{margin:0}
+.day .tot span{font-size:12px;color:var(--muted)}
+.day .tot b{font-size:18px;color:var(--ink)}
+.brk{display:grid;grid-template-columns:auto auto;justify-content:end;gap:1px 8px;margin:0 0 4px;font-size:12.5px}
+.brk dt{color:var(--muted)}
+.brk dd{margin:0;font-weight:700;color:var(--ink)}
+.brk small{font-weight:500;color:var(--muted)}
+.dtag{font-style:normal;font-size:11px;font-weight:700;padding:1px 7px;border-radius:999px;background:var(--ok);color:var(--paper);vertical-align:2px}
+.dtag.no{background:none;border:1px dashed var(--warn);color:var(--warn)}
+.day .no .tot b{color:var(--muted)}
+@media (max-width:640px){.day{grid-template-columns:1fr}}
+.bdg.fy{background:var(--fj);color:var(--paper)}
+.bdg.fn{border:1px dashed var(--muted);color:var(--muted);font-weight:500}
+.bdg.none{border:1px solid var(--rule);color:var(--muted);font-weight:500}
+.bdg.area{border:1px solid var(--rule);color:var(--ink-2);font-weight:500}
+.bdg.src{border:1px solid var(--rule);color:var(--muted);font-weight:500;font-family:var(--f-mono)}
+.price{text-align:right}
+.price .p{font-family:var(--f-mono);font-size:22px;font-weight:600;line-height:1.2}
+.price .pp{font-family:var(--f-mono);font-size:12.5px;color:var(--ink-2)}
+.price .tx{font-size:11.5px;color:var(--muted)}
+.price .na{font-size:13px;color:var(--muted)}
+.meter{position:relative;height:8px;background:var(--rule-soft);border-radius:4px}
+.meter i{position:absolute;left:0;top:0;bottom:0;border-radius:4px;background:var(--ok)}
+.meter i.over{background:var(--warn)}
+.meter b{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink)}
+.meter-l{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);font-family:var(--f-mono);margin-top:3px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px 18px;margin:0}
+.facts div{display:flex;flex-direction:column;min-width:0}
+.facts dt{font-size:11.5px;color:var(--muted);letter-spacing:.04em}
+.facts dd{margin:0;font-size:13.5px}
+.acc{border:1px solid var(--rule);border-radius:8px;padding:10px 13px;display:flex;flex-direction:column;gap:8px}
+.acc-h{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline}
+.acc-h h4{margin:0;font-size:12px;letter-spacing:.06em;color:var(--ink-2)}
+.acc-h .stop{font-weight:700;font-size:14px}
+.acc-h .lv{font-size:11.5px;font-weight:700;padding:1px 8px;border-radius:999px}
+.lv1{background:var(--pub-soft);color:var(--pub)} .lv2{background:var(--rule-soft);color:var(--ink-2)} .lv3{background:var(--warn-soft);color:var(--warn)}
+.acc p{margin:0;font-size:13px;color:var(--ink-2)}
+.acc-g{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px}
+.acc-g h5{margin:0 0 3px;font-size:12px;color:var(--muted);font-weight:700}
+.acc-g ul{margin:0;padding-left:17px;font-size:13px;line-height:1.6}
+@media (max-width:560px){.acc-g{grid-template-columns:1fr}}
+.ov-t .bus{font-size:11.5px;color:var(--muted)}
+.route{font-size:13.5px;line-height:1.65;background:var(--ground);border-left:3px solid var(--hk);padding:9px 13px;border-radius:0 6px 6px 0;color:var(--ink-2)}
+.route b{color:var(--ink)}
+.pc{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:560px){.pc{grid-template-columns:1fr}.c-top{grid-template-columns:1fr}.price{text-align:left}}
+.pc ul{margin:0;padding-left:18px;font-size:13px;color:var(--ink-2);display:flex;flex-direction:column;gap:2px}
+.pc h4{margin:0 0 3px;font-size:12px;letter-spacing:.06em}
+.pc .pro h4{color:var(--ok)}
+.pc .con h4{color:var(--warn)}
+.opts{width:100%;border-collapse:collapse;font-size:12.5px}
+.opts td{padding:4px 6px;border-top:1px solid var(--rule-soft)}
+.opts td.n{text-align:right;font-family:var(--f-mono);white-space:nowrap}
+.opts tr.cur td{background:var(--hk-soft);font-weight:700}
+details summary{cursor:pointer;font-size:12.5px;color:var(--muted)}
+.c-act{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;border-top:1px dashed var(--rule);padding-top:10px}
+.btn{border:1px solid var(--hk);background:none;color:var(--hk);border-radius:7px;padding:7px 14px;font-weight:700;font-size:13.5px;cursor:pointer}
+.btn[aria-pressed="true"]{background:var(--hk);color:var(--on-accent)}
+.c-act a{font-size:13px;color:var(--ink-2)}
+
+/* map */
+.panel{background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:14px}
+.panel h3{font-size:14px;margin-bottom:6px}
+#map{display:block;width:100%;height:auto}
+#map text{font-family:var(--f-body);fill:var(--ink)}
+#map .st{font-size:11px;font-weight:700}
+#map .lg{font-size:10px;fill:var(--muted)}
+.pin{cursor:pointer}
+.pin circle{transition:r .15s}
+.pin:focus{outline:none}
+.pin:focus-visible circle.o{stroke:var(--ink);stroke-width:3}
+.legend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:11.5px;color:var(--muted);margin-top:6px}
+.legend i{display:inline-block;width:14px;height:3px;vertical-align:middle;margin-right:4px;border-radius:2px}
+.legend s{display:inline-block;width:9px;height:9px;border-radius:50%;vertical-align:middle;margin-right:4px;text-decoration:none}
+
+/* empty night 2 */
+.empty{background:var(--paper);border:1px dashed var(--fj);border-radius:12px;padding:28px;display:flex;flex-direction:column;gap:12px;max-width:760px}
+.empty h3{font-family:var(--f-display);font-weight:900;font-size:20px;color:var(--fj)}
+.empty ul{margin:0;padding-left:18px;color:var(--ink-2);display:flex;flex-direction:column;gap:4px}
+.foot{font-size:12px;color:var(--muted);line-height:1.7;border-top:1px solid var(--rule);padding-top:14px}
+
+/* photos */
+.gal{display:flex;gap:6px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;margin-inline:-4px;padding-inline:4px}
+.gal button{flex:0 0 auto;border:0;padding:0;background:var(--rule-soft);cursor:zoom-in;scroll-snap-align:start;border-radius:6px;overflow:hidden;position:relative}
+.gal img{display:block;height:104px;width:156px;object-fit:cover}
+.gal button:first-child img{width:208px}
+.gal span{position:absolute;left:0;right:0;bottom:0;font-size:11px;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.65));padding:10px 7px 4px;text-align:left}
+.lb{border:0;padding:0;background:var(--paper);color:var(--ink);border-radius:10px;width:min(1000px,94vw);max-width:none}
+.lb::backdrop{background:rgba(0,0,0,.78)}
+.lb figure{margin:0}
+.lb img{display:block;width:100%;max-height:76vh;object-fit:contain;background:#000}
+.lb figcaption{padding:10px 14px 4px;font-size:14px;font-weight:700}
+.lb-nav{display:flex;gap:8px;align-items:center;padding:6px 14px 14px;flex-wrap:wrap}
+.lb-nav span{flex:1;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.lb-nav button{border:1px solid var(--rule);background:var(--ground);border-radius:7px;padding:6px 12px;font-size:13px;cursor:pointer}
+
+/* layout: bed diagram */
+.sec h4{margin:0 0 6px;font-size:12px;letter-spacing:.06em;color:var(--ink-2)}
+.bp{display:flex;flex-wrap:wrap;gap:8px}
+.bp-r{border:1px solid var(--rule);border-radius:7px;padding:7px 10px;display:flex;flex-direction:column;gap:6px;background:var(--ground);min-width:0}
+.bp-n{font-size:12.5px;font-weight:700}
+.bp-n small{font-weight:400;color:var(--muted);margin-left:5px;font-family:var(--f-mono)}
+.bp-b{display:flex;gap:3px;align-items:flex-end;flex-wrap:wrap}
+.bp-p{font-family:var(--f-mono);font-size:11.5px;color:var(--hk);font-weight:600}
+.g{display:inline-block;height:22px;width:11px;border:1.5px solid var(--ink-2);border-radius:3px}
+.g.D{width:21px}
+.g.F{border-style:dashed;border-radius:6px}
+.g.M{height:15px;border-style:dotted}
+.g.X{border-style:dashed;border-color:var(--muted)}
+.g.on{background:var(--hk);border-color:var(--hk);border-style:solid}
+.bp-leg{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:11.5px;color:var(--muted);margin-top:7px;align-items:center}
+.bp-leg .g{height:13px;width:8px;vertical-align:-2px;margin-right:4px}
+.bp-leg .g.D{width:14px}.bp-leg .g.M{height:9px}
+
+/* layout: floor plan */
+.fp{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:14px;align-items:start}
+@media (max-width:640px){.fp{grid-template-columns:1fr}}
+.fp svg{width:100%;height:auto;display:block;background:var(--ground);border-radius:8px;border:1px solid var(--rule-soft)}
+.fp text{font-family:var(--f-body);fill:var(--ink);pointer-events:none}
+.fp .rm[tabindex]{cursor:pointer}
+.fp .rm[tabindex]:hover rect,.fp .rm[tabindex]:focus-visible rect{stroke:var(--ink);stroke-width:2}
+.fp .rm:focus{outline:none}
+.fp .rm.cur rect{stroke:var(--hk);stroke-width:3}
+.fp-d{display:flex;flex-direction:column;gap:6px}
+.fp-d button{border:0;padding:0;background:none;cursor:zoom-in;border-radius:8px;overflow:hidden}
+.fp-d img{width:100%;aspect-ratio:3/2;object-fit:cover;display:block}
+.fp-d h5{margin:2px 0 0;font-size:15px;font-family:var(--f-display);font-weight:900}
+.fp-d p{font-size:13px;color:var(--ink-2);line-height:1.6}
+.fp-d .noimg{aspect-ratio:3/2;border-radius:8px;background:var(--ground);border:1px dashed var(--rule);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--muted)}
+/* overview switcher */
+.ov-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.ov-h h2{margin:0;font-family:var(--f-display);font-weight:900;font-size:18px}
+.ov-h span{font-size:12.5px;color:var(--muted)}
+.ov{display:grid;grid-template-columns:minmax(110px,.7fr) repeat(4,minmax(0,1fr));gap:10px}
+.ov button{font:inherit;color:inherit;text-align:left;cursor:pointer;background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:0;overflow:hidden;display:flex;flex-direction:column;transition:border-color .2s,box-shadow .2s}
+.ov button:hover{border-color:var(--ink-2)}
+.ov button[aria-pressed="true"]{border-color:var(--hk);box-shadow:0 0 0 2px var(--hk)}
+.ov .all{justify-content:center;align-items:flex-start;padding:12px;gap:4px}
+.ov .all b{font-family:var(--f-display);font-weight:900;font-size:18px}
+.ov .all span{font-size:12px;color:var(--muted)}
+.ov-img{display:block;position:relative;aspect-ratio:16/10;background:var(--rule-soft)}
+.ov-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.ov-img .bdg{position:absolute;left:6px;top:6px}
+.ov-img .mine{position:absolute;right:6px;top:6px;background:var(--hk);color:#fff;font-size:11px;font-weight:700;padding:2px 7px;border-radius:999px}
+.ov-t{padding:8px 10px 10px;display:flex;flex:1;flex-direction:column;gap:2px;min-width:0}
+.ov-t .nm{font-weight:700;font-size:13.5px;line-height:1.3}
+.ov-t .pr{font-family:var(--f-mono);font-weight:700;font-size:16px}
+.ov-t .pp{font-size:12px;color:var(--ink-2)}
+.ov-t .st{font-size:11.5px;font-weight:700}
+.ov-t .st.ok{color:var(--ok)} .ov-t .st.over{color:var(--warn)}
+@media (max-width:900px){.ov{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(170px,1fr);overflow-x:auto;padding-bottom:4px;scroll-snap-type:x proximity}.ov button{scroll-snap-align:start}.ov .all{min-width:110px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="head">
+    <div class="eyebrow">11/17 – 11/19 · 2 NIGHTS · 箱根 9 人・富士 8 人</div>
+    <h1>箱根＋富士山 兩晚住宿</h1>
+    <p>第一晚住箱根、第二晚住富士山區（河口湖駅取車，開車）。最上面的總覽點一間就只看那間，點「全部」回到一起比較。每晚挑一間，上面的票卡會把兩晚加起來，換算成每人金額。價格全部是一晚的總價，新台幣；箱根以 9 人計，富士以 8 人計；票卡的每人金額是兩晚各自除完再相加。</p>
+  </header>
+
+  <nav class="nights" aria-label="切換第一晚／第二晚">
+    <span class="q">現在看哪一晚？點按鈕切換 ▼</span>
+    <div class="tabs" role="tablist">
+      <button type="button" class="tab" role="tab" data-n="1" id="tab1" aria-selected="true"><span class="d">第一晚 · 11/17（二）</span><span class="t">箱根</span><span class="h"></span></button>
+      <button type="button" class="tab" role="tab" data-n="2" id="tab2" aria-selected="false"><span class="d">第二晚 · 11/18（三）</span><span class="t">富士山區</span><span class="h"></span></button>
+    </div>
+  </nav>
+
+  <section aria-label="第一晚總覽">
+    <div class="ov-h"><h2 id="ov-title">第一晚 11/17 箱根・總覽</h2><span>點一間只看那間，點「全部」一起比較</span></div>
+    <div class="ov" id="ov"></div>
+  </section>
+
+  <section class="ticket" aria-label="兩晚組合">
+    <button type="button" class="slot n1" id="slot1"><span class="lbl">第一晚 11/17 箱根</span><span class="nm">還沒選</span><span class="pr">點下方卡片的「選這間」</span></button>
+    <span class="op">+</span>
+    <button type="button" class="slot n2" id="slot2"><span class="lbl">第二晚 11/18 富士山區</span><span class="nm">還沒選</span><span class="pr">到第二晚分頁選一間</span></button>
+    <span class="op">=</span>
+    <div class="sum" aria-live="polite"><span class="note">兩晚合計</span><span class="big" id="sum-total">—</span><span class="pp" id="sum-pp">—</span></div>
+  </section>
+
+
+  <section id="night1" role="tabpanel" aria-labelledby="tab1" style="display:flex;flex-direction:column;gap:18px">
+    <div class="filters">
+      <div class="fg"><span>排序</span><div class="seg" id="f-sort">
+        <button type="button" data-v="price">價格</button><button type="button" data-v="score">評分</button><button type="button" data-v="route">順路程度</button></div></div>
+      <label class="chk"><input type="checkbox" id="f-free"> 只看可免費取消</label>
+    </div>
+
+    <div class="grid">
+      <div class="list" id="list"></div>
+      <aside class="side">
+        <div class="panel">
+          <h3>四個方案怎麼選</h3>
+          <ul class="note" style="padding-left:18px;margin:0;color:var(--ink-2);display:flex;flex-direction:column;gap:6px">
+            <li><b>① 樂天 Villa 仙石原</b>：房內有小溫泉浴缸，但沒有大浴場，附近也沒有日歸溫泉。優點是最便宜（NT$12,236，未含稅）。</li>
+            <li><b>② Re'Cove 溫泉飯店</b>：飯店自己有溫泉。缺點是房間小、床可能偏小，價格偏高（NT$18,708）。</li>
+            <li><b>③ Airbnb 源泉別墅</b>：3 個獨立源泉池，最過癮。缺點是最貴（¥118,921，約 NT$24,688），男女同行要帶泳衣或分時段泡。</li>
+            <li><b>④ Airbnb 湯本＋日歸溫泉</b>：房子沒溫泉，去附近的箱根湯寮泡。房價 NT$11,720，溫泉一人 ¥1,800，每人約 NT$1,676（住宿加溫泉），第二便宜，離車站、餐廳最近。湯寮單程約 20–30 分鐘，免費接駁車末班 21:05；備案湯の里おかだ開到 23:00，搭計程車約 5–10 分鐘。</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>位置與動線</h3>
+          <svg id="map" viewBox="0 0 600 330" role="img" aria-label="箱根交通與住宿位置示意圖"></svg>
+          <div class="legend">
+            <span><i style="background:var(--rail)"></i>登山電車</span>
+            <span><i style="background:var(--cable)"></i>登山纜車</span>
+            <span><i style="background:var(--rope)"></i>空中纜車</span>
+            <span><i style="background:var(--bus);height:2px"></i>巴士</span>
+            <span><s style="background:var(--pub)"></s>公共溫泉</span>
+            <span><s style="background:var(--pri)"></s>房內溫泉</span>
+            <span><s style="background:var(--muted)"></s>無溫泉（去泡日歸）</span>
+          </div>
+          <p class="note" style="margin-top:6px">位置是示意，車站與住宿依經緯度大略標點。點圓點會跳到那間的卡片。</p>
+        </div>
+        <div class="panel">
+          <h3>巴士班次（平日）</h3>
+          <ul class="note" style="padding-left:18px;margin:0;color:var(--ink-2);display:flex;flex-direction:column;gap:5px">
+            <li><b>T 線</b>（湯本・宮ノ下 ⇄ 仙石 ⇄ 桃源台）：白天約 15 分鐘一班。仙石往桃源台 6:44–21:42；往湯本方向末班約 20:20。</li>
+            <li><b>TG 線</b>（強羅 ⇄ 仙石 ⇄ 桃源台）：約 1 小時 1 班，強羅每小時 10 分左右發車，只有白天，約 33 分鐘到桃源台。傍晚以後改搭 T 線。</li>
+            <li><b>W 高速巴士</b>（仙石 → 御殿場駅，24 分鐘）：一天約 7 班，9:41、11:11、11:41、12:41、14:11、16:41、18:11；座位制。</li>
+            <li><b>M 觀光設施巡迴巴士</b>（仙石 → 御殿場 Outlet）：約 1 小時 1 班，9:19–17:59。</li>
+            <li>G 線（往御殿場駅）、L 線班次很少，抓到的資料不完整。</li>
+          </ul>
+          <p class="note" style="margin-top:6px">時刻取自 NAVITIME 10/26（一）平日班表，11 月可能改點，出發前請再查。箱根的店和巴士大多傍晚就收，晚餐和補給要早點處理。</p>
+        </div>
+        <div class="panel">
+          <h3>怎麼看「順路」</h3>
+          <p class="note" style="color:var(--ink-2)">原行程：11/17 登山電車上小涌谷；11/18 早上從強羅搭纜車 → 早雲山 → 大涌谷，A／B 再轉巴士去御殿場、河口湖。</p>
+          <ul class="note" style="padding-left:18px;margin:6px 0 0;color:var(--ink-2)">
+            <li><b>仙石原三間</b>：把順序反過來更好。17 號下午先走強羅 → 早雲山 → 大涌谷 → 桃源台，再搭巴士到仙石原入住；18 號直接從仙石原搭巴士去御殿場，省一段回頭路。</li>
+            <li><b>箱根湯本</b>：照原行程最順。17 號從小涌谷下山回湯本入住、泡湯；18 號早上搭登山電車上強羅接纜車。</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="night2" role="tabpanel" aria-labelledby="tab2" hidden style="display:flex;flex-direction:column;gap:18px">
+    <div class="grid">
+      <div class="list" id="list2"></div>
+      <aside class="side">
+        <div class="panel">
+          <h3>第二晚怎麼選</h3>
+          <ul class="note" style="padding-left:18px;margin:0;color:var(--ink-2);display:flex;flex-direction:column;gap:5px">
+            <li><b>開車（河口湖駅取車）</b>：河口湖の森、HAOSTAY 開 10–15 分鐘就到；山中湖要開約 30 分鐘，隔天也要開回河口湖駅還車。</li>
+            <li>租車店多半 19:00 打烊，取車時間要算好。</li>
+            <li>11/19 還車後搭高速巴士回新宿，行李可以放車上。</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>窗外看得到富士山嗎</h3>
+          <ul class="note" style="padding-left:18px;margin:0;color:var(--ink-2);display:flex;flex-direction:column;gap:5px">
+            <li><b>HAOSTAY 大石公園：看得到。</b>2 樓客廳、頂樓露臺都看得到。</li>
+            <li><b>樂天 Villa 山中湖：看得到。</b>客廳、露臺望湖看富士山；Room 3 的浴缸大概看不到。</li>
+            <li><b>樂天 Villa 河口湖の森：看不到。</b>窗外是森林。</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>三間位置</h3>
+          <p class="note" style="color:var(--ink-2)">HAOSTAY：河口湖北岸大石，離河口湖駅約 15 分鐘車程。<br>河口湖の森：河口湖東側船津，離河口湖駅約 2.5 km。<br>山中湖：山中湖東北岸平野，離河口湖駅約 15 km。</p>
+          <p class="note" style="margin-top:6px">三間都已訂好，價格是實際訂單金額：山中湖樂天以日圓計價，用台銀 10/28 即期賣出 0.2076 換算；河口湖の森和 HAOSTAY 是新台幣價。</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <footer class="foot">
+    價格查詢日期：箱根 2026/10/29（Re'Cove 仍是 10/23 的 8 人價格）；富士山區是實際訂單金額（日圓 × 0.2076，台銀 2026/10/28 即期賣出）；箱根 9 位大人、富士 8 位大人，各一晚，新台幣。Booking.com 價格是登入後顯示的價格，含稅；Agoda 價格<b>未含稅及其他費用</b>，結帳時會再加；Airbnb 價格是含所有費用的總價。房價會變動，訂房前請以網站當下顯示為準。Airbnb 照片與原始平面圖取自該房源頁面；重繪的平面圖依原圖比例描繪，浴室與露天的連接方式是推測。巴士路線依箱根 Navi（箱根登山巴士、小田急高速巴士）各站資訊整理，班次與時刻請出發前到箱根 Navi 查；W 高速巴士為座位制。
+  </footer>
+</div>
+
+<dialog class="lb" id="lb" aria-label="照片">
+  <figure><img id="lb-img" alt=""><figcaption id="lb-cap"></figcaption></figure>
+  <div class="lb-nav"><span id="lb-n"></span><button type="button" data-lb="-1">‹ 上一張</button><button type="button" data-lb="1">下一張 ›</button><button type="button" data-lb="x">關閉</button></div>
+</dialog>
+
+<script>
+(function(){
+const P1 = 9, P2 = 8;
+const ppl = h => h.night===2 ? P2 : P1;
+const AG = 'https://www.agoda.com/zh-tw/', BK = 'https://www.booking.com/hotel/jp/';
+const AGQ = '?adults=9&rooms=1&checkIn=2026-11-17&checkOut=2026-11-18&los=1&currency=TWD';
+const BKQ = '.zh-tw.html?checkin=2026-11-17&checkout=2026-11-18&group_adults=9&no_rooms=2&selected_currency=TWD';
+
+/* opts: meal none only (no meal plans), price NT$ for 8 people, free: cancel deadline or '' (non-refundable) */
+const H = [
+ {id:'yu', sum:'離湯本車站和餐廳最近、跟行程最順，但房子沒溫泉，要出門去泡日歸溫泉。', name:'箱根湯本 山坡獨棟（Airbnb）', jp:'俯瞰箱根湯本小鎮的兩層獨棟，84㎡，最多 12 人', onsen:'none', onsenNote:'房子沒有溫泉。這個方案以「住宿＋9 人去日歸溫泉」計價，見下方「日歸溫泉比價」。房東說步行 6 分鐘內另有兩處溫泉浴場', area:'箱根湯本', route:3,
+  lat:35.2306, lng:139.1081, src:'Airbnb', max:5, url:'https://www.airbnb.com.tw/rooms/843285427849128041?adults=9&check_in=2026-11-17&check_out=2026-11-18', tax:true, dir:'yu', day:true,
+  score:4.83, reviews:76, rooms:'3 臥室：大床 1（席夢思）／單人床 ×2＋摺疊床／雙層床 ×2 組＋摺疊床；客廳沙發床可睡 2', bath:'1 間浴室（有浴缸）；1F、2F 各 1 間廁所', inout:'15:00–21:00 自助入住／10:00 前', station:'箱根湯本駅步行約 12 分鐘（要爬陡坡）；最近巴士站「湯本郵局」',
+  acc:{ym:'就在箱根湯本，走到車站約 12 分鐘', stop:'湯本郵局', walk:'房東說是最近的站', lv:2, note:'在箱根湯本駅旁的山坡住宅區。走到車站約 12 分鐘，但要爬陡坡，帶行李建議從車站搭計程車（9 人 3 台）。房子後面是箱根新道，有車聲。',
+    in:['照原行程：從小涌谷搭登山電車下山到箱根湯本駅，再搭計程車或走上坡約 12 分鐘。','從新宿也可以直接搭小田急浪漫特快到箱根湯本駅。'],
+    out:['照原行程：箱根湯本搭登山電車上強羅（約 40 分鐘），接纜車 → 早雲山 → 大涌谷，再轉巴士去御殿場。','直接去：箱根湯本搭 T 線到「仙石」（約 33 分鐘），轉 G 線到御殿場駅、L／M 線到 Outlet，或 W 高速巴士。']},
+  food:{tag:'步行 5 分鐘有 2 間超商', bad:false, list:['房東說步行 5 分鐘內有兩間超商。','箱根湯本駅前餐廳最多，晚餐選擇比仙石原多很多。','有廚房（冰箱、電子鍋、全套鍋具、咖啡機），可以買回來煮。']},
+  opts:[{meal:'none',price:15083,free:'',fl:'24 小時內免費取消',room:'房價 NT$11,720＋箱根湯寮一人 ¥1,800',ml:'住宿＋箱根湯寮',stay:11720,on:1800,onl:'箱根湯寮',def:true},{meal:'none',price:16671,free:'',fl:'24 小時內免費取消',room:'房價 NT$11,720＋湯の里おかだ一人 ¥2,650（含計程車分攤）',ml:'住宿＋湯の里おかだ',stay:11720,on:2650,onl:'湯の里おかだ，含計程車'}],
+  routeNote:'<b>照原行程最順：</b>11/17 從小涌谷下山回湯本入住，傍晚去泡箱根湯寮、在湯本吃晚餐；11/18 早上搭登山電車上強羅，接原本的纜車路線。',
+  pros:['<b>四個方案第二便宜</b>：房價 NT$11,720，加箱根湯寮一人 ¥1,800，每人約 NT$1,676（住宿加溫泉）','在箱根湯本，餐廳、超商多，跟原行程最順','Airbnb 4.83 分／76 則，超讚房東；84㎡ 獨棟、3 間臥室'],
+  cons:['房子沒有溫泉，要出門泡；箱根湯寮平日 19:00 最後入場，趕不上可改去開到 23:00 的湯の里おかだ（搭計程車約 5–10 分鐘）','只有 1 間浴室；房子後面是箱根新道，有車聲和震動','走到車站要爬陡坡；只有訂房後 24 小時內可免費取消'],
+  photos:[['u0','客廳'],['u23','窗外的箱根湯本山景'],['u1','客廳・廚房'],['u2','戶外草皮・躺椅'],['u28','外觀'],['uplan','平面圖（1F／2F）'],['u7','廚房'],['u4','臥室 1（大床）'],['u3','臥室 2（單人床 ×2）'],['u5','臥室 3（雙層床 ×2）'],['u20','浴室'],['u24','洗手台・洗衣機'],['u30','玄關']]},
+ {id:'v-sengoku', sum:'最便宜、房內就能泡小溫泉，但沒有大浴場，附近也沒店，進出要靠計程車。', name:'Rakuten STAY VILLA 箱根仙石原', jp:'樂天住宿別墅（樓中樓）', onsen:'pri', onsenNote:'房內溫泉浴缸＋戶外足湯（住客評語）', area:'仙石原', route:2,
+  lat:35.2553, lng:138.9995, src:'Agoda', url:AG+'rakuten-stay-villa-hakone-sengokuhara/hotel/hakone-jp.html'+AGQ, tax:false,
+  score:8.6, reviews:393, rooms:'北館樓中樓 92㎡，2 臥室：雙人床 ×4＋床墊 1', bath:'2 間衛浴', inout:'依 Agoda 頁面', station:'姥子溫泉入口巴士站 720 m',
+  acc:{ym:'先搭計程車到「仙石」（約 5 分鐘），再搭 T 線約 33 分鐘，合計約 40–45 分鐘', stop:'姥子溫泉入口', walk:'約 720 m，步行 10 分鐘以上', lv:3, note:'在仙石原西側住宅區，附近沒有主要巴士站。9 人帶行李，建議從「仙石」或桃源台叫 3 台計程車（約 1.5 km）。',
+    in:['宮ノ下或箱根湯本搭 T 線、強羅駅搭 TG 線，到「仙石」下車，再轉計程車。','高速巴士 W 線（新宿 ⇄ 桃源台）有停附近的「東京放送入口」，走到住處的距離沒查到。'],
+    out:['叫計程車回「仙石」，轉 G 線到御殿場駅、L／M 線到 Outlet。','或在「東京放送入口」搭 W 高速巴士直達御殿場駅（座位制，先訂位）。']},
+  food:{tag:'附近沒店，先買好', bad:true, list:['住宅區，附近沒有超商或餐廳。','有廚房，建議在仙石原先買好，再搭計程車過去。','蕎麥麵店「穗し乃庵」「銀の穗」晚上 17:00–20:30 營業，有仙石原・姥子一帶的接送（要先確認 9 人能不能接）。']},
+  opts:[{meal:'none',price:12236,free:'11/10 前'}],
+  routeNote:'<b>在仙石原西側，要靠巴士或開車。</b>往御殿場方向順，但離強羅、大涌谷都要轉車。',
+  pros:['<b>四個方案最便宜</b>：NT$12,236（未含稅），每人約 NT$1,360','房內可以泡溫泉，還有戶外足湯、按摩椅','2 間衛浴、空間大，評語說待一整天都很舒服','有免費停車'],
+  cons:['房內溫泉浴缸比較小；沒有公共大浴場，附近也沒有日歸溫泉可去','不含餐，要自己煮或外食','離巴士站 720 m，帶行李走比較累'],
+  dir:'sen', photos:[['s0','房內溫泉浴缸'],['s5','戶外泡湯區'],['s19','入口招牌'],['s18','別墅外觀'],['s1','客廳'],['s4','樓中樓挑高客廳'],['s2','餐桌'],['s9','投影機'],['s3','臥室'],['s14','臥室'],['s8','臥室（帳篷佈置）'],['s6','浴室'],['s11','洗手台'],['s21','2 樓吊網']]},
+ {id:'recove', sum:'飯店有溫泉大浴場可以一起泡，但房間和床偏小，9 人要再加房，價格要重查。', name:"EN RESORT Re'Cove Hakone", jp:'EN RESORT 箱根（仙石原溫泉飯店）', onsen:'pub', onsenNote:'館內溫泉大浴場＋露天浴池（仙石原溫泉）', area:'仙石原', route:2,
+  lat:35.2643, lng:139.0120, src:'Booking', url:BK+'recove-hakone'+BKQ, tax:true, dir:'recove',
+  score:8.3, reviews:1159, rooms:'純住宿：雙人房 ×2，每間可住 4 人；另有特大雙人床套房 ×2（各 97㎡：2 張雙人床＋2 張沙發床）', bath:'房內衛浴；館內溫泉大浴場', inout:'15:00–19:00（要先告知抵達時間）／11:00 前', station:'「仙郷樓前」巴士站步行 2 分鐘；免費停車',
+  acc:{ym:'仙郷樓前搭 T 線往箱根湯本駅，約 30 分鐘，不用轉車', stop:'仙郷樓前', walk:'步行約 2 分鐘', lv:2, note:'飯店說附近有 2 個巴士站，都只要走 2–3 分鐘。',
+    in:['宮ノ下或箱根湯本搭 <b>T 線</b>（往桃源台），在「仙郷樓前」下車。','從強羅駅搭 TG 線（往桃源台）也會經過仙石原，在「仙石」下車再走過去。'],
+    out:['走到「仙石」站 3 號月台，搭 G 線到御殿場駅、L／M 線到御殿場 Outlet。','或搭 W 高速巴士直達御殿場駅（座位制，先訂位）。']},
+  food:{tag:'仙石原中心，有超商', bad:false, list:['仙石原有 2 間 7-Eleven（24 小時）、全家（24 小時）、Lawson（7:00–22:00／23:00）。','超市只有 Aコープ 仙石原店（9:30–18:00），熟食傍晚就賣完。','晚餐餐廳多半 20:30 前最後點餐，9 人建議先訂位。']},
+  opts:[{meal:'none',price:18708,free:'',fl:'取消規定待確認',room:'雙人房 ×2（每間 4 人）'},{meal:'none',price:41110,free:'11/15 前',room:'雙人床套房 ×2'}],
+  routeNote:'<b>適合反過來走。</b>在仙石原中心，跟 Airbnb 別墅同一區；18 號往御殿場的巴士經過仙石原。到強羅、大涌谷要搭巴士。',
+  pros:['有溫泉大浴場＋露天，可以大家一起泡','純住宿 2 間雙人房 NT$18,708（每人約 NT$2,079）','1,159 則評語、8.3 分'],
+  cons:['<b>9 人住 2 間會超過</b>：雙人房每間最多 4 人，要再加 1 間或改套房，價格是 8 人時查的，要重查；房間小、床可能也偏小；住客也提到燈光偏暗、露天浴池偏小','價格偏高：NT$18,708（8 人價），每人約 NT$2,079','入住只到 19:00；不含餐，仙石原餐廳不多要先訂；取消規定請在 Booking 上確認'],
+  photos:[['ext','外觀'],['onsen1','溫泉露天浴池'],['onsen2','露天庭園浴池'],['lobby','大廳'],['room1','大型客房'],['room2','大型客房・客廳區'],['fam1','和洋室家庭房（另一房型）'],['susuki','附近的仙石原芒草原']]},
+ {id:'abnb', sum:'整棟包下、有 3 個私人源泉池最過癮，但四個裡最貴，男女一起泡要帶泳衣。', name:'仙石原 源泉露天溫泉 包棟別墅', jp:'Airbnb 整棟獨棟房屋（244㎡，最多 20 人）', onsen:'pri', onsenNote:'包棟私人源泉放流溫泉：3 人內湯、2 人內湯＋2 人露天', area:'仙石原', route:2,
+  lat:35.2717, lng:139.0138, src:'Airbnb', max:5, url:'https://www.airbnb.com.tw/rooms/1103354194019712044?adults=9&check_in=2026-11-17&check_out=2026-11-18', tax:true,
+  score:4.86, reviews:211, rooms:'4 臥室：1F 洋室（大床＋2 單人床）、2F 和室 ×3（各 3 單人床＋1 折疊床）；客廳另有 4 套被褥', bath:'2 間溫泉浴室＋露天；廁所 1F、2F 各 2 間', inout:'16:00–21:00 自助入住／10:00 前', station:'「仙石」巴士站步行 2 分鐘（新宿直達高速巴士站）；免費停車 3 位',
+  acc:{ym:'「仙石」搭 T 線到箱根湯本駅約 33 分鐘，不用轉車', stop:'仙石', walk:'步行約 2 分鐘', lv:1, note:'「仙石」是仙石原最大的轉乘站，往強羅、湯本、桃源台、御殿場、新宿的巴士都停。',
+    in:['宮ノ下或箱根湯本搭 <b>T 線</b>、強羅駅搭 <b>TG 線</b>，在「仙石」下車。','從新宿也可以直接搭 W 高速巴士到「仙石」。'],
+    out:['「仙石」3 號月台：G 線直達御殿場駅、L／M 線到御殿場 Outlet、W 高速巴士經御殿場駅。仙石原三間裡轉乘最方便。']},
+  food:{tag:'仙石原中心，有超商', bad:false, list:['仙石原有 2 間 7-Eleven（24 小時）、全家（24 小時）、Lawson（7:00–22:00／23:00）。','超市只有 Aコープ 仙石原店（9:30–18:00），熟食傍晚就賣完。','別墅有大廚房，可以買食材自己煮；外食多半 20:30 前最後點餐。']},
+  opts:[{meal:'none',price:24688,free:'',fl:'24 小時內免費取消；11/10 前取消部分退款'}],
+  routeNote:'<b>適合反過來走，或從新宿直接搭高速巴士到「仙石」。</b>下車走 2 分鐘就到；18 號往御殿場的巴士也經過仙石。到強羅、大涌谷要搭巴士約 15–20 分鐘。',
+  pros:['整棟 244㎡ 自己用，3 個源泉放流溫泉池（含石砌露天）','4 間臥室，9 人用 3 間，空間最寬','Airbnb 4.86 分／211 則，超讚房東；商用大廚房、8 人餐桌，適合自己煮'],
+  cons:['<b>四個方案最貴</b>：¥118,921，約 NT$24,688（每人約 NT$2,743）','3 個池都在同一棟，男女同行要<b>帶泳衣</b>或分時段輪流泡','溫泉要好幾小時才注滿，熱水連續用 30 分鐘會自動停；只有訂房後 24 小時內可全額退'],
+  fp:true, photos:[['plan','平面圖（1F／2F，中文標註）'],['onsen1a','石砌露天溫泉'],['onsen1b','露天溫泉・夜'],['onsen2a','2 人內湯，窗外就是露天'],['onsen3a','3 人內湯'],['onsen3b','3 人內湯・洗身區'],['living1','客廳：沙發、投影機'],['living2','客廳'],['dining','用餐區：8 人餐桌'],['kitchen','廚房'],['bed1','臥室 1'],['bed2','臥室 2'],['bed3','臥室 3'],['bed4','臥室 4'],['bath1','盥洗室']]},
+ {id:'kw', sum:'最便宜、獨棟有三溫暖和地暖，但在森林裡，看不到富士山。', night:2, booked:true, name:'Rakuten STAY VILLA 富士河口湖の森', jp:'河口湖森林樂天住宿別墅（森林裡的獨棟樓中樓）', onsen:'pri', onsenNote:'每棟有私人三溫暖；住客說 2 樓有溫泉浴池（Agoda 房型沒寫「溫泉」，以住客評語為準）', area:'河口湖・船津', route:2,
+  lat:35.4788, lng:138.7607, src:'Agoda', url:'https://www.agoda.com/zh-tw/rakuten-stay-villa-lake-kawaguchiko-forest-h31581954/hotel/fujikawaguchiko-jp.html?adults=8&rooms=1&checkIn=2026-11-18&checkOut=2026-11-19&los=1&currency=TWD', tax:true, dir:'kw',
+  fuji:{lv:'no', tag:'看不到', t:'在森林裡，窗外是樹林。官方和住客都沒提到富士山景；樂天官方說看得到富士山的是山中湖和河口湖駅那兩處。'},
+  score:8.7, reviews:1080, rooms:'獨棟 2 臥室：雙人床 ×4＋日式床墊 1（97㎡ 最多 8 人；122㎡ 最多 10 人）', bath:'2 衛浴＋2 廁所、私人三溫暖、地暖', inout:'15:00 起／10:00 前，自助入住', station:'河口湖駅約 2.5 km（開車約 10 分鐘）',
+  acc:{car:true, h1:'11/18 去程（河口湖駅取車）', h2:'11/19 退房後', drive:'河口湖駅開車約 10 分鐘', note:'在河口湖東側的森林裡，離河口湖駅約 2.5 km。',
+    in:['河口湖駅取車，開車約 10 分鐘。'],
+    out:['退房 10:00，開車逛完再回河口湖駅還車（約 10 分鐘），搭高速巴士回新宿。']},
+  opts:[{meal:'none',price:8933,free:'',fl:'已訂',room:'實際訂單'}],
+  routeNote:'<b>開車最順：</b>河口湖駅取車後開 10 分鐘就到，隔天開車逛完再還車搭巴士回新宿。',
+  pros:['實付 NT$8,933，每人約 NT$1,117，三間裡最便宜','私人三溫暖；住客說還有溫泉浴池、地暖','1,080 則評語、8.7 分，園區有營火休息棟和戶外吊床'],
+  cons:['<b>窗外是森林，看不到富士山</b>'],
+  photos:[['k0','森林裡的園區'],['k12','園區夜景'],['k3','挑高客廳'],['k5','客廳・樓中樓'],['k6','餐桌與廚房'],['k8','廚房'],['k19','臥室'],['k13','私人三溫暖'],['k23','半露天浴池'],['k1','公共休息棟'],['k16','休息棟營火區'],['k22','戶外吊床']]},
+ {id:'yam', sum:'客廳和露臺正對湖和富士山、評分高，但沒有溫泉，Room 3 的按摩浴缸看不到富士山。', night:2, booked:true, name:'Rakuten STAY VILLA 山中湖', jp:'山中湖樂天住宿別墅（平野，湖邊獨棟）', onsen:'none', onsenNote:'沒有溫泉；每棟有大型按摩浴缸', area:'山中湖・平野', route:1,
+  lat:35.4239, lng:138.9019, src:'Agoda', url:'https://www.agoda.com/zh-tw/minamitsuru-gun-house-vacation-stay-83576/hotel/yamanakako-jp.html?adults=8&rooms=1&checkIn=2026-11-18&checkOut=2026-11-19&los=1&currency=TWD', tax:true, dir:'yam',
+  fuji:{lv:'yes', tag:'客廳・露臺看得到', t:'官方主打富士山景：1 樓客廳和木露臺望出去就是湖和富士山，前面沒有遮擋。2 樓按摩浴缸看得到富士山的只有 101、102 棟，你訂的 Room 3 泡澡時大概看不到。'},
+  score:9.0, reviews:347, rooms:'每棟 87㎡：雙人床 ×5（共 3 棟）', bath:'大型按摩浴缸、地暖', inout:'自助入住（時間依 Agoda 頁面）', station:'山中湖平野（河口湖駅開車約 30 分鐘）',
+  acc:{car:true, h1:'11/18 去程（河口湖駅取車）', h2:'11/19 退房後', drive:'河口湖駅開車約 30 分鐘', note:'在山中湖東北岸的平野，走到湖邊很近。離河口湖駅比較遠。',
+    in:['河口湖駅取車，開車約 30 分鐘。'],
+    out:['開回河口湖駅還車（約 30 分鐘），再搭高速巴士回新宿。']},
+  opts:[{meal:'none',price:13360,free:'',fl:'已訂・實付 ¥64,353',room:'Room 3・87㎡'}],
+  routeNote:'<b>開車要多繞一段：</b>河口湖駅取車後開約 30 分鐘，隔天也要開回河口湖駅還車。',
+  pros:['評分 9.0（347 則），住客很推','露臺看得到湖和富士山，有吊椅、BBQ','大型按摩浴缸、投影機'],
+  cons:['沒有溫泉','Room 3 的按摩浴缸大概看不到富士山（只有 101、102 看得到）'],
+  photos:[['y0','外觀'],['y2','露臺望湖與富士山'],['y1','挑高客廳'],['y3','客廳'],['y4','按摩浴缸'],['y18','按摩浴缸・夜'],['y14','臥室'],['y23','臥室・投影機'],['y11','露臺餐桌'],['y13','庭院'],['y25','吊椅'],['y29','洗手台'],['y15','夜景']]},
+ {id:'oishi', sum:'客廳和頂樓都看得到富士山、新又乾淨，但沒有溫泉，三間裡最貴。', night:2, booked:true, name:'HAOSTAY Villa Oishi Park', jp:'河口湖大石公園旁的三臥室公寓（2 層樓）', onsen:'none', onsenNote:'沒有溫泉', area:'河口湖・大石', route:2,
+  lat:35.5257, lng:138.7437, src:'Booking', url:'https://www.booking.com/hotel/jp/haostay-villa-oishi-park.zh-tw.html?checkin=2026-11-18&checkout=2026-11-19&group_adults=8&no_rooms=1&selected_currency=TWD', tax:true, dir:'oishi',
+  fuji:{lv:'yes', tag:'客廳・頂樓看得到', t:'2 樓客廳窗外和頂樓露臺都看得到富士山（Booking 照片，多位住客也特別提到）。臥室在 1 樓，看不太到。'},
+  score:9.1, reviews:103, rooms:'三臥室公寓 95㎡，3 間臥室（都在 1 樓）：單人床 ×2＋雙人床 1／雙人床 ×2／雙人床 ×2', bath:'2 間衛浴、2 間廁所', inout:'15:00–20:00（要先告知抵達時間）／10:00 前', station:'大石公園旁（河口湖駅開車約 15 分鐘）；免費停車',
+  acc:{car:true, h1:'11/18 去程（河口湖駅取車）', h2:'11/19 退房後', drive:'河口湖駅開車約 15 分鐘・免費停車', note:'在河口湖北岸大石公園旁。住客說臥室在 1 樓，行李不用搬上樓。',
+    in:['河口湖駅取車，開車約 15 分鐘；有免費停車。'],
+    out:['開回河口湖駅還車（約 15 分鐘），再搭高速巴士回新宿。']},
+  opts:[{meal:'none',price:14442,free:'',fl:'已訂',room:'三臥室公寓 95㎡'}],
+  routeNote:'<b>開車很順：</b>河口湖駅取車後開約 15 分鐘，就在大石公園旁，早上可以走過去看富士山。',
+  pros:['<b>看得到富士山</b>：2 樓客廳和頂樓都能看，住客評語一再提到','Booking 9.1 分（103 則），清潔、舒適都 9.6','3 間獨立臥室剛好 8 人，2 套衛浴，新建築'],
+  cons:['沒有溫泉','三間裡最貴，每人約 NT$1,805','22:00 後要放低音量'],
+  photos:[['o4','三臥室公寓・外觀'],['o11','2 樓客廳・廚房'],['o13','8 人餐桌'],['o17','客廳'],['o19','客廳窗外的富士山'],['o7','臥室'],['o10','臥室'],['o27','臥室'],['o20','臥室'],['o12','入口招牌'],['o6','浴室（浴缸）'],['o9','淋浴間'],['o8','頂樓望富士山'],['o16','廚房'],['o21','洗手台・洗衣機'],['o24','玄關'],['o18','停車位']]}
+];
+
+/* bed layout per room. S 單人床 D 雙人／大床 F 日式床舖 M 床墊／折疊床 X 床型未確認; p = suggested headcount */
+const PLAN = {
+  yu:[{n:'臥室 1',b:'D',p:2},{n:'臥室 2',b:'SSM',p:3},{n:'臥室 3',b:'SSSSM',p:4},{n:'客廳',b:'M',p:0}],
+  recove:[{n:'雙人房',b:'XXXX',p:4},{n:'雙人房',b:'XXXX',p:4}],
+  'v-sengoku':[{n:'樓中樓 2 臥室合計',sz:'92㎡',b:'DDDDM',p:9}],
+  kw:[{n:'臥室 1',b:'DD',p:4},{n:'臥室 2',b:'DDF',p:4}],
+  yam:[{n:'整棟',sz:'87㎡',b:'DDDDD',p:8}],
+  oishi:[{n:'臥室 1',sz:'三臥室公寓 95㎡',b:'SSD',p:4},{n:'臥室 2',b:'DD',p:2},{n:'臥室 3',b:'DD',p:2}]
+};
+const CAP = {S:1,D:2,F:1,M:1,X:1};
+
+/* Airbnb floor plan, traced from the host's 1:100 drawing (scan pixel coords). k: bed|live|bath|svc|circ */
+const FP = [
+  {id:'hall',f:1,x:378,y:235,w:177,h:525,n:'走廊',k:'circ'},
+  {id:'st1',f:1,x:525,y:240,w:90,h:190,n:'樓梯',k:'circ'},
+  {id:'kit',f:1,x:180,y:150,w:198,h:235,n:'廚房',k:'live',ph:'kitchen',d:'商用大廚房：2 組雙槽水槽、IH 爐、微波爐、大冰箱、電子鍋，9 人一起煮也不擠。'},
+  {id:'gk',f:1,x:380,y:110,w:130,h:125,n:'玄關',k:'svc',d:'密碼鑰匙盒自助入住，全館禁穿鞋。洗衣機、烘衣機在走廊玄關一帶。'},
+  {id:'wst',f:1,x:615,y:220,w:180,h:280,n:'臥室1\n洋室',k:'bed',ph:'bed1',b:'DSS',p:4,d:'1 樓西式房間：1 張大床＋2 張單人床。建議 4 人睡這間，離浴室、廁所最近。'},
+  {id:'lv1',f:1,x:185,y:385,w:260,h:140,n:'客廳（和室）',k:'live',ph:'living1',d:'沙發、大螢幕電視、投影機，地板是榻榻米加地毯。'},
+  {id:'lv2',f:1,x:185,y:525,w:260,h:175,n:'用餐區（和室）',k:'live',ph:'dining',d:'8 人餐桌。客廳另外備有 4 套被褥，人多時可以加睡。'},
+  {id:'so',f:1,x:185,y:700,w:70,h:60,n:'物入',k:'svc'},
+  {id:'wc1',f:1,x:560,y:690,w:75,h:125,n:'廁所\n×2',k:'svc'},
+  {id:'bA',f:1,x:185,y:760,w:150,h:135,n:'內湯\n2 人',k:'bath',ph:'onsen2a',d:'源泉放流內湯，2 人。窗外連著露天溫泉（依平面圖位置推測）。'},
+  {id:'dA',f:1,x:335,y:760,w:95,h:135,n:'更衣',k:'svc',ph:'bath1',d:'更衣室與洗手台。'},
+  {id:'dB',f:1,x:430,y:800,w:130,h:95,n:'更衣',k:'svc'},
+  {id:'bB',f:1,x:340,y:895,w:225,h:135,n:'內湯 3 人',k:'bath',ph:'onsen3a',d:'較大的源泉內湯，可 3 人同時泡。'},
+  {id:'rt',f:1,x:200,y:895,w:140,h:140,n:'露天\n2 人',k:'bath',ph:'onsen1a',round:true,d:'石砌露天溫泉，2 人，源泉放流。戶外難免有落葉或蟲，屋內備有撈網。'},
+  {id:'cor',f:2,x:1535,y:170,w:65,h:640,n:'走廊',k:'circ'},
+  {id:'st2',f:2,x:1600,y:170,w:80,h:230,n:'樓梯',k:'circ'},
+  {id:'rA',f:2,x:1125,y:170,w:325,h:235,n:'臥室2・和室',k:'bed',ph:'bed2',b:'SSSM',p:4,d:'2 樓和室：3 張單人床＋1 張折疊床，靠窗有廣緣（窗邊小廳）。建議 4 人睡這間（1 人睡折疊床）。'},
+  {id:'tk',f:2,x:1125,y:405,w:325,h:60,n:'床の間・衣櫃',k:'svc'},
+  {id:'rB',f:2,x:1125,y:465,w:325,h:230,n:'臥室3・和室',k:'bed',ph:'bed3',b:'SSSM',p:1,d:'2 樓和室：3 張單人床＋1 張折疊床。第 9 人睡這間。'},
+  {id:'rC',f:2,x:1125,y:695,w:325,h:240,n:'臥室4・和室',k:'bed',ph:'bed4',b:'SSSM',p:0,d:'2 樓和室：3 張單人床＋1 張折疊床，旁邊就是 2 樓廁所。'},
+  {id:'cl',f:2,x:1450,y:170,w:85,h:640,n:'押入',k:'svc'},
+  {id:'wc2',f:2,x:1450,y:810,w:150,h:125,n:'廁所 ×2',k:'svc'}
+];
+
+const S = {onsen:'all', meal:'none', sort:'price', free:false, n1:null, tab:1, fp:'rt', view:'all', n2:null, view2:'all'};
+try{ Object.assign(S, JSON.parse(localStorage.getItem('stay2')||'{}')); }catch(e){}
+S.onsen = 'all'; S.meal = 'none';
+['view','view2'].forEach(k=>{ if (S[k]!=='all' && !H.some(h=>h.id===S[k])) S[k] = 'all'; });
+function save(){ try{ localStorage.setItem('stay2', JSON.stringify({onsen:S.onsen,meal:S.meal,sort:S.sort,free:S.free,n1:S.n1,view:S.view,n2:S.n2,view2:S.view2})); }catch(e){} }
+
+const fmt = n => 'NT$'+Math.round(n).toLocaleString('en-US');
+const MEAL = {none:'純住宿', b:'含早餐', bd:'含早晚餐'};
+const ml = o => o.ml || MEAL[o.meal];
+const brkHtml = o => `<dl class="brk"><dt>房價總價</dt><dd>${fmt(o.stay)}</dd><dt>溫泉一人</dt><dd>¥${o.on.toLocaleString('en-US')}<small>（${o.onl}，約 ${fmt(o.on*JPY)}）</small></dd></dl><div class="p">${fmt(o.price/P1)}</div><div class="pp">每人（住宿加溫泉）・${P1} 人 ${fmt(o.price)}</div>`;
+function best(h){
+  if (h.soldout) return null;
+  const c = h.opts.filter(o=>o.meal===S.meal && (!S.free || o.free));
+  return c.length ? (c.find(o=>o.def) || c.reduce((a,b)=>a.price<=b.price?a:b)) : null;
+}
+function chosen(n=1){ const h = H.find(x=>x.id===S[NIGHT(n).sel]); return h ? {h, o: best(h) || h.opts.find(o=>o.def) || h.opts.reduce((a,b)=>a.price<=b.price?a:b)} : null; }
+
+const ONS = {pub:'公共溫泉', pri:'房內溫泉', none:'無溫泉'};
+const NIGHT = n => n===2 ? {sel:'n2', view:'view2', lbl:'第二晚'} : {sel:'n1', view:'view', lbl:'第一晚'};
+const freeLbl = o => o.fl || (o.free ? o.free+'免費取消' : '不可退款');
+const score10 = h => h.score/(h.max||10)*10;
+const img = (h,k) => `img/${h.dir||'abnb'}/${k}.jpg`;
+
+/* ---------- photos ---------- */
+function galHtml(h){
+  return `<div class="gal">${h.photos.map(([k,c],i)=>`<button type="button" data-ph="${h.id}:${i}" aria-label="放大：${c}"><img src="${img(h,k)}" alt="${c}" loading="lazy"><span>${c}</span></button>`).join('')}</div>`;
+}
+
+/* ---------- layout: bed diagram ---------- */
+function glyphs(code, p){
+  let left = p;
+  return [...code].map(t=>{ const on = left>0; left -= CAP[t]; return `<i class="g ${t}${on?' on':''}"></i>`; }).join('');
+}
+const BP_LEG = `<div class="bp-leg"><span><i class="g S"></i>單人床</span><span><i class="g D"></i>雙人／大床</span><span><i class="g F"></i>日式床舖</span><span><i class="g M"></i>床墊／沙發床／折疊床</span><span><i class="g X"></i>床型未確認</span><span><i class="g S on"></i>建議睡法</span></div>`;
+function bpHtml(h){
+  const rs = PLAN[h.id]; if (!rs) return '';
+  const cap = rs.reduce((a,r)=>a+[...r.b].reduce((x,t)=>x+CAP[t],0),0);
+  return `<div class="sec"><h4>格局・床位（${rs.length} 間，最多睡 ${cap} 人）</h4><div class="bp">${rs.map(r=>`<div class="bp-r"><div class="bp-n">${r.n}${r.sz?`<small>${r.sz}</small>`:''}</div><div class="bp-b">${glyphs(r.b,r.p)}</div><div class="bp-p">${r.p} 人</div></div>`).join('')}</div>${BP_LEG}</div>`;
+}
+
+/* ---------- layout: Airbnb floor plan ---------- */
+const FS = .42;
+const T = (f,x,y) => f===1 ? [16+(x-180)*FS, 34+(y-110)*FS] : [300+(x-1125)*FS, 34+(y-170)*FS];
+const FILL = {bed:'var(--hk-soft)', live:'var(--paper)', bath:'var(--pri-soft)', svc:'var(--rule-soft)', circ:'none'};
+function fpSvg(){
+  let g = `<text x="16" y="22" font-size="12" font-weight="700">1F</text><text x="300" y="22" font-size="12" font-weight="700">2F</text>`;
+  FP.forEach(r=>{
+    const [x,y] = T(r.f,r.x,r.y), w = r.w*FS, h = r.h*FS, cx = x+w/2, cy = y+h/2;
+    const lines = r.n.split('\n'), fs = r.k==='bed'||r.k==='live'||r.k==='bath' ? 10 : 8.5;
+    const ty = r.b ? y+15 : cy-(lines.length-1)*fs*.6+fs*.35;
+    let inner = `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r.round?16:2}" fill="${FILL[r.k]}" stroke="var(--ink-2)" stroke-width="${r.k==='circ'?.6:1}" ${r.k==='circ'?'stroke-dasharray="3 3"':''}/>`;
+    inner += lines.map((l,i)=>`<text x="${cx}" y="${ty+i*fs*1.2}" font-size="${fs}" font-weight="${r.k==='bed'?700:500}" text-anchor="middle" ${r.k==='circ'||r.k==='svc'?'style="fill:var(--muted)"':''}>${l}</text>`).join('');
+    if (r.b){
+      const ws = {S:9,D:17,M:9}, gap = 3, tot = [...r.b].reduce((a,t)=>a+ws[t]+gap,-gap);
+      let bx = cx-tot/2, left = r.p; const by = y+h-30;
+      [...r.b].forEach(t=>{ const on = left>0; left -= CAP[t]; const bh = t==='M'?13:20;
+        inner += `<rect x="${bx}" y="${by+20-bh}" width="${ws[t]}" height="${bh}" rx="2" fill="${on?'var(--hk)':'var(--paper)'}" stroke="${on?'var(--hk)':'var(--ink-2)'}" stroke-width="1.2" ${t==='M'?'stroke-dasharray="2 2"':''}/>`; bx += ws[t]+gap; });
+      inner += `<text x="${cx}" y="${by-5}" font-size="9" text-anchor="middle" style="fill:var(--hk);font-weight:700">${r.p?r.p+' 人':'空房'}</text>`;
+    }
+    const act = r.ph || r.d;
+    g += `<g class="rm${S.fp===r.id?' cur':''}" data-rm="${r.id}" ${act?`tabindex="0" role="button" aria-label="${r.n.replace('\n','')}"`:''}>${inner}</g>`;
+  });
+  const gk = T(1,445,110);
+  g += `<path d="M${gk[0]} ${gk[1]-12} v9 m-4 -4 l4 4 l4 -4" fill="none" stroke="var(--ink)" stroke-width="1.5"/><text x="${gk[0]+8}" y="${gk[1]-5}" font-size="9" style="fill:var(--muted)">入口</text>`;
+  return `<svg viewBox="0 0 540 434" role="img" aria-label="Airbnb 別墅 1F／2F 平面圖，可點房間看照片">${g}</svg>`;
+}
+function fpDetail(h){
+  const r = FP.find(x=>x.id===S.fp) || FP[0];
+  const pi = r.ph ? h.photos.findIndex(p=>p[0]===r.ph) : -1;
+  return `<div class="fp-d">${pi>=0?`<button type="button" data-ph="${h.id}:${pi}" aria-label="放大照片"><img src="${img(h,r.ph)}" alt="${h.photos[pi][1]}"></button>`:`<div class="noimg">這區沒有照片</div>`}
+    <h5>${r.n.replace('\n',' ')}</h5><p>${r.d||'—'}</p></div>`;
+}
+function fpHtml(h){
+  return `<div class="sec" id="fp-${h.id}"><h4>平面圖（重繪，點房間看照片）</h4><div class="fp">${fpSvg()}${fpDetail(h)}</div>
+    <div class="bp-leg"><span><i class="g S on"></i>建議睡這裡</span><span style="display:inline-flex;align-items:center;gap:4px"><i style="width:12px;height:12px;border-radius:3px;background:var(--hk-soft);border:1px solid var(--ink-2)"></i>臥室</span><span style="display:inline-flex;align-items:center;gap:4px"><i style="width:12px;height:12px;border-radius:3px;background:var(--pri-soft);border:1px solid var(--ink-2)"></i>溫泉</span><span style="display:inline-flex;align-items:center;gap:4px"><i style="width:12px;height:12px;border-radius:3px;background:var(--paper);border:1px solid var(--ink-2)"></i>客廳・廚房</span></div>
+    <p class="note" style="margin-top:4px">建議睡法：臥室1 洋室 4 人＋臥室2 和室 4 人＋臥室3 和室 1 人，臥室4 空著放行李。溫泉都在 1 樓，從洋室過去最近。</p></div>`;
+}
+
+/* ---------- list ---------- */
+function sorted(n=S.tab){
+  const arr = H.filter(h=> (h.night||1)===n && (S.onsen==='all' || h.onsen===S.onsen)).map(h=>({h,o:best(h)}));
+  return arr.sort((a,b)=>{
+    if (!a.o !== !b.o) return a.o ? -1 : 1;
+    if (S.sort==='score') return score10(b.h)-score10(a.h);
+    if (S.sort==='route') return b.h.route-a.h.route || (a.o&&b.o ? a.o.price-b.o.price : 0);
+    return (a.o?a.o.price:9e9)-(b.o?b.o.price:9e9);
+  });
+}
+
+/* ---------- day-trip onsen (plan yu) ---------- */
+const JPY = 0.2076;
+const DAY = [
+  {id:'yuryo', name:'箱根湯寮', tag:'首選', jp:'塔之沢・大浴場「本殿 湯楽庵 大湯」', ph:[['yr1','露天浴池・夜'],['yr5','大浴場露天'],['yr3','露天與木造休息亭'],['yr2','露天浴池'],['yr6','露天浴池'],['yr7','三溫暖ロウリュウ'],['yr4','外觀・入口']], fee:1800, ride:0,
+    rows:[['男女湯','<b>男女分開</b>：大浴場有內湯、露天、信樂燒陶缸、三溫暖。想男女一起泡，可另外訂貸切個室露天「花伝」'],['交通時間','<b>單程約 20–30 分鐘</b>：住處走到箱根湯本駅 12 分鐘（下坡）＋等車＋接駁車 3 分鐘'],['營業時間','平日 10:00–20:00（19:00 最後入場）；週末 10:00–21:00'],['門票','大人平日 ¥1,700–1,800（以 ¥1,800 計）'],['怎麼去','箱根湯本駅改札旁 7 號站牌搭<b>免費接駁車</b>（每天行駛）'],['接駁車・湯本駅發','9:00、9:20、9:40；<b>10:00–17:45 每 15 分鐘</b>（:00 :15 :30 :45）；18:00–19:40 每 20 分鐘，<b>末班 19:40</b>'],['接駁車・湯寮發','9:10–17:55（10–17 點 :10 :25 :40 :55）；18:10–19:50 每 20 分鐘；20:05、20:25、20:50，<b>末班 21:05</b>。20:10 以後是 9 人座小車，9 人可能要分兩班'],['回程','接駁車回湯本駅，再走上坡約 15 分鐘；或從湯本駅叫計程車 3 台，約 5 分鐘'],['交通費','¥0（搭計程車另計）']],
+    notes:['建議 16:00 前後出發，泡到 19:00 左右，搭 19:10–19:50 的車回湯本駅吃晚餐','9 人可以一起去','拿箱根周遊券入館每人折 ¥200；EMot App 的「お気軽温泉チケット」同價、送毛巾組','另有 19 間貸切個室露天，2 小時 ¥9,400 起，要預約'], ok:true},
+  {id:'okada', name:'湯の里おかだ', tag:'備案：開到最晚', jp:'湯本茶屋・湯坂山腰（ホテルおかだ旁），自家源泉 5 本', ph:[['ok2','露天浴池・夜'],['ok1','露天浴池'],['ok3','ホテルおかだ外觀']], fee:1650, ride:1000, rideL:'計程車分攤',
+    rows:[['男女湯','<b>男女分開</b>；另有家族風呂'],['交通時間','<b>計程車單程約 5–10 分鐘</b>，住處門口直接叫車'],['怎麼去','<b>搭計程車</b>，9 人分 3 台。跟箱根湯寮不同方向，在湯本茶屋（ホテルおかだ旁）'],['營業時間','<b>11:00–23:00</b>（22:00 最後入場）；12/1–3 休館，11/17 有開'],['門票','大人 ¥1,650；租毛巾 ¥300（自備可省）'],['回程','請櫃台幫忙叫計程車回住處'],['交通費','估一台單程約 ¥1,500，3 台來回約 ¥9,000，<b>每人約 ¥1,000</b>（實際以跳表為準）']],
+    notes:['<b>晚上 23:00 才關</b>，搭計程車不受巴士時間限制，可以吃完晚餐再去','官網沒寫團體人數限制'], ok:true}
+];
+const DAYLB = Object.fromEntries(DAY.map(d=>[d.id,{id:d.id,dir:'day',photos:d.ph.map(([k,c])=>[k,d.name+'・'+c])}]));
+const STAY = 11720;
+const dayTot = d => STAY + P1*(d.fee+d.ride)*JPY;
+function dayHtml(h){
+  if (!h.day) return '';
+  return `<div class="sec"><h4>日歸溫泉比價（房價另計，溫泉以一人計）</h4><div class="day">${DAY.map(d=>`<div class="${d.ok?'':'no'}">
+      <button type="button" class="day-img" data-ph="${d.id}:0" aria-label="放大：${d.name}"><img src="img/day/${d.ph[0][0]}.jpg" alt="${d.name}・${d.ph[0][1]}" loading="lazy"><span>共 ${d.ph.length} 張・點開看</span></button>
+      <div class="day-th">${d.ph.slice(1).map(([k,c],i)=>`<button type="button" data-ph="${d.id}:${i+1}" aria-label="放大：${c}"><img src="img/day/${k}.jpg" alt="${c}" loading="lazy"></button>`).join('')}</div>
+      <div class="b"><h5><span>${d.name} <em class="dtag${d.ok?'':' no'}">${d.tag}</em></span><small>${d.jp}</small></h5>
+      <dl>${d.rows.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl>
+      <ul>${d.notes.map(x=>`<li>${x}</li>`).join('')}</ul>
+      <dl class="tot"><dt>房價總價</dt><dd>${fmt(STAY)}</dd><dt>溫泉一人</dt><dd>¥${(d.fee+d.ride).toLocaleString('en-US')}${d.ride?`（門票 ¥${d.fee.toLocaleString('en-US')}＋${d.rideL||'交通'} ¥${d.ride}）`:''}，約 ${fmt((d.fee+d.ride)*JPY)}</dd><dt>每人</dt><dd><b>${fmt(dayTot(d)/P1)}</b>（住宿加溫泉）</dd><dt>${P1} 人總計</dt><dd>${fmt(dayTot(d))}</dd></dl></div></div>`).join('')}</div>
+    <p class="note" style="margin-top:6px"><b>怎麼選：</b>首選箱根湯寮，免費接駁車 10–17 點每 15 分鐘一班，湯寮發末班 21:05。想吃完晚餐再泡，改去開到 23:00 的湯の里おかだ，從住處搭計程車約 5–10 分鐘（3 台）。</p>
+    <p class="note" style="margin-top:4px">房價 NT$11,720 是 Airbnb 9 人含所有費用的總價。日圓以台銀 10/28 即期賣出 0.2076 換算；票價與營業時間取自湯の里おかだ官網與箱根ナビ（10/28–29），箱根湯寮官網維修中，出發前再確認。箱根湯寮接駁車時刻取自官網 2026/4/1 起的時刻表（網頁存檔，5/16）；湯の里おかだ計程車時間取自訂房網站（湯本駅約 5 分鐘），車資是估算。走路時間是估算。11/17 是平日，15:00 入住後去湯寮，19:00 前要進場。</p></div>`;
+}
+
+/* ---------- access without a car ---------- */
+const LV = {1:'交通很方便',2:'交通方便',3:'要搭計程車'};
+function accHtml(h){
+  const a = h.acc; if (!a) return '';
+  return `<div class="acc"><div class="acc-h"><h4>${a.car?'開車怎麼到':'不開車怎麼到'}</h4>${a.car?`<span class="stop">${a.drive}</span>`:`<span class="stop">巴士站「${a.stop}」・${a.walk}</span><span class="lv lv${a.lv}">${LV[a.lv]}</span>`}</div>
+    <p>${a.note}</p>${a.ym?`<p><b>到箱根湯本：</b>${a.ym}。看車頭寫「箱根湯本駅行」的最保險。</p>`:''}
+    <div class="acc-g"><div><h5>${a.h1||'11/17 去程（從強羅／宮ノ下）'}</h5><ul>${a.in.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+    <div><h5>${a.h2||'11/18 往御殿場'}</h5><ul>${a.out.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+    ${h.food?`<div style="grid-column:1/-1"><h5>附近吃的、買的</h5><ul>${h.food.list.map(x=>`<li>${x}</li>`).join('')}</ul></div>`:''}</div></div>`;
+}
+
+/* ---------- overview switcher ---------- */
+const SHORT = {oishi:'HAOSTAY 大石公園',kw:'樂天 Villa 河口湖の森',yam:'樂天 Villa 山中湖',yu:'Airbnb 湯本＋日歸溫泉','v-sengoku':'樂天 Villa 仙石原','recove':"Re'Cove 溫泉飯店",'abnb':'Airbnb 源泉別墅'};
+function renderOv(){
+  const N = NIGHT(S.tab), arr = sorted(), V = S[N.view];
+  document.getElementById('ov-title').textContent = S.tab===2 ? '第二晚 11/18 富士山區・總覽' : '第一晚 11/17 箱根・總覽';
+  document.getElementById('ov').innerHTML = `<button type="button" class="all" data-view="all" aria-pressed="${V==='all'}"><b>全部 ${arr.length} 間</b><span>一起比較</span></button>` +
+    arr.map(({h,o})=>{
+      const p = o || h.opts.find(x=>x.def) || h.opts.reduce((a,b)=>a.price<=b.price?a:b), ph = h.photos.find(x=>x[0]!=='plan') || h.photos[0];
+      return `<button type="button" data-view="${h.id}" aria-pressed="${V===h.id}">
+        <span class="ov-img"><img src="${img(h,ph[0])}" alt="" loading="lazy"><span class="bdg ${h.onsen}">${ONS[h.onsen]}</span>${S[N.sel]===h.id?`<span class="mine">${N.lbl}</span>`:''}</span>
+        <span class="ov-t"><span class="nm">${SHORT[h.id]||h.name}${h.booked?' <span class="bdg bk">已訂</span>':''}</span>${p.stay?`<span class="pr">房價 ${fmt(p.stay)}</span><span class="pp">溫泉一人 ¥${p.on.toLocaleString('en-US')}（約 ${fmt(p.on*JPY)}）</span><span class="pp"><b>每人 ${fmt(p.price/ppl(h))}</b>（住宿加溫泉）・${h.src} ${h.score}</span>`:`<span class="pr">${fmt(p.price)}${h.tax?'':'<small style="font-size:11px;font-weight:500"> 未稅</small>'}</span><span class="pp">每人 ${fmt(p.price/ppl(h))}・${h.src} ${h.score}</span>`}${h.acc?`<span class="bus">${h.acc.car?h.acc.drive:`巴士站「${h.acc.stop}」・${h.acc.walk}`}</span>`:''}${h.fuji?`<span class="bus" style="color:var(--${h.fuji.lv==='no'?'muted':'fj'});font-weight:700">富士山景：${h.fuji.tag}</span>`:''}${h.food?`<span class="bus" style="color:var(--${h.food.bad?'warn':'ok'})">${h.food.tag}</span>`:''}
+        ${h.soldout?'<span class="st over">11/18 已完售</span>':''}${h.sum?`<span class="sm">${h.sum}</span>`:''}</span>
+      </button>`;
+    }).join('');
+}
+
+function renderList(n){
+  const N = NIGHT(n); let arr = sorted(n);
+  if (S[N.view]!=='all') arr = arr.filter(x=>x.h.id===S[N.view]);
+  document.getElementById(n===2?'list2':'list').innerHTML = arr.map(({h,o})=>{
+    const rows = h.opts.slice().sort((a,b)=>a.price-b.price).map(x=>`<tr class="${o&&x===o?'cur':''}"><td>${ml(x)}${x.room?'・'+x.room+(x.room.length<3?' 房型':''):''}</td><td>${freeLbl(x)}</td><td class="n">${x.est?'約 ':''}${fmt(x.price)}</td></tr>`).join('');
+    return `<article class="card${S[N.sel]===h.id?' sel':''}${o?'':' na'}" id="c-${h.id}">
+      <div class="c-top">
+        <div>
+          <h3 class="c-name">${h.name}<small>${h.jp}</small></h3>${h.sum?`<p class="c-sum">${h.sum}</p>`:''}
+          <div class="badges">
+            <span class="bdg ${h.onsen}">${ONS[h.onsen]}</span>
+            ${h.booked?'<span class="bdg bk">已訂</span>':''}${h.fuji?`<span class="bdg ${h.fuji.lv==='no'?'fn':'fy'}">富士山景：${h.fuji.tag}</span>`:''}<span class="bdg area">${h.area}</span>
+            <span class="bdg src">${h.src} ${h.score}／${h.max||10}・${h.reviews} 則</span>
+          </div>
+        </div>
+        <div class="price">${o ? `${o.stay?brkHtml(o):`<div class="p">${o.est?'約 ':''}${fmt(o.price)}</div><div class="pp">每人 ${fmt(o.price/ppl(h))}</div>`}<div class="tx">${ml(o)}・${freeLbl(o)}${h.tax?'':'・未含稅'}</div>`
+          : `<div class="na">${h.soldout?`Agoda 上 11/18 已完售<br><small>完售前 ${fmt(h.opts[0].price)}</small>`:`沒有「${MEAL[S.meal]}${S.free?'＋可取消':''}」的方案`}</div>`}</div>
+      </div>
+      
+      ${h.photos?galHtml(h):''}
+      <dl class="facts">
+        ${h.fuji?`<div><dt>富士山景</dt><dd>${h.fuji.t}</dd></div>`:''}
+        <div><dt>溫泉</dt><dd>${h.onsenNote}</dd></div>
+        <div><dt>房型與床位</dt><dd>${h.rooms}</dd></div>
+        <div><dt>衛浴</dt><dd>${h.bath}</dd></div>
+        <div><dt>入住／退房</dt><dd>${h.inout}</dd></div>
+        <div><dt>交通</dt><dd>${h.station}</dd></div>
+      </dl>
+      ${accHtml(h)}
+      ${dayHtml(h)}
+      ${h.fp?fpHtml(h):bpHtml(h)}
+      <div class="route">${h.routeNote}</div>
+      <div class="pc"><div class="pro"><h4>優點</h4><ul>${h.pros.map(x=>`<li>${x}</li>`).join('')}</ul></div><div class="con"><h4>要注意</h4><ul>${h.cons.map(x=>`<li>${x}</li>`).join('')}</ul></div></div>
+      <details><summary>所有價格方案（${h.opts.length}）</summary><table class="opts">${rows}</table></details>
+      <div class="c-act">
+        <button type="button" class="btn" data-pick="${h.id}" aria-pressed="${S[N.sel]===h.id}"${h.soldout?' disabled':''}>${h.soldout?'已完售':S[N.sel]===h.id?`✓ ${N.lbl}就住這間`:`選這間當${N.lbl}`}</button>
+        <a href="${h.url}" target="_blank" rel="noopener">到 ${h.src} 看房 ↗</a>
+      </div>
+    </article>`;
+  }).join('') || '<p class="note">沒有符合條件的住宿，放寬篩選試試看。</p>';
+}
+
+/* ---------- map ---------- */
+const LON0=138.985, LAT0=35.275, KX=4462, KY=5448;
+const P = (lat,lng)=>[20+(lng-LON0)*KX, 15+(LAT0-lat)*KY];
+const ST = {yumoto:[35.2329,139.1048,'箱根湯本'], miya:[35.2387,139.0669,'宮ノ下'], kowaki:[35.2372,139.0563,'小涌谷'], gora:[35.2503,139.0466,'強羅'], soun:[35.2452,139.0390,'早雲山'], owaku:[35.2430,139.0200,'大涌谷'], togen:[35.2405,139.0010,'桃源台'], sengoku:[35.2580,139.0170,'仙石原']};
+function renderMap(){
+  const line = (keys,col,w,dash)=>`<polyline points="${keys.map(k=>P(ST[k][0],ST[k][1]).join(',')).join(' ')}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" ${dash?`stroke-dasharray="${dash}"`:''}/>`;
+  let g = '';
+  const lake = P(35.215,139.005), lk2 = P(35.205,139.02);
+  g += `<ellipse cx="${(lake[0]+lk2[0])/2}" cy="${(lake[1]+lk2[1])/2+20}" rx="34" ry="80" fill="var(--fj-soft)" transform="rotate(-12 ${(lake[0]+lk2[0])/2} ${(lake[1]+lk2[1])/2+20})"/>`;
+  g += `<text class="lg" x="${lk2[0]-20}" y="${lk2[1]+60}">蘆之湖</text>`;
+  g += line(['togen','sengoku'],'var(--bus)',2,'4 4');
+  const sg = P(ST.sengoku[0],ST.sengoku[1]);
+  g += `<line x1="${sg[0]}" y1="${sg[1]}" x2="${sg[0]-40}" y2="${sg[1]-40}" stroke="var(--bus)" stroke-width="2" stroke-dasharray="4 4"/><text class="lg" x="${sg[0]-92}" y="${sg[1]-44}">往御殿場・河口湖</text>`;
+  g += line(['yumoto','miya','kowaki','gora'],'var(--rail)',4);
+  g += line(['gora','soun'],'var(--cable)',4);
+  g += line(['soun','owaku','togen'],'var(--rope)',3,'1 5');
+  Object.entries(ST).forEach(([k,[la,ln,n]])=>{
+    const [x,y]=P(la,ln); const below = ['kowaki','owaku','yumoto','miya'].includes(k);
+    g += `<circle cx="${x}" cy="${y}" r="4.5" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/><text class="st" x="${x}" y="${below?y+17:y-9}" text-anchor="middle">${n}</text>`;
+  });
+  const vis = new Set(H.filter(h=> S.onsen==='all' || h.onsen===S.onsen).map(h=>h.id));
+  H.filter(h=>(h.night||1)===1).forEach(h=>{
+    const [x,y]=P(h.lat,h.lng), sel=S.n1===h.id, on=vis.has(h.id);
+    g += `<g class="pin" data-go="${h.id}" tabindex="${on?0:-1}" role="button" aria-label="${h.name}" style="opacity:${on?1:.25}">
+      <circle class="o" cx="${x}" cy="${y}" r="${sel?10:7}" fill="var(--${h.onsen==='none'?'muted':h.onsen})" stroke="var(--paper)" stroke-width="2"/>
+      ${sel?`<circle cx="${x}" cy="${y}" r="15" fill="none" stroke="var(--hk)" stroke-width="2"/>`:''}
+    </g>`;
+  });
+  document.getElementById('map').innerHTML = g;
+}
+
+/* ---------- ticket ---------- */
+function renderTicket(){
+  const c = chosen(), s1 = document.getElementById('slot1');
+  s1.classList.toggle('filled', !!c);
+  s1.querySelector('.nm').textContent = c ? c.h.name : '還沒選';
+  s1.querySelector('.pr').textContent = c ? `${fmt(c.o.price)}・${ml(c.o)}${c.h.tax?'':'・未含稅'}` : '點下方卡片的「選這間」';
+  const c2 = chosen(2), s2 = document.getElementById('slot2');
+  s2.classList.toggle('filled', !!c2);
+  s2.querySelector('.nm').textContent = c2 ? c2.h.name : '還沒選';
+  s2.querySelector('.pr').textContent = c2 ? `${fmt(c2.o.price)}・${ml(c2.o)}${c2.h.tax?'':'・未含稅'}` : '到第二晚分頁選一間';
+  const tot = (c?c.o.price:0)+(c2?c2.o.price:0), pp = (c?c.o.price/ppl(c.h):0)+(c2?c2.o.price/ppl(c2.h):0), notax = (c&&!c.h.tax)||(c2&&!c2.h.tax);
+  document.getElementById('sum-total').textContent = c&&c2 ? fmt(tot) : c||c2 ? fmt(tot)+' + ?' : '—';
+  document.getElementById('sum-pp').textContent = c&&c2 ? `每人 ${fmt(pp)}${notax?'（Agoda 部分未含稅）':''}` : c||c2 ? `已選一晚，每人 ${fmt(pp)}，另一晚待選` : '兩晚都選好後會算出每人金額';
+}
+
+function syncCtl(){
+  [['f-sort','sort']].forEach(([id,k])=>document.querySelectorAll('#'+id+' button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v===S[k]))));
+  document.getElementById('f-free').checked = S.free;
+  const t1 = S.tab===1;
+  document.getElementById('tab1').setAttribute('aria-selected',String(t1));
+  document.getElementById('tab2').setAttribute('aria-selected',String(!t1));
+  document.querySelector('#tab1 .h').textContent = t1 ? '✓ 正在看這晚' : '點這裡切換 →';
+  document.querySelector('#tab2 .h').textContent = t1 ? '點這裡切換 →' : '✓ 正在看這晚';
+  document.getElementById('night1').hidden = !t1;
+  document.getElementById('night2').hidden = t1;
+}
+function render(){ syncCtl(); renderOv(); renderList(1); renderList(2); renderMap(); renderTicket(); save(); }
+
+/* ---------- events ---------- */
+[['f-sort','sort']].forEach(([id,k])=>document.getElementById(id).addEventListener('click',e=>{const b=e.target.closest('button'); if(b){S[k]=b.dataset.v; render();}}));
+document.getElementById('f-free').addEventListener('change',e=>{S.free=e.target.checked; render();});
+document.getElementById('tab1').addEventListener('click',()=>{S.tab=1; render();});
+document.getElementById('tab2').addEventListener('click',()=>{S.tab=2; render();});
+document.getElementById('slot1').addEventListener('click',()=>{S.tab=1; render(); if(S.n1){const el=document.getElementById('c-'+S.n1); el&&el.scrollIntoView({block:'center'});}});
+document.getElementById('slot2').addEventListener('click',()=>{S.tab=2; render(); if(S.n2){const el=document.getElementById('c-'+S.n2); el&&el.scrollIntoView({block:'center'});}});
+document.getElementById('ov').addEventListener('click',e=>{const b=e.target.closest('[data-view]'); if(!b) return; const N = NIGHT(S.tab); S[N.view]=b.dataset.view; render();
+  if (S[N.view]!=='all'){ const el=document.getElementById('c-'+S[N.view]); el && el.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'}); }});
+const list = document.getElementById('list');
+function pickRoom(id){
+  S.fp = id; const h = H.find(x=>x.fp), el = document.getElementById('fp-'+h.id);
+  if (el){ el.outerHTML = fpHtml(h); const g = document.querySelector(`#fp-${h.id} [data-rm="${id}"]`); g && g.focus({preventScroll:true}); }
+}
+function onList(e){
+  const ph = e.target.closest('[data-ph]'); if (ph){ const [id,i] = ph.dataset.ph.split(':'); openLb(H.find(x=>x.id===id) || DAYLB[id], +i); return; }
+  const rm = e.target.closest('[data-rm][tabindex]'); if (rm){ pickRoom(rm.dataset.rm); return; }
+  const b = e.target.closest('[data-pick]'); if(!b || b.disabled) return; const k = NIGHT(H.find(x=>x.id===b.dataset.pick).night||1).sel; S[k] = S[k]===b.dataset.pick ? null : b.dataset.pick; render();
+}
+list.addEventListener('click',onList);
+document.getElementById('list2').addEventListener('click',onList);
+list.addEventListener('keydown',e=>{const rm=e.target.closest('[data-rm][tabindex]'); if(rm&&(e.key==='Enter'||e.key===' ')){e.preventDefault(); pickRoom(rm.dataset.rm);}});
+
+/* ---------- lightbox ---------- */
+const lb = document.getElementById('lb'), LB = {h:null, i:0};
+function showLb(){ const [k,c] = LB.h.photos[LB.i]; document.getElementById('lb-img').src = img(LB.h,k); document.getElementById('lb-img').alt = c; document.getElementById('lb-cap').textContent = c; document.getElementById('lb-n').textContent = `${LB.i+1} / ${LB.h.photos.length}`; }
+function openLb(h,i){ LB.h = h; LB.i = i; showLb(); if (lb.showModal) lb.showModal(); else lb.setAttribute('open',''); }
+function stepLb(d){ const n = LB.h.photos.length; LB.i = (LB.i+d+n)%n; showLb(); }
+lb.addEventListener('click',e=>{ if (e.target===lb) return lb.close(); const b = e.target.closest('[data-lb]'); if(!b) return; b.dataset.lb==='x' ? lb.close() : stepLb(+b.dataset.lb); });
+lb.addEventListener('keydown',e=>{ if(e.key==='ArrowRight') stepLb(1); if(e.key==='ArrowLeft') stepLb(-1); });
+function go(id){ if (S.view!=='all' && S.view!==id){ S.view = id; render(); } const el=document.getElementById('c-'+id); if(!el) return; el.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'center'}); el.classList.add('hover'); setTimeout(()=>el.classList.remove('hover'),1200); }
+const map = document.getElementById('map');
+map.addEventListener('click',e=>{const p=e.target.closest('[data-go]'); if(p) go(p.dataset.go);});
+map.addEventListener('keydown',e=>{const p=e.target.closest('[data-go]'); if(p&&(e.key==='Enter'||e.key===' ')){e.preventDefault(); go(p.dataset.go);}});
+
+render();
+})();
+</script>
